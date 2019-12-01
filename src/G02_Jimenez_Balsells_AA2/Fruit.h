@@ -1,0 +1,18 @@
+#pragma once
+#include "Utils.h"
+#include <string>
+
+class Fruit {
+public:
+	enum class FruitType {ORANGE, SRTRAWBERRY, CHERRY };
+private:
+	Vec2 initialPos;
+	FruitType type;
+public:
+	Fruit();
+	Vec2 GetInitialPos();
+	FruitType GetType();
+	void SetInitialPos(Vec2);
+	void Update();
+	void Draw(std::string);
+};
