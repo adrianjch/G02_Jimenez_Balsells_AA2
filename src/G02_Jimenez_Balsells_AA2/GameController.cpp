@@ -3,19 +3,27 @@
 #include "Menu.h"
 #include "Ranking.h"
 #include "Game.h"
+#include <Windows.h>
 
 GameController::GameController() {
 	scene = new SplashScreen();
 	gameState = GameState::SPLASH_SCREEN;
+	renderer = Renderer::Instance();
+	renderer->LoadFont({"buttons", "../../res/ttf/PAC-FONT.TTF", 72});
+	renderer->LoadTextureText("buttons", { "play normal", "PLAY", {255,0,0,255}, 500, 200 });
 }
 
 void GameController::Play() {
 	bool finish = false;
 	while (!finish) {
+		// INPUT
+		inputManager.ReadInput();
+
+		// UPDATE AND DRAW
 		switch (gameState) {
 			case GameController::GameState::SPLASH_SCREEN:
 				if (scene->GetState() == Scene::SceneState::RUNNING) {
-					scene->Update();
+					scene->Update(inputManager.GetInput());
 					scene->Draw();
 				}
 				else if (scene->GetState() == Scene::SceneState::MENU_STATE) {
@@ -26,7 +34,7 @@ void GameController::Play() {
 				break;
 			case GameController::GameState::MENU:
 				if (scene->GetState() == Scene::SceneState::RUNNING) {
-					scene->Update();
+					scene->Update(inputManager.GetInput());
 					scene->Draw();
 				}
 				else if (scene->GetState() == Scene::SceneState::PLAY_STATE) {
@@ -48,7 +56,7 @@ void GameController::Play() {
 				break;
 			case GameController::GameState::RANKING:
 				if (scene->GetState() == Scene::SceneState::RUNNING) {
-					scene->Update();
+					scene->Update(inputManager.GetInput());
 					scene->Draw();
 				}
 				else if (scene->GetState() == Scene::SceneState::MENU_STATE) {
@@ -58,6 +66,7 @@ void GameController::Play() {
 				}
 				break;
 		}
-		//frame controller
+		//FRAME CONTROLLER
+		Sleep(1000);
 	}
 }

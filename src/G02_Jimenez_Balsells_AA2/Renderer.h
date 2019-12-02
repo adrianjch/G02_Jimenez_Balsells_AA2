@@ -26,16 +26,16 @@ public:
 	};
 
 	~Renderer();
-	 void Clear()  ;
-	 void Render() ;
-	 void LoadFont(Font font);
-	 void LoadTexture(const std::string &id, const std::string &path);
-	 void LoadTextureText(const std::string &fontId, Text text);
-	 Vector2 GetTextureSize(const std::string &id);
-	 void PushImage(const std::string &id,const SDL_Rect &rect);
-	 void PushSprite(const std::string &id,const SDL_Rect &rectSprite,const SDL_Rect &rectPos);
-	 void PushRotatedSprite(const std::string &id, const SDL_Rect &rectSprite, const SDL_Rect &rectPos, float angle);
-	 void SetRendreDrawColor(int r, int g, int b);	 
+	void Clear();
+	void Render();
+	void LoadFont(Font font);
+	void LoadTexture(const std::string &id, const std::string &path);
+	void LoadTextureText(const std::string &fontId, Text text);
+	Vec2 GetTextureSize(const std::string &id);
+	void PushImage(const std::string &id, const SDL_Rect &rect);
+	void PushSprite(const std::string &id, const SDL_Rect &rectSprite, const SDL_Rect &rectPos);
+	void PushRotatedSprite(const std::string &id, const SDL_Rect &rectSprite, const SDL_Rect &rectPos, float angle);
+	void SetRendreDrawColor(int r, int g, int b);
 };
 
 

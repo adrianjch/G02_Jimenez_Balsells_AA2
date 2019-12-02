@@ -1,5 +1,6 @@
 #pragma once
-#include "Utils.h"
+#include "Types.h"
+#include "Map.h"
 #include <ctime>
 #include <string>
 
@@ -23,9 +24,8 @@ public:
 	void SetScore(int);
 	void SetLives(int);
 	void SetEmpowered(bool);
-	void Update(**Cell);
-	void Move(**Cell, Vec2);
+	void Update(const Input &, Map::Cell**);
+	void Move(Map::Cell**, Vec2);
 	void Draw(std::string);
 	void Dead();
-
 };

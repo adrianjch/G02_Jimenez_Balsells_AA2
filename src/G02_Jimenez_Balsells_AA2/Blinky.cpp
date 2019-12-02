@@ -5,11 +5,11 @@ Blinky::Blinky() {
 
 }
 
-void Blinky::Update(**Cell) {
+void Blinky::Update(Map::Cell** map) {
 
 }
 
-void Blinky::Move(**Cell, Vec2) {
+void Blinky::Move(Map::Cell** map, Vec2) {
 
 }
 

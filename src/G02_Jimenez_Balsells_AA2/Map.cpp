@@ -1,4 +1,3 @@
-#pragma onece
 #include "Map.h"
 
 Map::Map() {

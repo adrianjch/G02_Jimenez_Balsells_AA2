@@ -6,6 +6,6 @@ private:
 
 public:
 	Ranking();
-	void Update();
+	void Update(const Input &);
 	void Draw();
 };

@@ -7,6 +7,6 @@ private:
 	clock_t timer;
 public:
 	SplashScreen();
-	void Update();
+	void Update(const Input &);
 	void Draw();
 };

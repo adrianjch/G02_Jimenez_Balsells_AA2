@@ -6,7 +6,7 @@ Renderer::Renderer()
 	if (SDL_Init(SDL_INIT_EVERYTHING) != 0) throw "No es pot inicialitzar SDL subsystems";
 
 	// --- WINDOW ---
-	m_window = SDL_CreateWindow("SDL...", SDL_WINDOWPOS_CENTERED, SDL_WINDOWPOS_CENTERED, SCREEN_WIDTH, SCREEN_HEIGHT, SDL_WINDOW_SHOWN );
+	m_window = SDL_CreateWindow("SDL...", SDL_WINDOWPOS_CENTERED, SDL_WINDOWPOS_CENTERED, SCREEN_WIDTH, SCREEN_HEIGHT, SDL_WINDOW_SHOWN);
 	if (m_window == nullptr) throw "No es pot inicialitzar SDL_Window";
 
 	// --- RENDERER ---
@@ -58,28 +58,28 @@ void Renderer::LoadTexture(const std::string &id, const std::string &path) {
 };
 
 void Renderer::LoadTextureText(const std::string &fontId, Text text) {
-	SDL_Surface	*tmpSurf = TTF_RenderText_Blended(m_fontData[fontId], text.text.c_str(), SDL_Color{ text.color.r, text.color.g, text.color.b,text.color.a });
+	SDL_Surface	*tmpSurf = TTF_RenderText_Blended(m_fontData[fontId], text.text.c_str(), SDL_Color{ static_cast<Uint8>(text.color.r), static_cast<Uint8>(text.color.g), static_cast<Uint8>(text.color.b), static_cast<Uint8>(text.color.a) });
 	if (tmpSurf == nullptr) throw "Unable to create the SDL text surface";
 	SDL_Texture *texture{ SDL_CreateTextureFromSurface(m_renderer, tmpSurf) };
 	m_textureData[text.id] = texture;
-	
+
 };
 
-Vector2 Renderer::GetTextureSize(const std::string &id) {
+Vec2 Renderer::GetTextureSize(const std::string &id) {
 	int w; int h;
-	SDL_QueryTexture(m_textureData[id], NULL, NULL,&w, &h);
-	return {w, h};
+	SDL_QueryTexture(m_textureData[id], NULL, NULL, &w, &h);
+	return { w, h };
 };
 
 void Renderer::PushImage(const std::string &id, const SDL_Rect &rect) {
 	SDL_RenderCopy(m_renderer, m_textureData[id], nullptr, &rect);
 };
 
-void Renderer::PushSprite(const std::string &id, const SDL_Rect &rectSprite,const SDL_Rect &rectPos) {
+void Renderer::PushSprite(const std::string &id, const SDL_Rect &rectSprite, const SDL_Rect &rectPos) {
 	SDL_RenderCopy(m_renderer, m_textureData[id], &rectSprite, &rectPos);
 }
 
-void Renderer::PushRotatedSprite(const std::string & id, const SDL_Rect & rectSprite, const SDL_Rect & rectPos, float angle){
+void Renderer::PushRotatedSprite(const std::string & id, const SDL_Rect & rectSprite, const SDL_Rect & rectPos, float angle) {
 	SDL_Point center = { rectPos.w / 2, rectPos.h / 2 };
 	SDL_RenderCopyEx(m_renderer, m_textureData[id], &rectSprite, &rectPos, angle, &center, SDL_FLIP_NONE);
 }

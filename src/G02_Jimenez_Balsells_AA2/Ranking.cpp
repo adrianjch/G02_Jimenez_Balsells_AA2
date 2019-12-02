@@ -4,7 +4,7 @@ Ranking::Ranking() {
 	state = SceneState::RUNNING;
 }
 
-void Ranking::Update() {
+void Ranking::Update(const Input &input) {
 
 }
 

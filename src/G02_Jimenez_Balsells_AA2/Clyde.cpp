@@ -5,11 +5,11 @@ Clyde::Clyde() {
 
 }
 
-void Clyde::Update(**Cell) {
+void Clyde::Update(Map::Cell** map) {
 
 }
 
-void Clyde::Move(**Cell, Vec2) {
+void Clyde::Move(Map::Cell** map, Vec2) {
 
 }
 

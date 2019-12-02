@@ -37,14 +37,15 @@ void Player::SetLives(int _lives) {
 	lives = _lives;
 }
 
-void Player::SetEmpowered(bool _isEmpowered) {
-	isEmpowered = _isEmpowered;
+void Player::SetEmpowered(bool empowered) {
+	isEmpowered = empowered;
+}
 
-void Player::Update(**Cell) {
+void Player::Update(const Input &input, Map::Cell** map) {
 
 }
 
-void Player::Move(**Cell, Vec2) {
+void Player::Move(Map::Cell** map, Vec2) {
 
 }
 

@@ -5,11 +5,11 @@ Inky::Inky() {
 
 }
 
-void Inky::Update(**Cell) {
+void Inky::Update(Map::Cell** map) {
 
 }
 
-void Inky::Move(**Cell, Vec2) {
+void Inky::Move(Map::Cell** map, Vec2) {
 
 }
 
