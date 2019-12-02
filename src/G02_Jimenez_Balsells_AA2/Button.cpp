@@ -26,10 +26,10 @@ void Button::Update(const Input &input) {
 
 void Button::Draw() {
 	if (hover) {
-		renderer->PushImage(hoverID, SDL_Rect({ pos.x, pos.y, renderer->GetTextureSize(hoverID).x, renderer->GetTextureSize(hoverID).y }));
+		renderer->PushImage(hoverID, { pos.x, pos.y, renderer->GetTextureSize(hoverID).x, renderer->GetTextureSize(hoverID).y });
 	}
 	else {
-		renderer->PushImage(normalID, SDL_Rect({ pos.x, pos.y, renderer->GetTextureSize(normalID).x, renderer->GetTextureSize(normalID).y }));
+		renderer->PushImage(normalID, { pos.x, pos.y, renderer->GetTextureSize(normalID).x, renderer->GetTextureSize(normalID).y });
 	}
 }
 
