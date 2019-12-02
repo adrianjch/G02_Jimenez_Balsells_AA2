@@ -13,6 +13,10 @@ bool Button::CheckIfHover(Vec2 pos) {
 	return false;
 }
 
+bool Button::IsClicked() {
+	return clicked;
+}
+
 void Button::Update(const Input &input) {
 	hover = CheckIfHover(input.mouse);
 	if (hover) {

@@ -12,6 +12,7 @@ private:
 public:
 	Button(std::string, std::string, Vec2);
 	bool CheckIfHover(Vec2);
+	bool IsClicked();
 	void Update(const Input &);
 	void Draw();
 };
