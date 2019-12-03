@@ -15,6 +15,10 @@ void InputManager::ReadInput() {
 		switch (event.type) {
 			case SDL_KEYDOWN:
 				switch (event.key.keysym.sym) {
+					case SDLK_p:
+						input.keyDown[Input::Key::P] = true;
+						input.key[Input::Key::P] = true;
+						break;
 					case SDLK_w:
 						input.keyDown[Input::Key::W] = true;
 						input.key[Input::Key::W] = true;
@@ -59,6 +63,10 @@ void InputManager::ReadInput() {
 				break;
 			case SDL_KEYUP:
 				switch (event.key.keysym.sym) {
+					case SDLK_p:
+						input.keyUp[Input::Key::P] = true;
+						input.key[Input::Key::P] = false;
+					break;
 					case SDLK_w:
 						input.keyUp[Input::Key::W] = true;
 						input.key[Input::Key::W] = false;

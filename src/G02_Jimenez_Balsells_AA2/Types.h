@@ -50,7 +50,7 @@ struct Vec2 {
 };
 
 struct Input {
-	enum class Key { W, A, S, D, LEFT, RIGHT, UP, DOWN, SPACE, ESCAPE, LEFT_CLICK, RIGHT_CLICK, COUNTER };
+	enum class Key { W, A, S, D, P, LEFT, RIGHT, UP, DOWN, SPACE, ESCAPE, LEFT_CLICK, RIGHT_CLICK, COUNTER };
 
 	Input() {
 		for (int i = 0; i < static_cast<int>(Key::COUNTER); i++) {
