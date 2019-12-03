@@ -4,7 +4,7 @@
 		<Player x="10" y="8"/>
 		<Blinky x="10" y="5"/>
 		<Inky x="11" y="11"/>
-		<Clyke x="11" y="14"/>
+		<Clyde x="11" y="14"/>
 		<PowerUps num="4">
 			<Power x="2" y="5"/>
 			<Power x="19" y="5"/>

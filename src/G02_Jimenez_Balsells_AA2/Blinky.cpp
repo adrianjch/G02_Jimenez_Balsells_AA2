@@ -13,7 +13,6 @@ void Blinky::Move(Map::Cell** map, Vec2) {
 
 }
 
-void Blinky::Draw(std::string) {
-
-
+void Blinky::Draw() {
+	renderer->PushSprite("spritesheet", { 0, 128, 128, 128 }, { pixelPos.x, pixelPos.y, 35, 35 });
 }

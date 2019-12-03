@@ -7,5 +7,5 @@ public:
 	Inky();
 	void Update(Map::Cell** map);
 	void Move(Map::Cell** map, Vec2);
-	void Draw(std::string);
+	void Draw();
 };

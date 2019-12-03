@@ -21,7 +21,7 @@ void Fruit::Update() {
 
 }
 
-void Fruit::Draw(std::string) {
+void Fruit::Draw() {
 
 
 }

@@ -14,5 +14,5 @@ public:
 	FruitType GetType();
 	void SetInitialPos(Vec2);
 	void Update();
-	void Draw(std::string);
+	void Draw();
 };

@@ -2,7 +2,11 @@
 #include "Enemy.h"
 
 Enemy::Enemy() {
+	renderer = renderer->Instance();
+}
 
+Vec2 Enemy::GetInitialPos() {
+	return initialPos;
 }
 
 Vec2 Enemy::GetPixelPos() {
@@ -15,6 +19,8 @@ Vec2 Enemy::GetMapPos() {
 
 void Enemy::SetInitialPos(Vec2 _initialPos) {
 	initialPos = _initialPos;
+	cellPos = initialPos;
+	pixelPos = { cellPos.x*35, cellPos.y*35 };
 }
 
 void Enemy::Dead() {

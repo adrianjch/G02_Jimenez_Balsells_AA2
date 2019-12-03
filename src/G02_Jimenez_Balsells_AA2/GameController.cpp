@@ -11,6 +11,7 @@ GameController::GameController() {
 	renderer = Renderer::Instance();
 	renderer->LoadFont({"buttons", "../../res/ttf/PAC-FONT.TTF", 60});
 	renderer->LoadFont({ "splashScreenText", "../../res/ttf/PAC-FONT.TTF", 100 });
+	renderer->LoadFont({ "hud", "../../res/ttf/Gameplay.ttf", 60 });
 
 	// Loading splashScreen text
 	renderer->LoadTextureText("splashScreenText", { "title", "pacman", {255,255,0,255}, 200, 600 });
@@ -30,8 +31,10 @@ GameController::GameController() {
 	renderer->LoadTextureText("buttons", { "menu hover", "menu", {255,0,0,255}, 200, 600 });
 
 	// Loading Game Text
-	renderer->LoadTextureText("buttons", { "press to play", "Press Start To Play", {255,0 ,0 ,255}, 200, 600 });
+	renderer->LoadTextureText("buttons", { "press to play", "PrEsS sPaCe To StArT", {255,0 ,0 ,255}, 200, 600 });
 
+	// Loading Spritesheet
+	renderer->LoadTexture("spritesheet", "../../res/img/PacManSpritesheet.png");
 }
 
 void GameController::Play() {
@@ -110,6 +113,6 @@ void GameController::Play() {
 				break;
 		}
 		//FRAME CONTROLLER
-		// Sleep(1000);
+		Sleep(17);
 	}
 }

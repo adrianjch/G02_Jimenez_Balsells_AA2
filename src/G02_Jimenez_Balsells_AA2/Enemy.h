@@ -1,5 +1,6 @@
 #pragma once
 #include "Types.h"
+#include "Renderer.h"
 #include <string>
 #include <ctime>
 
@@ -12,9 +13,10 @@ protected:
 	Vec2 initialPos;
 	EnemyState state;
 	clock_t deadTimer;
-
+	Renderer *renderer;
 public:
 	Enemy();
+	Vec2 GetInitialPos();
 	Vec2 GetPixelPos();
 	Vec2 GetMapPos();
 	void SetInitialPos(Vec2);

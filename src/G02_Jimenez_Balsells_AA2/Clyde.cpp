@@ -13,6 +13,6 @@ void Clyde::Move(Map::Cell** map, Vec2) {
 
 }
 
-void Clyde::Draw(std::string) {
-
+void Clyde::Draw() {
+	renderer->PushSprite("spritesheet", { 0, 384, 128, 128 }, { pixelPos.x, pixelPos.y, 35, 35 });
 }
