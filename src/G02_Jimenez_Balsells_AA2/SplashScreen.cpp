@@ -4,6 +4,7 @@
 SplashScreen::SplashScreen() {
 	state = SceneState::RUNNING;
 	timer = clock();
+	renderer = Renderer::Instance();
 }
 
 void SplashScreen::Update(const Input &input) {
@@ -12,13 +13,9 @@ void SplashScreen::Update(const Input &input) {
 }
 
 void SplashScreen::Draw() {
-	std::cout << "\n\n";
-	std::cout << " лллллллл     лллллл     лллллллл лл      лл   лллллл   ллл     лл\n";
-	std::cout << " лл      лл лл      лл лл         лллл  лллл лл      лл лллл    лл\n";
-	std::cout << " лл      лл лл      лл лл         лл  лл  лл лл      лл лл лл   лл\n";
-	std::cout << " лллллллл   лллллллллл лл         лл      лл лллллллллл лл  лл  лл\n";
-	std::cout << " лл         лл      лл лл         лл      лл лл      лл лл   лл лл\n";
-	std::cout << " лл         лл      лл лл         лл      лл лл      лл лл    лллл\n";
-	std::cout << " лл         лл      лл   лллллллл лл      лл лл      лл лл     ллл\n";
-	std::cout << "\n\n";
+	Vec2 size = renderer->GetTextureSize("title");
+
+	renderer->Clear();
+	renderer->PushImage("title", { SCREEN_WIDTH/2 - size.x/2, SCREEN_HEIGHT/2 - size.y/2, size.x, size.y });
+	renderer->Render();
 }

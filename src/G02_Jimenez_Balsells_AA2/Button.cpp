@@ -7,10 +7,11 @@ Button::Button(std::string id1, std::string id2, Vec2 p) {
 	pos = p;
 	normalID = id1;
 	hoverID = id2;
+	size = renderer->GetTextureSize(normalID);
 }
 
-bool Button::CheckIfHover(Vec2 pos) {
-	return false;
+bool Button::CheckIfHover(Vec2 mousePos) {
+	return (mousePos.x > pos.x && mousePos.x < (pos.x + size.x) && mousePos.y < (pos.y + size.y) && mousePos.y > pos.y);
 }
 
 bool Button::IsClicked() {
@@ -26,10 +27,10 @@ void Button::Update(const Input &input) {
 
 void Button::Draw() {
 	if (hover) {
-		renderer->PushImage(hoverID, { pos.x, pos.y, renderer->GetTextureSize(hoverID).x, renderer->GetTextureSize(hoverID).y });
+		renderer->PushImage(hoverID, { pos.x, pos.y, size.x, size.y });
 	}
 	else {
-		renderer->PushImage(normalID, { pos.x, pos.y, renderer->GetTextureSize(normalID).x, renderer->GetTextureSize(normalID).y });
+		renderer->PushImage(normalID, { pos.x, pos.y, size.x, size.y });
 	}
 }
 

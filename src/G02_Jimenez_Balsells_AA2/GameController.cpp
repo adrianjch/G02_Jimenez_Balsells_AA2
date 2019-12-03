@@ -9,8 +9,20 @@ GameController::GameController() {
 	scene = new SplashScreen();
 	gameState = GameState::SPLASH_SCREEN;
 	renderer = Renderer::Instance();
-	renderer->LoadFont({"buttons", "../../res/ttf/PAC-FONT.TTF", 72});
-	renderer->LoadTextureText("buttons", { "play normal", "PLAY", {255,0,0,255}, 500, 200 });
+	renderer->LoadFont({"buttons", "../../res/ttf/PAC-FONT.TTF", 60});
+	renderer->LoadFont({ "splashScreenText", "../../res/ttf/PAC-FONT.TTF", 100 });
+
+	renderer->LoadTextureText("splashScreenText", { "title", "pacman", {255,255,0,255}, 200, 600 });
+
+	renderer->LoadTextureText("buttons", { "play normal", "PLAY", {255,0,0,255}, 200, 600 });
+	renderer->LoadTextureText("buttons", { "play hover", "play", {255,0,0,255}, 200, 600 });
+	renderer->LoadTextureText("buttons", { "ranking normal", "RANKING", {255,0,0,255}, 200, 600 });
+	renderer->LoadTextureText("buttons", { "ranking hover", "ranking", {255,0,0,255}, 200, 600 });
+	renderer->LoadTextureText("buttons", { "sound normal", "SOUND", {255,0,0,255}, 200, 600 });
+	renderer->LoadTextureText("buttons", { "sound hover", "sound", {255,0,0,255}, 200, 600 });
+	renderer->LoadTextureText("buttons", { "exit normal", "EXIT", {255,0,0,255}, 200, 600 });
+	renderer->LoadTextureText("buttons", { "exit hover", "exit", {255,0,0,255}, 200, 600 });
+
 }
 
 void GameController::Play() {
@@ -53,6 +65,20 @@ void GameController::Play() {
 				}
 				break;
 			case GameController::GameState::GAME:
+				if (scene->GetState() == Scene::SceneState::START_GAME) {
+					scene->Update(inputManager.GetInput());
+					scene->Draw();
+				}
+				else if (scene->GetState() == Scene::SceneState::RUNNING) {
+					scene->Update(inputManager.GetInput());
+					scene->Draw();
+				}
+				else if (scene->GetState() == Scene::SceneState::GAME_OVER) {
+
+				}
+				else if (scene->GetState() == Scene::SceneState::RANKING_STATE) {
+
+				}
 				break;
 			case GameController::GameState::RANKING:
 				if (scene->GetState() == Scene::SceneState::RUNNING) {
@@ -67,6 +93,6 @@ void GameController::Play() {
 				break;
 		}
 		//FRAME CONTROLLER
-		Sleep(1000);
+		// Sleep(1000);
 	}
 }

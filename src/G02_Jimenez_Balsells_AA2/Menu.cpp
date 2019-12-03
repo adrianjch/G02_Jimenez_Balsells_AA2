@@ -6,11 +6,11 @@ Menu::Menu() {
 }
 
 void Menu::Update(const Input &input) {
-	std::cout << "menu";
 	play.Update(input);
 	ranking.Update(input);
 	sound.Update(input);
 	exit.Update(input);
+
 	if (play.IsClicked())
 		state = SceneState::PLAY_STATE;
 	else if (ranking.IsClicked())

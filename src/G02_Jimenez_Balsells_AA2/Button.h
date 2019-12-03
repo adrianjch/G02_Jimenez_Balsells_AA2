@@ -7,6 +7,7 @@ private:
 	bool clicked;
 	bool hover;
 	Vec2 pos;
+	Vec2 size;
 	std::string normalID, hoverID;
 	Renderer* renderer;
 public:
