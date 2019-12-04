@@ -65,12 +65,12 @@ void Player::Update(const Input &input, Map &map) {
 					actualMovement = Movement::DOWN;
 					break;
 				case Movement::LEFT:
-					if (cellPos.y * 35 == pixelPos.y) {
+					if (pixelPos.y % 35 == 0) {
 						actualMovement = Movement::LEFT;
 					}
 					break;
 				case Movement::RIGHT:
-					if (cellPos.y * 35 == pixelPos.y) {
+					if (pixelPos.y % 35 == 0) {
 						actualMovement = Movement::RIGHT;
 					}
 					break;
@@ -82,12 +82,12 @@ void Player::Update(const Input &input, Map &map) {
 					actualMovement = Movement::UP;
 					break;
 				case Movement::LEFT:
-					if (cellPos.y * 35 == pixelPos.y) {
+					if (pixelPos.y % 35 == 0) {
 						actualMovement = Movement::LEFT;
 					}
 					break;
 				case Movement::RIGHT:
-					if (cellPos.y * 35 == pixelPos.y) {
+					if (pixelPos.y % 35 == 0) {
 						actualMovement = Movement::RIGHT;
 					}
 					break;
@@ -96,12 +96,12 @@ void Player::Update(const Input &input, Map &map) {
 		case Movement::LEFT:
 			switch (futureMovement) {
 				case Movement::UP:
-					if (cellPos.x * 35 == pixelPos.x) {
+					if (pixelPos.x % 35 == 0) {
 						actualMovement = Movement::UP;
 					}
 					break;
 				case Movement::DOWN:
-					if (cellPos.x * 35 == pixelPos.x) {
+					if (pixelPos.x % 35 == 0) {
 						actualMovement = Movement::DOWN;
 					}
 					break;
@@ -113,12 +113,12 @@ void Player::Update(const Input &input, Map &map) {
 		case Movement::RIGHT:
 			switch (futureMovement) {
 				case Movement::UP:
-					if (cellPos.x * 35 == pixelPos.x) {
-						actualMovement = Movement::RIGHT;
+					if (pixelPos.x % 35 == 0) {
+						actualMovement = Movement::UP;
 					}
 					break;
 				case Movement::DOWN:
-					if (cellPos.x * 35 == pixelPos.x) {
+					if (pixelPos.x % 35 == 0) {
 						actualMovement = Movement::DOWN;
 					}
 					break;
@@ -131,30 +131,23 @@ void Player::Update(const Input &input, Map &map) {
 
 	switch (actualMovement) {
 		case Movement::UP:
-			if (map.GetCell({cellPos.x, cellPos.y - 1}) != Map::Cell::WALL)
+			if (map.GetCell({pixelPos.x / 35, (pixelPos.y-1) / 35}) != Map::Cell::WALL)
 				pixelPos.y -= 1;
 			break;
 		case Movement::DOWN:
-			if (map.GetCell({ cellPos.x, cellPos.y + 1 }) != Map::Cell::WALL)
+			if (map.GetCell({pixelPos.x / 35, (pixelPos.y+35) / 35}) != Map::Cell::WALL)
 				pixelPos.y += 1;
 			break;
 		case Movement::LEFT:
-			if (map.GetCell({ cellPos.x - 1, cellPos.y }) != Map::Cell::WALL)
+			if (map.GetCell({(pixelPos.x-1) / 35, pixelPos.y / 35}) != Map::Cell::WALL)
 				pixelPos.x -= 1;
 			break;
 		case Movement::RIGHT:
-			if (map.GetCell({ cellPos.x + 1, cellPos.y }) != Map::Cell::WALL)
+			if (map.GetCell({(pixelPos.x+35) / 35, pixelPos.y / 35}) != Map::Cell::WALL)
 				pixelPos.x += 1;
 			break;
-		case Movement::STOP:
-			break;
 	}
-
-	//if (cellPos.x  != pixelPos.x/35 || cellPos.y != pixelPos.y/35) {
-		cellPos.x = static_cast<int>(pixelPos.x+1 / 35);
-		cellPos.y = static_cast<int>(pixelPos.y+1 / 35);
 		std::cout << cellPos.x << "," << cellPos.y << "  " << pixelPos.x << "," << pixelPos.y << (int)actualMovement << (int)futureMovement << std::endl;
-	//}
 }
 
 void Player::Move(Map::Cell** map, Vec2) {
