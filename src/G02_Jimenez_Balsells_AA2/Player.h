@@ -7,7 +7,7 @@
 
 class Player {
 private:
-	enum class Movement { UP, DOWN, LEFT, RIGHT };
+	enum class Movement { UP, DOWN, LEFT, RIGHT , STOP};
 	Vec2 pixelPos;
 	Vec2 cellPos;
 	Vec2 initialPos;

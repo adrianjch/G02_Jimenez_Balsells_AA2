@@ -68,6 +68,7 @@ void Game::Update(const Input &input) {
 		if (input.key.at(Input::Key::P)) {
 			state = SceneState::PAUSE;
 		}
+		player.Update(input, map);
 		break;
 	case SceneState::GAME_OVER:
 		state = SceneState::RANKING_STATE;
