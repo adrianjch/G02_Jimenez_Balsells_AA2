@@ -7,7 +7,6 @@
 
 class Player {
 private:
-	enum class Movement { UP, DOWN, LEFT, RIGHT , STOP};
 	Vec2 pixelPos;
 	Vec2 cellPos;
 	Vec2 initialPos;
@@ -20,18 +19,18 @@ private:
 	Renderer* renderer;
 public:
 	Player();
-	Vec2 GetInitialPos();
-	Vec2 GetPixelPos();
-	Vec2 GetMapPos();
-	int GetScore();
-	int GetLives();
-	bool IsEmpowered();
-	void SetInitialPos(Vec2);
-	void SetScore(int);
-	void SetLives(int);
-	void SetEmpowered(bool);
-	void Update(const Input &, Map&);
-	void Move(Map::Cell**, Vec2);
-	void Draw();
-	void Dead();
+	Vec2 GetInitialPos() const;
+	Vec2 GetPixelPos() const;
+	Vec2 GetMapPos() const;
+	int GetScore() const;
+	int GetLives() const;
+	bool IsEmpowered() const;
+	void SetInitialPos(const Vec2 &);
+	void SetScore(const int &);
+	void SetLives(const int &);
+	void SetEmpowered(const bool &);
+	void Update(const Input &, Map &);//
+	void Move(Map &);//
+	void Draw() const;
+	void Dead();//
 };

@@ -69,6 +69,8 @@ void Game::Update(const Input &input) {
 			state = SceneState::PAUSE;
 		}
 		player.Update(input, map);
+		inky.Update(input, map);
+		clyde.Update(input, map);
 		break;
 	case SceneState::GAME_OVER:
 		state = SceneState::RANKING_STATE;

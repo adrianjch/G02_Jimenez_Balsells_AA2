@@ -67,3 +67,5 @@ struct Input {
 	std::unordered_map<Key, bool> key;
 	Vec2 mouse;
 };
+
+enum class Movement { UP, DOWN, LEFT, RIGHT };
