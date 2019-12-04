@@ -4,6 +4,10 @@
 Player::Player() {
 	renderer = renderer->Instance();
 	actualMovement = futureMovement = Movement::LEFT;
+	spriteNumber = 6;
+	frameCounter = 0;
+	score = 0;
+	lives = 3;
 }
 
 Vec2 Player::GetInitialPos() const{
@@ -33,11 +37,14 @@ bool Player::IsEmpowered() const{
 void Player::SetInitialPos(const Vec2 &_initialPos) {
 	initialPos = _initialPos;
 	cellPos = initialPos;
-	pixelPos = { cellPos.x*35, cellPos.y*35 };
+	pixelPos = { cellPos.x*CELL_SIZE, cellPos.y*CELL_SIZE };
 }
 
 void Player::SetScore(const int &_score) {
-	score = _score;
+	if (_score > 9999)
+		score = 9999;
+	else
+		score = _score;
 }
 
 void Player::SetLives(const int &_lives) {
@@ -60,6 +67,21 @@ void Player::Update(const Input &input, Map &map) {
 
 	Move(map);
 
+	if (map.GetCell({ pixelPos.x / CELL_SIZE, pixelPos.y / CELL_SIZE }) == Map::Cell::POINT) {
+		if ((actualMovement == Movement::LEFT || actualMovement == Movement::RIGHT) && (pixelPos.x % CELL_SIZE == 0)) {
+			map.SetCell({ pixelPos.x / CELL_SIZE, pixelPos.y / CELL_SIZE }, Map::Cell::NONE);
+			SetScore(score + 1);
+			map.SetCoinCounter(map.GetCoinCounter() - 1);
+		}
+		else if ((actualMovement == Movement::UP || actualMovement == Movement::DOWN) && (pixelPos.y % CELL_SIZE == 0)) {
+			map.SetCell({ pixelPos.x / CELL_SIZE, pixelPos.y / CELL_SIZE }, Map::Cell::NONE);
+			SetScore(score + 1);
+			map.SetCoinCounter(map.GetCoinCounter() - 1);
+		}
+	}
+
+	frameCounter++;
+	
 	std::cout << cellPos.x << "," << cellPos.y << "  " << pixelPos.x << "," << pixelPos.y << (int)actualMovement << (int)futureMovement << std::endl;
 }
 
@@ -71,12 +93,12 @@ void Player::Move(Map &map) {
 			actualMovement = Movement::DOWN;
 			break;
 		case Movement::LEFT:
-			if (pixelPos.y % 35 == 0 && map.GetCell({ ((700 + pixelPos.x - 1) % 700) / 35, pixelPos.y / 35 }) != Map::Cell::WALL) {
+			if (pixelPos.y % CELL_SIZE == 0 && map.GetCell({ ((700 + pixelPos.x - 1) % 700) / CELL_SIZE, pixelPos.y / CELL_SIZE }) != Map::Cell::WALL) {
 				actualMovement = Movement::LEFT;
 			}
 			break;
 		case Movement::RIGHT:
-			if (pixelPos.y % 35 == 0 && map.GetCell({ (pixelPos.x + 35 % 700) / 35, pixelPos.y / 35 }) != Map::Cell::WALL) {
+			if (pixelPos.y % CELL_SIZE == 0 && map.GetCell({ ((pixelPos.x + CELL_SIZE) % 700) / CELL_SIZE, pixelPos.y / CELL_SIZE }) != Map::Cell::WALL) {
 				actualMovement = Movement::RIGHT;
 			}
 			break;
@@ -88,12 +110,12 @@ void Player::Move(Map &map) {
 			actualMovement = Movement::UP;
 			break;
 		case Movement::LEFT:
-			if (pixelPos.y % 35 == 0 && map.GetCell({ ((700 + pixelPos.x - 1) % 700) / 35, pixelPos.y / 35 }) != Map::Cell::WALL) {
+			if (pixelPos.y % CELL_SIZE == 0 && map.GetCell({ ((700 + pixelPos.x - 1) % 700) / CELL_SIZE, pixelPos.y / CELL_SIZE }) != Map::Cell::WALL) {
 				actualMovement = Movement::LEFT;
 			}
 			break;
 		case Movement::RIGHT:
-			if (pixelPos.y % 35 == 0 && map.GetCell({ (pixelPos.x + 35 % 700) / 35, pixelPos.y / 35 }) != Map::Cell::WALL) {
+			if (pixelPos.y % CELL_SIZE == 0 && map.GetCell({ ((pixelPos.x + CELL_SIZE) % 700) / CELL_SIZE, pixelPos.y / CELL_SIZE }) != Map::Cell::WALL) {
 				actualMovement = Movement::RIGHT;
 			}
 			break;
@@ -102,12 +124,12 @@ void Player::Move(Map &map) {
 	case Movement::LEFT:
 		switch (futureMovement) {
 		case Movement::UP:
-			if (pixelPos.x % 35 == 0 && map.GetCell({ pixelPos.x / 35, ((700 + pixelPos.y - 1) % 700) / 35 }) != Map::Cell::WALL) {
+			if (pixelPos.x % CELL_SIZE == 0 && map.GetCell({ pixelPos.x / CELL_SIZE, ((700 + pixelPos.y - 1) % 700) / CELL_SIZE }) != Map::Cell::WALL) {
 				actualMovement = Movement::UP;
 			}
 			break;
 		case Movement::DOWN:
-			if (pixelPos.x % 35 == 0 && map.GetCell({ pixelPos.x / 35, (pixelPos.y + 35 % 700) / 35 }) != Map::Cell::WALL) {
+			if (pixelPos.x % CELL_SIZE == 0 && map.GetCell({ pixelPos.x / CELL_SIZE, ((pixelPos.y + CELL_SIZE) % 700) / CELL_SIZE }) != Map::Cell::WALL) {
 				actualMovement = Movement::DOWN;
 			}
 			break;
@@ -119,12 +141,12 @@ void Player::Move(Map &map) {
 	case Movement::RIGHT:
 		switch (futureMovement) {
 		case Movement::UP:
-			if (pixelPos.x % 35 == 0 && map.GetCell({ pixelPos.x / 35, ((700 + pixelPos.y - 1) % 700) / 35 }) != Map::Cell::WALL) {
+			if (pixelPos.x % CELL_SIZE == 0 && map.GetCell({ pixelPos.x / CELL_SIZE, ((700 + pixelPos.y - 1) % 700) / CELL_SIZE }) != Map::Cell::WALL) {
 				actualMovement = Movement::UP;
 			}
 			break;
 		case Movement::DOWN:
-			if (pixelPos.x % 35 == 0 && map.GetCell({ pixelPos.x / 35, (pixelPos.y + 35 % 700) / 35 }) != Map::Cell::WALL) {
+			if (pixelPos.x % CELL_SIZE == 0 && map.GetCell({ pixelPos.x / CELL_SIZE, ((pixelPos.y + CELL_SIZE) % 700) / CELL_SIZE }) != Map::Cell::WALL) {
 				actualMovement = Movement::DOWN;
 			}
 			break;
@@ -137,29 +159,68 @@ void Player::Move(Map &map) {
 
 	switch (actualMovement) {
 	case Movement::UP:
-		if (map.GetCell({ pixelPos.x / 35, ((700 + pixelPos.y - 1) % 700) / 35 }) != Map::Cell::WALL)
+		if (map.GetCell({ pixelPos.x / CELL_SIZE, ((700 + pixelPos.y - 1) % 700) / CELL_SIZE }) != Map::Cell::WALL) {
 			pixelPos.y -= 1;
+			if (frameCounter >= MAX_FRAME) {
+				if (spriteNumber == 0)
+					spriteNumber = 1;
+				else
+					spriteNumber = 0;
+				frameCounter = 0;
+			}
+		}
 		break;
 	case Movement::DOWN:
-		if (map.GetCell({ pixelPos.x / 35, (pixelPos.y + 35 % 700) / 35 }) != Map::Cell::WALL)
+		if (map.GetCell({ pixelPos.x / CELL_SIZE, ((pixelPos.y + CELL_SIZE) % 700) / CELL_SIZE }) != Map::Cell::WALL) {
 			pixelPos.y += 1;
+			if (frameCounter >= MAX_FRAME) {
+				if (spriteNumber == 2)
+					spriteNumber = 3;
+				else
+					spriteNumber = 2;
+				frameCounter = 0;
+			}
+		}
 		break;
 	case Movement::LEFT:
-		if (map.GetCell({ ((700 + pixelPos.x - 1) % 700) / 35, pixelPos.y / 35 }) != Map::Cell::WALL)
+		if (map.GetCell({ ((700 + pixelPos.x - 1) % 700) / CELL_SIZE, pixelPos.y / CELL_SIZE }) != Map::Cell::WALL) {
 			pixelPos.x -= 1;
+			if (frameCounter >= MAX_FRAME) {
+				if (spriteNumber == 6)
+					spriteNumber = 7;
+				else
+					spriteNumber = 6;
+				frameCounter = 0;
+			}
+		}
 		break;
 	case Movement::RIGHT:
-		if (map.GetCell({ (pixelPos.x + 35 % 700) / 35, pixelPos.y / 35 }) != Map::Cell::WALL)
+		if (map.GetCell({ ((pixelPos.x + CELL_SIZE) % 700) / CELL_SIZE, pixelPos.y / CELL_SIZE }) != Map::Cell::WALL) {
 			pixelPos.x += 1;
+			if (frameCounter >= MAX_FRAME) {
+				if (spriteNumber == 4)
+					spriteNumber = 5;
+				else
+					spriteNumber = 4;
+				frameCounter = 0;
+			}
+		}
 		break;
 	}
 
-	pixelPos.x = (665 + pixelPos.x) % 665;
-	pixelPos.y = (665 + pixelPos.y) % 665;
+	if (pixelPos.x <= -CELL_SIZE)
+		pixelPos.x = 699;
+	else if (pixelPos.x >= 700)
+		pixelPos.x = -CELL_SIZE + 1;
+
+	if (pixelPos.y <= -CELL_SIZE)
+		pixelPos.y = 699;
+	else if (pixelPos.y >= 700)
+		pixelPos.y = -CELL_SIZE + 1;
 }
 
 void Player::Draw() const{
-	renderer->PushSprite("spritesheet", { 640, 0, 128, 128 }, { pixelPos.x, pixelPos.y, 35, 35 });
+	renderer->PushSprite("spritesheet", { spriteNumber*128, 0, 128, 128 }, { pixelPos.x, pixelPos.y, CELL_SIZE, CELL_SIZE });
 }
 
 void Player::Dead() {

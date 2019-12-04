@@ -17,6 +17,9 @@ private:
 	Movement futureMovement;
 	clock_t empoweredTimer;
 	Renderer* renderer;
+	int spriteNumber;
+	int frameCounter;
+	const int MAX_FRAME = 5;
 public:
 	Player();
 	Vec2 GetInitialPos() const;

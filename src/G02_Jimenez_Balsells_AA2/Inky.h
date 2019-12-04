@@ -7,6 +7,9 @@ class Inky : public Enemy {
 private:
 	Movement actualMovement;
 	Movement futureMovement;
+	int spriteNumber;
+	int frameCounter;
+	const int MAX_FRAME = 5;
 public:
 	Inky();
 	void Update(const Input &, Map&);

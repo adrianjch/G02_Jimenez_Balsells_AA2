@@ -13,10 +13,14 @@ private:
 	int numRows;
 	clock_t fruitTimer;
 	Renderer *renderer;
+	int coinCounter;
 public:
 	Map();
 	Cell GetCell(Vec2);
 	void SetSize(Vec2);
+	Vec2 GetSize();
+	int GetCoinCounter();
+	void SetCoinCounter(int);
 	void SetCell(Vec2, Cell);
 	void Update();
 	void Draw();

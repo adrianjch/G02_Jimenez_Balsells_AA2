@@ -20,6 +20,20 @@ void Map::SetSize(Vec2 pos) {
 	}
 }
 
+Vec2 Map::GetSize() {
+	return { numColumns, numRows };
+}
+
+int Map::GetCoinCounter() {
+	return coinCounter;
+}
+
+void Map::SetCoinCounter(int _coins) {
+	coinCounter = _coins;
+}
+
+
+
 void Map::SetCell(Vec2 pos, Cell type) {
 	map[pos.x][pos.y] = type;
 }

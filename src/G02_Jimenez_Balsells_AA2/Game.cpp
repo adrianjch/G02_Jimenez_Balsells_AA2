@@ -36,12 +36,15 @@ Game::Game() {
 		clyde.SetInitialPos({ std::stoi(pRoot->first_node("Positions")->first_node("Clyde")->first_attribute("x")->value()) - 1,
 							  std::stoi(pRoot->first_node("Positions")->first_node("Clyde")->first_attribute("y")->value()) - 1 });
 		// Set power ups positions
+		int counter = 0;
 		for (rapidxml::xml_node<> *pNode = pRoot->first_node("Positions")->first_node("PowerUps")->first_node("Power"); pNode; pNode = pNode->next_sibling()) {
 			map.SetCell({ std::stoi(pNode->first_attribute("x")->value()) - 1, std::stoi(pNode->first_attribute("y")->value()) - 1 }, Map::Cell::POWER_UP);
+			counter++;
 		}
 		// Set wall positions
 		for (rapidxml::xml_node<> *pNode = pRoot->first_node("Map")->first_node("Wall"); pNode; pNode = pNode->next_sibling()) {
 			map.SetCell({ std::stoi(pNode->first_attribute("x")->value()) - 1, std::stoi(pNode->first_attribute("y")->value()) - 1 }, Map::Cell::WALL);
+			counter++;
 		}
 
 		// Set "empty" cells
@@ -49,6 +52,8 @@ Game::Game() {
 		map.SetCell(blinky.GetInitialPos(), Map::Cell::NONE);
 		map.SetCell(inky.GetInitialPos(), Map::Cell::NONE);
 		map.SetCell(clyde.GetInitialPos(), Map::Cell::NONE);
+
+		map.SetCoinCounter(map.GetSize().x * map.GetSize().y - 4 - counter);
 
 		doc.clear();
 	}
@@ -71,6 +76,10 @@ void Game::Update(const Input &input) {
 		player.Update(input, map);
 		inky.Update(input, map);
 		clyde.Update(input, map);
+
+		if (map.GetCoinCounter() <= 0 || player.GetLives() <= 0)
+			state = SceneState::GAME_OVER;
+
 		break;
 	case SceneState::GAME_OVER:
 		state = SceneState::RANKING_STATE;

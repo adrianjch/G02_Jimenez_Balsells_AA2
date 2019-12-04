@@ -11,7 +11,7 @@ GameController::GameController() {
 	renderer = Renderer::Instance();
 	renderer->LoadFont({"buttons", "../../res/ttf/PAC-FONT.TTF", 60});
 	renderer->LoadFont({ "splashScreenText", "../../res/ttf/PAC-FONT.TTF", 100 });
-	renderer->LoadFont({ "hud", "../../res/ttf/Gameplay.ttf", 60 });
+	renderer->LoadFont({ "hud", "../../res/ttf/Gameplay.ttf", 40 });
 
 	// Loading splashScreen text
 	renderer->LoadTextureText("splashScreenText", { "title", "pacman", {255,255,0,255}, 200, 600 });
@@ -32,6 +32,17 @@ GameController::GameController() {
 
 	// Loading Game Text
 	renderer->LoadTextureText("buttons", { "press to play", "PrEsS sPaCe To StArT", {255,0 ,0 ,255}, 200, 600 });
+	renderer->LoadTextureText("hud", { "0", "0", {0,0 ,0 ,255}, 200, 600 });
+	renderer->LoadTextureText("hud", { "1", "1", {0,0 ,0 ,255}, 200, 600 });
+	renderer->LoadTextureText("hud", { "2", "2", {0,0 ,0 ,255}, 200, 600 });
+	renderer->LoadTextureText("hud", { "3", "3", {0,0 ,0 ,255}, 200, 600 });
+	renderer->LoadTextureText("hud", { "4", "4", {0,0 ,0 ,255}, 200, 600 });
+	renderer->LoadTextureText("hud", { "5", "5", {0,0 ,0 ,255}, 200, 600 });
+	renderer->LoadTextureText("hud", { "6", "6", {0,0 ,0 ,255}, 200, 600 });
+	renderer->LoadTextureText("hud", { "7", "7", {0,0 ,0 ,255}, 200, 600 });
+	renderer->LoadTextureText("hud", { "8", "8", {0,0 ,0 ,255}, 200, 600 });
+	renderer->LoadTextureText("hud", { "9", "9", {0,0 ,0 ,255}, 200, 600 });
+
 
 	// Loading Spritesheet
 	renderer->LoadTexture("spritesheet", "../../res/img/PacManSpritesheet.png");
