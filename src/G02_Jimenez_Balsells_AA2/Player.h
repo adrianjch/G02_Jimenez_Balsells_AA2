@@ -8,7 +8,6 @@
 class Player {
 private:
 	Vec2 pixelPos;
-	Vec2 cellPos;
 	Vec2 initialPos;
 	int score;
 	int lives;
@@ -23,7 +22,6 @@ public:
 	Player();
 	Vec2 GetInitialPos() const;
 	Vec2 GetPixelPos() const;
-	Vec2 GetMapPos() const;
 	int GetScore() const;
 	int GetLives() const;
 	bool IsEmpowered() const;

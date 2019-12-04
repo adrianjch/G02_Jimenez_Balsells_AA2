@@ -5,6 +5,7 @@
 #include "../../dep/inc/XML/rapidxml_iterators.hpp"
 #include "../../dep/inc/XML/rapidxml_print.hpp"
 #include <sstream>
+#include <cmath>
 
 Game::Game() {
 	state = SceneState::START_GAME;
@@ -20,10 +21,10 @@ Game::Game() {
 
 		rapidxml::xml_node<> *pRoot = doc.first_node();
 		// Set map size
-		map.SetSize({ std::stoi(pRoot->first_node("Positions")->first_attribute("x")->value()), 
+		map.SetSize({ std::stoi(pRoot->first_node("Positions")->first_attribute("x")->value()),
 					  std::stoi(pRoot->first_node("Positions")->first_attribute("y")->value()) });
 		// Set player position
-		player.SetInitialPos({ std::stoi(pRoot->first_node("Positions")->first_node("Player")->first_attribute("x")->value()) - 1, 
+		player.SetInitialPos({ std::stoi(pRoot->first_node("Positions")->first_node("Player")->first_attribute("x")->value()) - 1,
 							   std::stoi(pRoot->first_node("Positions")->first_node("Player")->first_attribute("y")->value()) - 1 });
 		// Set blinky position
 		blinky.SetInitialPos({ std::stoi(pRoot->first_node("Positions")->first_node("Blinky")->first_attribute("x")->value()) - 1,
@@ -47,10 +48,10 @@ Game::Game() {
 		}
 
 		// Set "empty" cells
-		map.SetCell(player.GetInitialPos(), Map::Cell::NONE);
-		map.SetCell(blinky.GetInitialPos(), Map::Cell::NONE);
-		map.SetCell(inky.GetInitialPos(), Map::Cell::NONE);
-		map.SetCell(clyde.GetInitialPos(), Map::Cell::NONE);
+		map.SetCell({player.GetInitialPos().x/CELL_SIZE,player.GetInitialPos().y / CELL_SIZE }, Map::Cell::NONE);
+		map.SetCell({ blinky.GetInitialPos().x / CELL_SIZE, blinky.GetInitialPos().y / CELL_SIZE }, Map::Cell::NONE);
+		map.SetCell({ inky.GetInitialPos().x / CELL_SIZE,inky.GetInitialPos().y / CELL_SIZE }, Map::Cell::NONE);
+		map.SetCell({ clyde.GetInitialPos().x / CELL_SIZE, clyde.GetInitialPos().y / CELL_SIZE }, Map::Cell::NONE);
 
 		map.SetCoinCounter(map.GetSize().x * map.GetSize().y - 4 - counter);
 
@@ -76,7 +77,22 @@ void Game::Update(const Input &input) {
 		inky.Update(input, map);
 		clyde.Update(input, map);
 
-		if (map.GetCoinCounter() <= 0 || player.GetLives() <= 0)
+		if (sqrt((pow(player.GetPixelPos().x - inky.GetPixelPos().x, 2) + pow(player.GetPixelPos().y - inky.GetPixelPos().y, 2))) < 25 ||
+			sqrt((pow(player.GetPixelPos().x - clyde.GetPixelPos().x, 2) + pow(player.GetPixelPos().y - clyde.GetPixelPos().y, 2))) < 25 ||
+			sqrt((pow(player.GetPixelPos().x - blinky.GetPixelPos().x, 2) + pow(player.GetPixelPos().y - blinky.GetPixelPos().y, 2))) < 25) {
+
+			player.Dead();
+			inky.SetPixelPos(inky.GetInitialPos());
+			clyde.SetPixelPos(clyde.GetInitialPos());
+			blinky.SetPixelPos(blinky.GetInitialPos());
+
+			if (player.GetLives() <= 0)
+				state = SceneState::GAME_OVER;
+			else
+				state = SceneState::START_GAME;
+		}
+
+		if (map.GetCoinCounter() <= 0)
 			state = SceneState::GAME_OVER;
 
 		break;
@@ -119,6 +135,14 @@ void Game::Draw() const{
 		case SceneState::GAME_OVER:
 			break;
 		case SceneState::PAUSE:
+			map.Draw();
+			blinky.Draw();
+			inky.Draw();
+			clyde.Draw();
+			fruit->Draw();
+			player.Draw();
+			hud.Draw(player);
+			Renderer::Instance()->PushSprite("spritesheet", { 0, 996, 128, 128 }, { 0, 0, SCREEN_WIDTH, SCREEN_HEIGHT });
 			sound.Draw();
 			break;
 	}

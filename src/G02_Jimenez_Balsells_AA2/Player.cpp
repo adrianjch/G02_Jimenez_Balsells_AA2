@@ -17,10 +17,6 @@ Vec2 Player::GetPixelPos() const{
 	return pixelPos;
 }
 
-Vec2 Player::GetMapPos() const{
-	return cellPos;
-}
-
 int Player::GetScore() const{
 	return score;
 }
@@ -34,9 +30,8 @@ bool Player::IsEmpowered() const{
 }
 
 void Player::SetInitialPos(const Vec2 &_initialPos) {
-	initialPos = _initialPos;
-	cellPos = initialPos;
-	pixelPos = { cellPos.x*CELL_SIZE, cellPos.y*CELL_SIZE };
+	initialPos = { _initialPos.x*CELL_SIZE, _initialPos.y*CELL_SIZE };
+	pixelPos = initialPos;
 }
 
 void Player::SetScore(const int &_score) {
@@ -79,9 +74,21 @@ void Player::Update(const Input &input, Map &map) {
 		}
 	}
 
+	if (map.GetCell({ pixelPos.x / CELL_SIZE, pixelPos.y / CELL_SIZE }) == Map::Cell::POWER_UP) {
+		if ((actualMovement == Movement::LEFT || actualMovement == Movement::RIGHT) && (pixelPos.x % CELL_SIZE == 10)) {
+			map.SetCell({ pixelPos.x / CELL_SIZE, pixelPos.y / CELL_SIZE }, Map::Cell::NONE);
+			// isEmpowered = true;
+			
+		}
+		else if ((actualMovement == Movement::UP || actualMovement == Movement::DOWN) && (pixelPos.y % CELL_SIZE == 10)) {
+			map.SetCell({ pixelPos.x / CELL_SIZE, pixelPos.y / CELL_SIZE }, Map::Cell::NONE);
+			// isEmpowered = true;
+		}
+	}
+
 	frameCounter++;
 	
-	std::cout << cellPos.x << "," << cellPos.y << "  " << pixelPos.x << "," << pixelPos.y << (int)actualMovement << (int)futureMovement << std::endl;
+	// std::cout << cellPos.x << "," << cellPos.y << "  " << pixelPos.x << "," << pixelPos.y << (int)actualMovement << (int)futureMovement << std::endl;
 }
 
 void Player::Move(const Map &map) {
@@ -223,5 +230,6 @@ void Player::Draw() const{
 }
 
 void Player::Dead() {
-
+	pixelPos = initialPos;
+	SetLives(lives - 1);
 }

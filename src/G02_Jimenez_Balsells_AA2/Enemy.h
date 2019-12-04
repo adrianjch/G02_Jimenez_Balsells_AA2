@@ -9,7 +9,6 @@ public:
 	enum class EnemyState { NORMAL, SCARED, DEAD };
 protected:
 	Vec2 pixelPos;
-	Vec2 cellPos;
 	Vec2 initialPos;
 	EnemyState state;
 	clock_t deadTimer;
@@ -17,7 +16,7 @@ public:
 	Enemy();
 	Vec2 GetInitialPos() const;
 	Vec2 GetPixelPos() const;
-	Vec2 GetMapPos() const;
 	void SetInitialPos(const Vec2 &);
+	void SetPixelPos(const Vec2 &);
 	void Dead();//
 };
