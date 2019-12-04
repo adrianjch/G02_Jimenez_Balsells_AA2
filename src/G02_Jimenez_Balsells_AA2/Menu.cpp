@@ -2,7 +2,6 @@
 
 Menu::Menu() {
 	state = SceneState::RUNNING;
-	renderer = Renderer::Instance();
 }
 
 void Menu::Update(const Input &input) {
@@ -25,11 +24,11 @@ void Menu::Update(const Input &input) {
 		state = SceneState::EXIT_STATE;
 }
 
-void Menu::Draw() {
-	renderer->Clear();
+void Menu::Draw() const{
+	Renderer::Instance()->Clear();
 	play.Draw();
 	ranking.Draw();
 	sound.Draw();
 	exit.Draw();
-	renderer->Render();
+	Renderer::Instance()->Render();
 }

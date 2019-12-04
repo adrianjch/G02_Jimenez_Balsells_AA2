@@ -6,5 +6,5 @@ private:
 	Input input;
 public:
 	void ReadInput();
-	Input GetInput();
+	Input GetInput() const;
 };

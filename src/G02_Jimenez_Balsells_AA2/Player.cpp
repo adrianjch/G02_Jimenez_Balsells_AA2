@@ -2,7 +2,6 @@
 #include "Player.h"
 
 Player::Player() {
-	renderer = renderer->Instance();
 	actualMovement = futureMovement = Movement::LEFT;
 	spriteNumber = 6;
 	frameCounter = 0;
@@ -85,7 +84,7 @@ void Player::Update(const Input &input, Map &map) {
 	std::cout << cellPos.x << "," << cellPos.y << "  " << pixelPos.x << "," << pixelPos.y << (int)actualMovement << (int)futureMovement << std::endl;
 }
 
-void Player::Move(Map &map) {
+void Player::Move(const Map &map) {
 	switch (actualMovement) {
 	case Movement::UP:
 		switch (futureMovement) {
@@ -220,7 +219,7 @@ void Player::Move(Map &map) {
 }
 
 void Player::Draw() const{
-	renderer->PushSprite("spritesheet", { spriteNumber*128, 0, 128, 128 }, { pixelPos.x, pixelPos.y, CELL_SIZE, CELL_SIZE });
+	Renderer::Instance()->PushSprite("spritesheet", { spriteNumber*128, 0, 128, 128 }, { pixelPos.x, pixelPos.y, CELL_SIZE, CELL_SIZE });
 }
 
 void Player::Dead() {

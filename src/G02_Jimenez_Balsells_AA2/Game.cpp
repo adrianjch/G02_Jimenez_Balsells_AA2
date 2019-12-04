@@ -1,14 +1,13 @@
 #include "Game.h"
 #include "Constants.h"
-#include <sstream>
 #include "../../dep/inc/XML/rapidxml.hpp"
 #include "../../dep/inc/XML/rapidxml_utils.hpp"
 #include "../../dep/inc/XML/rapidxml_iterators.hpp"
 #include "../../dep/inc/XML/rapidxml_print.hpp"
+#include <sstream>
 
 Game::Game() {
 	state = SceneState::START_GAME;
-	renderer = renderer->Instance();
 	// XML
 	std::ifstream file("../../res/files/config.xml");
 	if (file.is_open()) {
@@ -94,8 +93,8 @@ void Game::Update(const Input &input) {
 	}
 }
 
-void Game::Draw() {
-	renderer->Clear();
+void Game::Draw() const{
+	Renderer::Instance()->Clear();
 	switch (Scene::GetState()) {
 		case SceneState::START_GAME:
 			map.Draw();
@@ -105,8 +104,8 @@ void Game::Draw() {
 			fruit->Draw();
 			player.Draw();
 			hud.Draw(player);
-			renderer->PushSprite("spritesheet", { 0, 996, 128, 128 }, { 0, 0, SCREEN_WIDTH, SCREEN_HEIGHT });
-			renderer->PushImage("press to play", { SCREEN_WIDTH/2 - 400, SCREEN_HEIGHT/2, renderer->GetTextureSize("press to play").x, renderer->GetTextureSize("press to play").y });
+			Renderer::Instance()->PushSprite("spritesheet", { 0, 996, 128, 128 }, { 0, 0, SCREEN_WIDTH, SCREEN_HEIGHT });
+			Renderer::Instance()->PushImage("press to play", { SCREEN_WIDTH/2 - 400, SCREEN_HEIGHT/2, Renderer::Instance()->GetTextureSize("press to play").x, Renderer::Instance()->GetTextureSize("press to play").y });
 			break;
 		case SceneState::RUNNING:
 			map.Draw();
@@ -118,11 +117,10 @@ void Game::Draw() {
 			hud.Draw(player);
 			break;
 		case SceneState::GAME_OVER:
-
 			break;
 		case SceneState::PAUSE:
 			sound.Draw();
 			break;
 	}
-	renderer->Render();
+	Renderer::Instance()->Render();
 }

@@ -5,7 +5,7 @@
 class Blinky : public Enemy {
 public:
 	Blinky();
-	void Update(Map::Cell**);
-	void Move(Map::Cell**, Vec2);
-	void Draw();
+	void Update(Map::Cell**);//
+	void Move(Map::Cell**, Vec2);//
+	void Draw() const;
 };

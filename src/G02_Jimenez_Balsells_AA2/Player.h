@@ -16,10 +16,9 @@ private:
 	Movement actualMovement;
 	Movement futureMovement;
 	clock_t empoweredTimer;
-	Renderer* renderer;
 	int spriteNumber;
 	int frameCounter;
-	const int MAX_FRAME = 5;
+	const int MAX_FRAME = 4;
 public:
 	Player();
 	Vec2 GetInitialPos() const;
@@ -33,7 +32,7 @@ public:
 	void SetLives(const int &);
 	void SetEmpowered(const bool &);
 	void Update(const Input &, Map &);//
-	void Move(Map &);//
+	void Move(const Map &);
 	void Draw() const;
 	void Dead();//
 };

@@ -10,9 +10,9 @@ private:
 	FruitType type;
 public:
 	Fruit();
-	Vec2 GetInitialPos();
-	FruitType GetType();
-	void SetInitialPos(Vec2);
-	void Update();
-	void Draw();
+	Vec2 GetInitialPos() const;
+	FruitType GetType() const;
+	void SetInitialPos(const Vec2 &);
+	void Update();//
+	void Draw() const;
 };

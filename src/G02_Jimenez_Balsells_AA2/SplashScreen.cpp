@@ -4,7 +4,6 @@
 SplashScreen::SplashScreen() {
 	state = SceneState::RUNNING;
 	timer = clock();
-	renderer = Renderer::Instance();
 }
 
 void SplashScreen::Update(const Input &input) {
@@ -12,10 +11,11 @@ void SplashScreen::Update(const Input &input) {
 		state = SceneState::MENU_STATE;
 }
 
-void SplashScreen::Draw() {
-	Vec2 size = renderer->GetTextureSize("title");
+void SplashScreen::Draw() const{
+	Renderer::Instance()->Clear();
 
-	renderer->Clear();
-	renderer->PushImage("title", { SCREEN_WIDTH/2 - size.x/2, SCREEN_HEIGHT/2 - size.y/2, size.x, size.y });
-	renderer->Render();
+	Vec2 size = Renderer::Instance()->GetTextureSize("title");
+
+	Renderer::Instance()->PushImage("title", { SCREEN_WIDTH/2 - size.x/2, SCREEN_HEIGHT/2 - size.y/2, size.x, size.y });
+	Renderer::Instance()->Render();
 }

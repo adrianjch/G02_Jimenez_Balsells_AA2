@@ -6,8 +6,7 @@ class Hud {
 private:
 	int windowHeight;
 	int windowWidth;
-	Renderer* renderer;
 public:
 	Hud();
-	void Draw(Player);
+	void Draw(const Player &) const;
 };

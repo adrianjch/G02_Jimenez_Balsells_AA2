@@ -7,9 +7,8 @@
 class SplashScreen : public Scene {
 private:
 	clock_t timer;
-	Renderer *renderer;
 public:
 	SplashScreen();
 	void Update(const Input &);
-	void Draw();
+	void Draw() const;
 };

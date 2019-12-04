@@ -1,5 +1,5 @@
 #include "Scene.h"
 
-Scene::SceneState Scene::GetState() {
+Scene::SceneState Scene::GetState() const{
 	return state;
 }

@@ -1,14 +1,26 @@
 #include "Map.h"
 
 Map::Map() {
-	renderer = renderer->Instance();
+
 }
 
-Map::Cell Map::GetCell(Vec2 pos) {
+Map::Cell Map::GetCell(const Vec2 &pos) const{
 	return map[pos.x][pos.y];
 }
 
-void Map::SetSize(Vec2 pos) {
+Vec2 Map::GetSize() const{
+	return { numColumns, numRows };
+}
+
+int Map::GetCoinCounter() const{
+	return coinCounter;
+}
+
+void Map::SetCell(const Vec2 &pos, const Cell &type) const{
+	map[pos.x][pos.y] = type;
+}
+
+void Map::SetSize(const Vec2 &pos) {
 	numColumns = pos.x;
 	numRows = pos.y;
 	// Create map
@@ -20,40 +32,26 @@ void Map::SetSize(Vec2 pos) {
 	}
 }
 
-Vec2 Map::GetSize() {
-	return { numColumns, numRows };
-}
-
-int Map::GetCoinCounter() {
-	return coinCounter;
-}
-
-void Map::SetCoinCounter(int _coins) {
-	coinCounter = _coins;
-}
-
-
-
-void Map::SetCell(Vec2 pos, Cell type) {
-	map[pos.x][pos.y] = type;
+void Map::SetCoinCounter(const int &coins) {
+	coinCounter = coins;
 }
 
 void Map::Update() {
 
 }
 
-void Map::Draw() {
+void Map::Draw() const{
 	for (int y = 0; y < numRows; y++) {
 		for (int x = 0; x < numColumns; x++) {
 			switch (map[x][y]) {
 				case Cell::WALL:
-					renderer->PushSprite("spritesheet", { 512, 768, 128, 128 }, { x*35, y*35, 35, 35 });
+					Renderer::Instance()->PushSprite("spritesheet", { 512, 768, 128, 128 }, { x*35, y*35, 35, 35 });
 					break;
 				case Cell::POINT:
-					renderer->PushSprite("spritesheet", { 640, 768, 128, 128 }, { x*35, y*35, 35, 35 });
+					Renderer::Instance()->PushSprite("spritesheet", { 640, 768, 128, 128 }, { x*35, y*35, 35, 35 });
 					break;
 				case Cell::POWER_UP:
-					renderer->PushSprite("spritesheet", { 768, 768, 128, 128 }, { x * 35, y * 35, 35, 35 });
+					Renderer::Instance()->PushSprite("spritesheet", { 768, 768, 128, 128 }, { x*35, y*35, 35, 35 });
 					break;
 				default:
 					break;

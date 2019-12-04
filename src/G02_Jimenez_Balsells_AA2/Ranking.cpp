@@ -2,7 +2,6 @@
 
 Ranking::Ranking() {
 	state = SceneState::RUNNING;
-	renderer = renderer->Instance();
 }
 
 void Ranking::Update(const Input &input) {
@@ -13,8 +12,8 @@ void Ranking::Update(const Input &input) {
 	}
 }
 
-void Ranking::Draw() {
-	renderer->Clear();
+void Ranking::Draw() const{
+	Renderer::Instance()->Clear();
 	menu.Draw();
-	renderer->Render();
+	Renderer::Instance()->Render();
 }

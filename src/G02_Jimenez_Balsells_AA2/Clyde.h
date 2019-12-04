@@ -12,7 +12,7 @@ private:
 	const int MAX_FRAME = 5;
 public:
 	Clyde();
-	void Update(const Input &, Map&);
-	void Move(Map &);
-	void Draw();
+	void Update(const Input &, const Map &);
+	void Move(const Map &);
+	void Draw() const;
 };

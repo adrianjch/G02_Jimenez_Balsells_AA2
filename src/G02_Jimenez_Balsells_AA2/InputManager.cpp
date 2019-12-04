@@ -141,6 +141,6 @@ void InputManager::ReadInput() {
 	}
 }
 
-Input InputManager::GetInput() {
+Input InputManager::GetInput() const{
 	return input;
 }

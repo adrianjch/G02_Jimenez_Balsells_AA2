@@ -9,11 +9,10 @@ private:
 	Vec2 pos;
 	Vec2 size;
 	std::string normalID, hoverID;
-	Renderer* renderer;
 public:
 	Button(std::string, std::string, Vec2);
-	bool CheckIfHover(Vec2);
-	bool IsClicked();
+	bool CheckIfHover(const Vec2 &) const;
+	bool IsClicked() const;
 	void Update(const Input &);
-	void Draw();
+	void Draw() const;
 };

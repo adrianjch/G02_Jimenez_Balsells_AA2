@@ -7,7 +7,7 @@ Inky::Inky() {
 	frameCounter = 0;
 }
 
-void Inky::Update(const Input &input, Map &map) {
+void Inky::Update(const Input &input, const Map &map) {
 	if (input.keyDown.at(Input::Key::W) || input.keyDown.at(Input::Key::UP))
 		futureMovement = Movement::UP;
 	else if (input.keyDown.at(Input::Key::A) || input.keyDown.at(Input::Key::LEFT))
@@ -18,11 +18,10 @@ void Inky::Update(const Input &input, Map &map) {
 		futureMovement = Movement::RIGHT;
 
 	Move(map);
-
 	frameCounter++;
 }
 
-void Inky::Move(Map &map) {
+void Inky::Move(const Map &map) {
 	switch (actualMovement) {
 	case Movement::UP:
 		switch (futureMovement) {
@@ -152,6 +151,6 @@ void Inky::Move(Map &map) {
 		pixelPos.y = -CELL_SIZE + 1;
 }
 
-void Inky::Draw() {
-	renderer->PushSprite("spritesheet", { spriteNumber * 128, 256, 128, 128 }, { pixelPos.x, pixelPos.y, 35, 35 });
+void Inky::Draw() const{
+	Renderer::Instance()->PushSprite("spritesheet", { spriteNumber * 128, 256, 128, 128 }, { pixelPos.x, pixelPos.y, 35, 35 });
 }

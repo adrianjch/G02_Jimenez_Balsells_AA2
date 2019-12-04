@@ -7,7 +7,7 @@ Clyde::Clyde() {
 	frameCounter = 0;
 }
 
-void Clyde::Update(const Input &input, Map &map) {
+void Clyde::Update(const Input &input, const Map &map) {
 	if (input.keyDown.at(Input::Key::W) || input.keyDown.at(Input::Key::UP))
 		futureMovement = Movement::DOWN;
 	else if (input.keyDown.at(Input::Key::A) || input.keyDown.at(Input::Key::LEFT))
@@ -22,7 +22,7 @@ void Clyde::Update(const Input &input, Map &map) {
 	frameCounter++;
 }
 
-void Clyde::Move(Map &map) {
+void Clyde::Move(const Map &map) {
 	switch (actualMovement) {
 	case Movement::UP:
 		switch (futureMovement) {
@@ -152,6 +152,6 @@ void Clyde::Move(Map &map) {
 		pixelPos.y = -CELL_SIZE + 1;
 }
 
-void Clyde::Draw() {
-	renderer->PushSprite("spritesheet", { spriteNumber*128, 384, 128, 128 }, { pixelPos.x, pixelPos.y, 35, 35 });
+void Clyde::Draw() const{
+	Renderer::Instance()->PushSprite("spritesheet", { spriteNumber*128, 384, 128, 128 }, { pixelPos.x, pixelPos.y, 35, 35 });
 }

@@ -13,12 +13,11 @@ protected:
 	Vec2 initialPos;
 	EnemyState state;
 	clock_t deadTimer;
-	Renderer *renderer;
 public:
 	Enemy();
-	Vec2 GetInitialPos();
-	Vec2 GetPixelPos();
-	Vec2 GetMapPos();
-	void SetInitialPos(Vec2);
-	void Dead();
+	Vec2 GetInitialPos() const;
+	Vec2 GetPixelPos() const;
+	Vec2 GetMapPos() const;
+	void SetInitialPos(const Vec2 &);
+	void Dead();//
 };

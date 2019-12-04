@@ -12,16 +12,15 @@ private:
 	int numColumns;
 	int numRows;
 	clock_t fruitTimer;
-	Renderer *renderer;
 	int coinCounter;
 public:
 	Map();
-	Cell GetCell(Vec2);
-	void SetSize(Vec2);
-	Vec2 GetSize();
-	int GetCoinCounter();
-	void SetCoinCounter(int);
-	void SetCell(Vec2, Cell);
-	void Update();
-	void Draw();
+	Cell GetCell(const Vec2 &) const;
+	Vec2 GetSize() const;
+	int GetCoinCounter() const;
+	void SetCell(const Vec2 &, const Cell &) const;
+	void SetSize(const Vec2 &);
+	void SetCoinCounter(const int &);
+	void Update();//
+	void Draw() const;
 };

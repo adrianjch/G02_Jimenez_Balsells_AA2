@@ -8,6 +8,6 @@ protected:
 	SceneState state;
 public:
 	virtual void Update(const Input &) = 0;
-	virtual void Draw() = 0;
-	SceneState GetState();
+	virtual void Draw() const = 0;
+	SceneState GetState() const;
 };
