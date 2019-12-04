@@ -136,24 +136,25 @@ void Player::Update(const Input &input, Map &map) {
 			break;
 		case Movement::DOWN:
 			if (map.GetCell({ cellPos.x, cellPos.y + 1 }) != Map::Cell::WALL)
-			pixelPos.y += 1;
+				pixelPos.y += 1;
 			break;
 		case Movement::LEFT:
 			if (map.GetCell({ cellPos.x - 1, cellPos.y }) != Map::Cell::WALL)
-			pixelPos.x -= 1;
+				pixelPos.x -= 1;
 			break;
 		case Movement::RIGHT:
 			if (map.GetCell({ cellPos.x + 1, cellPos.y }) != Map::Cell::WALL)
-			pixelPos.x += 1;
+				pixelPos.x += 1;
 			break;
 		case Movement::STOP:
 			break;
 	}
 
-	if (cellPos.x  != pixelPos.x/35 || cellPos.y != pixelPos.y/35) {
-		cellPos.x = pixelPos.x / 35;
-		cellPos.y = pixelPos.y / 35;
-	}
+	//if (cellPos.x  != pixelPos.x/35 || cellPos.y != pixelPos.y/35) {
+		cellPos.x = static_cast<int>(pixelPos.x+1 / 35);
+		cellPos.y = static_cast<int>(pixelPos.y+1 / 35);
+		std::cout << cellPos.x << "," << cellPos.y << "  " << pixelPos.x << "," << pixelPos.y << (int)actualMovement << (int)futureMovement << std::endl;
+	//}
 }
 
 void Player::Move(Map::Cell** map, Vec2) {
