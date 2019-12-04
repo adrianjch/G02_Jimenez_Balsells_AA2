@@ -61,26 +61,17 @@ void Player::Update(const Input &input, Map &map) {
 	switch (actualMovement) {
 		case Movement::UP:
 			switch (futureMovement) {
-				case Movement::UP:
-					if (map.GetCell({ cellPos.x, cellPos.y - 1 }) != Map::Cell::WALL)
-						actualMovement = Movement::UP;
-					else
-						actualMovement = Movement::STOP;
-					break;
 				case Movement::DOWN:
-					if (map.GetCell({ cellPos.x, cellPos.y + 1 }) != Map::Cell::WALL)
-						actualMovement = Movement::DOWN;
+					actualMovement = Movement::DOWN;
 					break;
 				case Movement::LEFT:
 					if (cellPos.y * 35 == pixelPos.y) {
-						if (map.GetCell({ cellPos.x - 1, cellPos.y}) != Map::Cell::WALL)
-							actualMovement = Movement::LEFT;
+						actualMovement = Movement::LEFT;
 					}
 					break;
 				case Movement::RIGHT:
 					if (cellPos.y * 35 == pixelPos.y) {
-						if (map.GetCell({ cellPos.x + 1, cellPos.y}) != Map::Cell::WALL)
-							actualMovement = Movement::RIGHT;
+						actualMovement = Movement::RIGHT;
 					}
 					break;
 			}
@@ -88,25 +79,16 @@ void Player::Update(const Input &input, Map &map) {
 		case Movement::DOWN:
 			switch (futureMovement) {
 				case Movement::UP:
-					if (map.GetCell({ cellPos.x, cellPos.y - 1 }) != Map::Cell::WALL)
-						actualMovement = Movement::UP;
-					break;
-				case Movement::DOWN:
-					if (map.GetCell({ cellPos.x, cellPos.y + 1 }) != Map::Cell::WALL)
-						actualMovement = Movement::DOWN;
-					else
-						actualMovement = Movement::STOP;
+					actualMovement = Movement::UP;
 					break;
 				case Movement::LEFT:
 					if (cellPos.y * 35 == pixelPos.y) {
-						if (map.GetCell({ cellPos.x - 1, cellPos.y}) != Map::Cell::WALL)
-							actualMovement = Movement::LEFT;
+						actualMovement = Movement::LEFT;
 					}
 					break;
 				case Movement::RIGHT:
 					if (cellPos.y * 35 == pixelPos.y) {
-						if (map.GetCell({ cellPos.x + 1, cellPos.y}) != Map::Cell::WALL)
-							actualMovement = Movement::RIGHT;
+						actualMovement = Movement::RIGHT;
 					}
 					break;
 			}
@@ -115,24 +97,15 @@ void Player::Update(const Input &input, Map &map) {
 			switch (futureMovement) {
 				case Movement::UP:
 					if (cellPos.x * 35 == pixelPos.x) {
-						if (map.GetCell({ cellPos.x, cellPos.y - 1 }) != Map::Cell::WALL)
-							actualMovement = Movement::UP;
+						actualMovement = Movement::UP;
 					}
 					break;
 				case Movement::DOWN:
 					if (cellPos.x * 35 == pixelPos.x) {
-						if (map.GetCell({ cellPos.x, cellPos.y + 1 }) != Map::Cell::WALL)
-							actualMovement = Movement::DOWN;
+						actualMovement = Movement::DOWN;
 					}
 					break;
-				case Movement::LEFT:
-					if (map.GetCell({ cellPos.x - 1, cellPos.y}) != Map::Cell::WALL)
-						actualMovement = Movement::LEFT;
-					else
-						actualMovement = Movement::STOP;
-					break;
 				case Movement::RIGHT:
-					if (map.GetCell({ cellPos.x + 1, cellPos.y}) != Map::Cell::WALL)
 						actualMovement = Movement::RIGHT;
 					break;
 			}
@@ -141,69 +114,43 @@ void Player::Update(const Input &input, Map &map) {
 			switch (futureMovement) {
 				case Movement::UP:
 					if (cellPos.x * 35 == pixelPos.x) {
-						if (map.GetCell({ cellPos.x, cellPos.y - 1 }) != Map::Cell::WALL)
-							actualMovement = Movement::RIGHT;
+						actualMovement = Movement::RIGHT;
 					}
 					break;
 				case Movement::DOWN:
 					if (cellPos.x * 35 == pixelPos.x) {
-						if (map.GetCell({ cellPos.x, cellPos.y + 1 }) != Map::Cell::WALL)
-							actualMovement = Movement::DOWN;
+						actualMovement = Movement::DOWN;
 					}
 					break;
 				case Movement::LEFT:
-					if (map.GetCell({ cellPos.x - 1, cellPos.y}) != Map::Cell::WALL)
-						actualMovement = Movement::LEFT;
-					break;
-				case Movement::RIGHT:
-					if (map.GetCell({ cellPos.x + 1, cellPos.y}) != Map::Cell::WALL)
-						actualMovement = Movement::RIGHT;
-					else
-						actualMovement = Movement::STOP;
-					break;
-			}
-			break;
-		case Movement::STOP:
-			switch (futureMovement) {
-			case Movement::UP:
-				if (map.GetCell({ cellPos.x, cellPos.y - 1 }) != Map::Cell::WALL)
-					actualMovement = Movement::RIGHT;
-
-				break;
-			case Movement::DOWN:
-				if (map.GetCell({ cellPos.x, cellPos.y + 1 }) != Map::Cell::WALL)
-					actualMovement = Movement::DOWN;
-				break;
-			case Movement::LEFT:
-				if (map.GetCell({ cellPos.x - 1, cellPos.y }) != Map::Cell::WALL)
 					actualMovement = Movement::LEFT;
-				break;
-			case Movement::RIGHT:
-				if (map.GetCell({ cellPos.x + 1, cellPos.y }) != Map::Cell::WALL)
-					actualMovement = Movement::RIGHT;
-				break;
+					break;
 			}
 			break;
 	}
 
 	switch (actualMovement) {
 		case Movement::UP:
-			pixelPos.y -= 1;
+			if (map.GetCell({cellPos.x, cellPos.y - 1}) != Map::Cell::WALL)
+				pixelPos.y -= 1;
 			break;
 		case Movement::DOWN:
+			if (map.GetCell({ cellPos.x, cellPos.y + 1 }) != Map::Cell::WALL)
 			pixelPos.y += 1;
 			break;
 		case Movement::LEFT:
+			if (map.GetCell({ cellPos.x - 1, cellPos.y }) != Map::Cell::WALL)
 			pixelPos.x -= 1;
 			break;
 		case Movement::RIGHT:
+			if (map.GetCell({ cellPos.x + 1, cellPos.y }) != Map::Cell::WALL)
 			pixelPos.x += 1;
 			break;
 		case Movement::STOP:
 			break;
 	}
 
-	if (cellPos.x  == pixelPos.x/35 || cellPos.y == pixelPos.y/35) {
+	if (cellPos.x  != pixelPos.x/35 || cellPos.y != pixelPos.y/35) {
 		cellPos.x = pixelPos.x / 35;
 		cellPos.y = pixelPos.y / 35;
 	}
