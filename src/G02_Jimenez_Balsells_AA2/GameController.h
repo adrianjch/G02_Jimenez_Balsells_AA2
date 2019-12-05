@@ -9,7 +9,6 @@ private:
 	GameState gameState;
 	Scene* scene;
 	InputManager inputManager;
-	Renderer* renderer;
 public:
 	GameController();
 	void Play();
