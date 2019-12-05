@@ -10,7 +10,7 @@ Button::Button(std::string id1, std::string id2, Vec2 p) {
 }
 
 bool Button::CheckIfHover(const Vec2 &mousePos) const{
-	return (mousePos.x > pos.x && mousePos.x < (pos.x + size.x) && mousePos.y < (pos.y + size.y) && mousePos.y > pos.y);
+	return (mousePos.x > pos.x - size.x/2 && mousePos.x < pos.x + size.x/2 && mousePos.y < pos.y + size.y/2 && mousePos.y > pos.y - size.y/2);
 }
 
 bool Button::IsClicked() const{
@@ -26,10 +26,10 @@ void Button::Update(const Input &input) {
 
 void Button::Draw() const{
 	if (hover) {
-		Renderer::Instance()->PushImage(hoverID, { pos.x, pos.y, size.x, size.y });
+		Renderer::Instance()->PushImage(hoverID, { pos.x - size.x/2, pos.y - size.y/2, size.x, size.y });
 	}
 	else {
-		Renderer::Instance()->PushImage(normalID, { pos.x, pos.y, size.x, size.y });
+		Renderer::Instance()->PushImage(normalID, { pos.x - size.x / 2, pos.y - size.y / 2, size.x, size.y });
 	}
 }
 

@@ -14,7 +14,7 @@ void Hud::Draw(const Player &p) const{
 	int counter = 0;
 	do {
 		scoreStr = std::to_string(tmp % 10);
-		Renderer::Instance()->PushImage(scoreStr, { 830-(counter*30), 100, Renderer::Instance()->GetTextureSize(scoreStr).x, Renderer::Instance()->GetTextureSize(scoreStr).y });
+		Renderer::Instance()->PushImage(scoreStr, { 840 - (counter*42), 40, Renderer::Instance()->GetTextureSize(scoreStr).x, Renderer::Instance()->GetTextureSize(scoreStr).y });
 		tmp /= 10;
 		counter++;
 

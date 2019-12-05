@@ -7,6 +7,7 @@
 class SplashScreen : public Scene {
 private:
 	clock_t timer;
+	float duration;
 public:
 	SplashScreen();
 	void Update(const Input &);

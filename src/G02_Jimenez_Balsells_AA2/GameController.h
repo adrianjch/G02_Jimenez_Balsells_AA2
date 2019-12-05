@@ -11,5 +11,5 @@ private:
 	InputManager inputManager;
 public:
 	GameController();
-	void Play();
+	void Run();
 };

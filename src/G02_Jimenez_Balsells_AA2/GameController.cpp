@@ -9,11 +9,12 @@ GameController::GameController() {
 	scene = new SplashScreen();
 	gameState = GameState::SPLASH_SCREEN;
 	Renderer::Instance()->LoadFont({"buttons", "../../res/ttf/PAC-FONT.TTF", 60});
-	Renderer::Instance()->LoadFont({ "splashScreenText", "../../res/ttf/PAC-FONT.TTF", 100 });
-	Renderer::Instance()->LoadFont({ "hud", "../../res/ttf/Gameplay.ttf", 40 });
+	Renderer::Instance()->LoadFont({ "title", "../../res/ttf/PAC-FONT.TTF", 100 });
+	Renderer::Instance()->LoadFont({ "hud", "../../res/ttf/Gameplay.ttf", 55 });
+	Renderer::Instance()->LoadFont({ "pac40", "../../res/ttf/PAC-FONT.TTF", 40 });
 
 	// Loading splashScreen text
-	Renderer::Instance()->LoadTextureText("splashScreenText", { "title", "pacman", {255,255,0,255}, 200, 600 });
+	Renderer::Instance()->LoadTextureText("title", { "title", "pacman", {255,255,0,255}, 200, 600 });
 
 	// Loading menu buttons text
 	Renderer::Instance()->LoadTextureText("buttons", { "play normal", "PLAY", {255,0,0,255}, 200, 600 });
@@ -26,11 +27,18 @@ GameController::GameController() {
 	Renderer::Instance()->LoadTextureText("buttons", { "exit hover", "exit", {255,0,0,255}, 200, 600 });
 
 	// Loading Ranking buttons text
+	Renderer::Instance()->LoadTextureText("title", { "ranking", "ranking", {255,0,0,255}, 200, 600 });
 	Renderer::Instance()->LoadTextureText("buttons", { "menu normal", "MENU", {255,0,0,255}, 200, 600 });
 	Renderer::Instance()->LoadTextureText("buttons", { "menu hover", "menu", {255,0,0,255}, 200, 600 });
 
 	// Loading Game Text
-	Renderer::Instance()->LoadTextureText("buttons", { "press to play", "PrEsS sPaCe To StArT", {255,0 ,0 ,255}, 200, 600 });
+	Renderer::Instance()->LoadTextureText("pac40", { "press to play", "PrEsS sPaCe To StArT", {255,0 ,0 ,255}, 200, 600 });
+	Renderer::Instance()->LoadTextureText("pac40", { "press to continue", "PrEsS sPaCe To CoNtInUe", {255,0 ,0 ,255}, 200, 600 });
+	Renderer::Instance()->LoadTextureText("title", { "stop", "StOp", {255,0 ,0 ,255}, 200, 600 });
+	Renderer::Instance()->LoadTextureText("pac40", { "sound: normal", "SOUND:", {255,255,255,255}, 200, 600 });
+	Renderer::Instance()->LoadTextureText("pac40", { "sound: hover", "sound:", {255,255,255,255}, 200, 600 });
+	Renderer::Instance()->LoadTextureText("buttons", { "on", "on", {0,255,0,255}, 200, 600 });
+	Renderer::Instance()->LoadTextureText("buttons", { "off", "off", {255,0,0,255}, 200, 600 });
 	Renderer::Instance()->LoadTextureText("hud", { "0", "0", {0,0 ,0 ,255}, 200, 600 });
 	Renderer::Instance()->LoadTextureText("hud", { "1", "1", {0,0 ,0 ,255}, 200, 600 });
 	Renderer::Instance()->LoadTextureText("hud", { "2", "2", {0,0 ,0 ,255}, 200, 600 });
@@ -46,9 +54,11 @@ GameController::GameController() {
 	Renderer::Instance()->LoadTexture("spritesheet", "../../res/img/PacManSpritesheet.png");
 }
 
-void GameController::Play() {
+void GameController::Run() {
+	unsigned int startFrame, endFrame;
 	bool finish = false;
 	while (!finish) {
+		startFrame = SDL_GetTicks();
 		// INPUT
 		inputManager.ReadInput();
 
@@ -122,6 +132,8 @@ void GameController::Play() {
 				break;
 		}
 		//FRAME CONTROLLER
-		Sleep(17);
+		endFrame = SDL_GetTicks();
+		if (endFrame - startFrame < 1000 / MAX_FRAMERATE)
+			SDL_Delay((1000 / MAX_FRAMERATE) - (endFrame - startFrame));
 	}
 }

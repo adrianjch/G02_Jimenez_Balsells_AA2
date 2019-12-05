@@ -23,8 +23,7 @@ private:
 	Clyde clyde;
 	Fruit* fruit;
 	Hud hud;
-	Text StartPlaying{};
-	Button sound{ "sound normal", "sound hover", {SCREEN_WIDTH / 2 - 200, SCREEN_HEIGHT / 2} };
+	Button sound{ "sound: normal", "sound: hover", {SCREEN_WIDTH / 2 - 100, SCREEN_HEIGHT / 2 + 70} };
 public:
 	Game();
 	void Update(const Input &);

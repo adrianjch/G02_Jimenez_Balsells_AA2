@@ -14,6 +14,8 @@ void Ranking::Update(const Input &input) {
 
 void Ranking::Draw() const{
 	Renderer::Instance()->Clear();
+	Vec2 size = Renderer::Instance()->GetTextureSize("ranking");
+	Renderer::Instance()->PushImage("ranking", { 150, 20, size.x, size.y });
 	menu.Draw();
 	Renderer::Instance()->Render();
 }

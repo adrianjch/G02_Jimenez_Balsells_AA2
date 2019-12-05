@@ -106,13 +106,20 @@ void Game::Update(const Input &input) {
 		else if (input.key.at(Input::Key::SPACE)) {
 			state = SceneState::RUNNING;
 		}
+		sound.Update(input);
+		/*if (sound.IsClicked()) {
+			if (Mix_PausedMusic())
+				Mix_ResumeMusic();
+			else
+				Mix_PauseMusic();
+		}*/
 	}
 }
 
 void Game::Draw() const{
 	Renderer::Instance()->Clear();
 	switch (Scene::GetState()) {
-		case SceneState::START_GAME:
+		case SceneState::START_GAME: {
 			map.Draw();
 			blinky.Draw();
 			inky.Draw();
@@ -121,8 +128,10 @@ void Game::Draw() const{
 			player.Draw();
 			hud.Draw(player);
 			Renderer::Instance()->PushSprite("spritesheet", { 0, 996, 128, 128 }, { 0, 0, SCREEN_WIDTH, SCREEN_HEIGHT });
-			Renderer::Instance()->PushImage("press to play", { SCREEN_WIDTH/2 - 400, SCREEN_HEIGHT/2, Renderer::Instance()->GetTextureSize("press to play").x, Renderer::Instance()->GetTextureSize("press to play").y });
+			Vec2 size = Renderer::Instance()->GetTextureSize("press to play");
+			Renderer::Instance()->PushImage("press to play", { SCREEN_WIDTH / 2 - 350, SCREEN_HEIGHT / 2 - 50, size.x, size.y });
 			break;
+		}
 		case SceneState::RUNNING:
 			map.Draw();
 			blinky.Draw();
@@ -134,7 +143,7 @@ void Game::Draw() const{
 			break;
 		case SceneState::GAME_OVER:
 			break;
-		case SceneState::PAUSE:
+		case SceneState::PAUSE: {
 			map.Draw();
 			blinky.Draw();
 			inky.Draw();
@@ -143,8 +152,21 @@ void Game::Draw() const{
 			player.Draw();
 			hud.Draw(player);
 			Renderer::Instance()->PushSprite("spritesheet", { 0, 996, 128, 128 }, { 0, 0, SCREEN_WIDTH, SCREEN_HEIGHT });
+			Vec2 size = Renderer::Instance()->GetTextureSize("stop");
+			Renderer::Instance()->PushImage("stop", { 220, 50, size.x, size.y });
+			size = Renderer::Instance()->GetTextureSize("press to continue");
+			Renderer::Instance()->PushImage("press to continue", { 20, 200, size.x, size.y });
 			sound.Draw();
+			if (true/*sound is playing*/) {
+				size = Renderer::Instance()->GetTextureSize("on");
+				Renderer::Instance()->PushImage("on", { 470, 390, size.x, size.y });
+			}
+			else {
+				size = Renderer::Instance()->GetTextureSize("off");
+				Renderer::Instance()->PushImage("off", { 470, 390, size.x, size.y });
+			}
 			break;
+		}
 	}
 	Renderer::Instance()->Render();
 }
