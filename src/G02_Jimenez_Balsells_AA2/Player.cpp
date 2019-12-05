@@ -75,14 +75,16 @@ void Player::Update(const Input &input, Map &map) {
 	}
 
 	if (map.GetCell({ pixelPos.x / CELL_SIZE, pixelPos.y / CELL_SIZE }) == Map::Cell::POWER_UP) {
-		if ((actualMovement == Movement::LEFT || actualMovement == Movement::RIGHT) && (pixelPos.x % CELL_SIZE == 10)) {
+		if ((actualMovement == Movement::LEFT || actualMovement == Movement::RIGHT) && (pixelPos.x % CELL_SIZE == 0)) {
 			map.SetCell({ pixelPos.x / CELL_SIZE, pixelPos.y / CELL_SIZE }, Map::Cell::NONE);
 			// isEmpowered = true;
+			SetScore(score + 20);
 			
 		}
-		else if ((actualMovement == Movement::UP || actualMovement == Movement::DOWN) && (pixelPos.y % CELL_SIZE == 10)) {
+		else if ((actualMovement == Movement::UP || actualMovement == Movement::DOWN) && (pixelPos.y % CELL_SIZE == 0)) {
 			map.SetCell({ pixelPos.x / CELL_SIZE, pixelPos.y / CELL_SIZE }, Map::Cell::NONE);
 			// isEmpowered = true;
+			SetScore(score + 20);
 		}
 	}
 
@@ -231,5 +233,6 @@ void Player::Draw() const{
 
 void Player::Dead() {
 	pixelPos = initialPos;
+	actualMovement = futureMovement = Movement::LEFT;
 	SetLives(lives - 1);
 }
