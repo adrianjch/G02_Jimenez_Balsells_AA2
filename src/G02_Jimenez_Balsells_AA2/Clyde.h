@@ -15,4 +15,5 @@ public:
 	void Update(const Input &, const Map &);
 	void Move(const Map &);
 	void Draw() const;
+	void Reset();
 };

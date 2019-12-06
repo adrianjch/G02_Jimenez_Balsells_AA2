@@ -155,3 +155,10 @@ void Clyde::Move(const Map &map) {
 void Clyde::Draw() const{
 	Renderer::Instance()->PushSprite("spritesheet", { spriteNumber*128, 384, 128, 128 }, { pixelPos.x, pixelPos.y, 35, 35 });
 }
+
+void Clyde::Reset() {
+	pixelPos = initialPos;
+	actualMovement = futureMovement = Movement::RIGHT;
+	spriteNumber = 4;
+	frameCounter = 0;
+}

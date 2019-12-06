@@ -3,7 +3,9 @@
 #include "Menu.h"
 #include "Ranking.h"
 #include "Game.h"
+#include "Music.h"
 #include <Windows.h>
+
 
 GameController::GameController() {
 	scene = new SplashScreen();
@@ -52,6 +54,11 @@ GameController::GameController() {
 
 	// Loading Spritesheet
 	Renderer::Instance()->LoadTexture("spritesheet", "../../res/img/PacManSpritesheet.png");
+
+	// Loading Music
+	Music::Instance()->LoadMusic("waka waka", "../../res/au/pacman_waka_waka.mp3");
+	Music::Instance()->LoadMusic("begin", "../../res/au/pacman_beginning.mp3");
+	Music::Instance()->LoadMusic("death", "../../res/au/pacman_death.mp3");
 }
 
 void GameController::Run() {

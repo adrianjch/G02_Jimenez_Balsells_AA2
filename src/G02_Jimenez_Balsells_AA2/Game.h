@@ -9,7 +9,9 @@
 #include "Clyde.h"
 #include "Fruit.h"
 #include "Hud.h"
+#include "Music.h"
 #include <string>
+#include <ctime>
 
 
 class Game : public Scene {

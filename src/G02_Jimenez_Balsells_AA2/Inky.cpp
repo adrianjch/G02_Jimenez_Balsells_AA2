@@ -154,3 +154,10 @@ void Inky::Move(const Map &map) {
 void Inky::Draw() const{
 	Renderer::Instance()->PushSprite("spritesheet", { spriteNumber * 128, 256, 128, 128 }, { pixelPos.x, pixelPos.y, 35, 35 });
 }
+
+void Inky::Reset() {
+	pixelPos = initialPos;
+	actualMovement = futureMovement = Movement::LEFT;
+	spriteNumber = 6;
+	frameCounter = 0;
+}

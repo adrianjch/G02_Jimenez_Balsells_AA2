@@ -48,7 +48,7 @@ Game::Game() {
 		}
 
 		// Set "empty" cells
-		map.SetCell({player.GetInitialPos().x/CELL_SIZE,player.GetInitialPos().y / CELL_SIZE }, Map::Cell::NONE);
+		map.SetCell({ player.GetInitialPos().x / CELL_SIZE,player.GetInitialPos().y / CELL_SIZE }, Map::Cell::NONE);
 		map.SetCell({ blinky.GetInitialPos().x / CELL_SIZE, blinky.GetInitialPos().y / CELL_SIZE }, Map::Cell::NONE);
 		map.SetCell({ inky.GetInitialPos().x / CELL_SIZE,inky.GetInitialPos().y / CELL_SIZE }, Map::Cell::NONE);
 		map.SetCell({ clyde.GetInitialPos().x / CELL_SIZE, clyde.GetInitialPos().y / CELL_SIZE }, Map::Cell::NONE);
@@ -57,34 +57,45 @@ Game::Game() {
 
 		doc.clear();
 	}
+
+	Music::Instance()->PlayMusic("begin", 1);
 }
 
 void Game::Update(const Input &input) {
 	switch (Scene::GetState()) {
 	case SceneState::START_GAME:
-		if (input.key.at(Input::Key::SPACE)) {
-			state = SceneState::RUNNING;
-		}
-		else if (input.key.at(Input::Key::ESCAPE)) {
-			state = SceneState::MENU_STATE;
+		if (!Music::Instance()->IsPlaying()) {
+			if (input.key.at(Input::Key::SPACE)) {
+				state = SceneState::RUNNING;
+			}
+			else if (input.key.at(Input::Key::ESCAPE)) {
+				state = SceneState::MENU_STATE;
+			}
 		}
 		break;
 	case SceneState::RUNNING:
 		if (input.key.at(Input::Key::P)) {
 			state = SceneState::PAUSE;
 		}
+
 		player.Update(input, map);
-		inky.Update(input, map);
-		clyde.Update(input, map);
 
-		if (sqrt((pow(player.GetPixelPos().x - inky.GetPixelPos().x, 2) + pow(player.GetPixelPos().y - inky.GetPixelPos().y, 2))) < 25 ||
-			sqrt((pow(player.GetPixelPos().x - clyde.GetPixelPos().x, 2) + pow(player.GetPixelPos().y - clyde.GetPixelPos().y, 2))) < 25 ||
-			sqrt((pow(player.GetPixelPos().x - blinky.GetPixelPos().x, 2) + pow(player.GetPixelPos().y - blinky.GetPixelPos().y, 2))) < 25) {
+		if (player.GetState() != Player::State::DEAD && player.GetState() != Player::State::RESET) {
+			inky.Update(input, map);
+			clyde.Update(input, map);
 
-			player.Dead();
-			inky.SetPixelPos(inky.GetInitialPos());
-			clyde.SetPixelPos(clyde.GetInitialPos());
-			blinky.SetPixelPos(blinky.GetInitialPos());
+			if ((sqrt((pow(player.GetPixelPos().x - inky.GetPixelPos().x, 2) + pow(player.GetPixelPos().y - inky.GetPixelPos().y, 2))) < 25) ||
+				(sqrt((pow(player.GetPixelPos().x - clyde.GetPixelPos().x, 2) + pow(player.GetPixelPos().y - clyde.GetPixelPos().y, 2))) < 25) ||
+				(sqrt((pow(player.GetPixelPos().x - blinky.GetPixelPos().x, 2) + pow(player.GetPixelPos().y - blinky.GetPixelPos().y, 2))) < 25)) {
+
+				player.Dead();
+			}
+		}
+		if (player.GetState() == Player::State::RESET) {
+			inky.Reset();
+			clyde.Reset();
+			// blinky.Reset();
+			player.Reset();
 
 			if (player.GetLives() <= 0)
 				state = SceneState::GAME_OVER;
@@ -92,81 +103,83 @@ void Game::Update(const Input &input) {
 				state = SceneState::START_GAME;
 		}
 
-		if (map.GetCoinCounter() <= 0)
+		if (map.GetCoinCounter() <= 0) {
 			state = SceneState::GAME_OVER;
+			Music::Instance()->PauseMusic();
+		}
 
 		break;
 	case SceneState::GAME_OVER:
 		state = SceneState::RANKING_STATE;
 		break;
 	case SceneState::PAUSE:
-		if(input.key.at(Input::Key::ESCAPE)) {
+		if (input.key.at(Input::Key::ESCAPE)) {
 			state = SceneState::MENU_STATE;
 		}
 		else if (input.key.at(Input::Key::SPACE)) {
 			state = SceneState::RUNNING;
 		}
+		if (Music::Instance()->IsPlaying()) {
+			Music::Instance()->PauseMusic();
+		}
 		sound.Update(input);
-		/*if (sound.IsClicked()) {
-			if (Mix_PausedMusic())
-				Mix_ResumeMusic();
-			else
-				Mix_PauseMusic();
-		}*/
+		if (sound.IsClicked()) {
+			Music::Instance()->SetState(!Music::Instance()->GetState());
+		}
 	}
 }
 
-void Game::Draw() const{
+void Game::Draw() const {
 	Renderer::Instance()->Clear();
 	switch (Scene::GetState()) {
-		case SceneState::START_GAME: {
-			map.Draw();
-			blinky.Draw();
-			inky.Draw();
-			clyde.Draw();
-			fruit->Draw();
-			player.Draw();
-			hud.Draw(player);
-			Renderer::Instance()->PushSprite("spritesheet", { 0, 996, 128, 128 }, { 0, 0, SCREEN_WIDTH, SCREEN_HEIGHT });
-			Vec2 size = Renderer::Instance()->GetTextureSize("press to play");
-			Renderer::Instance()->PushImage("press to play", { SCREEN_WIDTH / 2 - 350, SCREEN_HEIGHT / 2 - 50, size.x, size.y });
-			break;
+	case SceneState::START_GAME: {
+		map.Draw();
+		blinky.Draw();
+		inky.Draw();
+		clyde.Draw();
+		fruit->Draw();
+		player.Draw();
+		hud.Draw(player);
+		Renderer::Instance()->PushSprite("spritesheet", { 0, 996, 128, 128 }, { 0, 0, SCREEN_WIDTH, SCREEN_HEIGHT });
+		Vec2 size = Renderer::Instance()->GetTextureSize("press to play");
+		Renderer::Instance()->PushImage("press to play", { SCREEN_WIDTH / 2 - 350, SCREEN_HEIGHT / 2 - 50, size.x, size.y });
+		break;
+	}
+	case SceneState::RUNNING:
+		map.Draw();
+		blinky.Draw();
+		inky.Draw();
+		clyde.Draw();
+		fruit->Draw();
+		player.Draw();
+		hud.Draw(player);
+		break;
+	case SceneState::GAME_OVER:
+		break;
+	case SceneState::PAUSE: {
+		map.Draw();
+		blinky.Draw();
+		inky.Draw();
+		clyde.Draw();
+		fruit->Draw();
+		player.Draw();
+		hud.Draw(player);
+		Renderer::Instance()->PushSprite("spritesheet", { 0, 996, 128, 128 }, { 0, 0, SCREEN_WIDTH, SCREEN_HEIGHT });
+		Vec2 size = Renderer::Instance()->GetTextureSize("stop");
+		Renderer::Instance()->PushImage("stop", { 220, 50, size.x, size.y });
+		size = Renderer::Instance()->GetTextureSize("press to continue");
+		Renderer::Instance()->PushImage("press to continue", { 20, 200, size.x, size.y });
+		sound.Draw();
+		if (Music::Instance()->GetState()) {
+			size = Renderer::Instance()->GetTextureSize("on");
+			Renderer::Instance()->PushImage("on", { 470, 390, size.x, size.y });
 		}
-		case SceneState::RUNNING:
-			map.Draw();
-			blinky.Draw();
-			inky.Draw();
-			clyde.Draw();
-			fruit->Draw();
-			player.Draw();
-			hud.Draw(player);
-			break;
-		case SceneState::GAME_OVER:
-			break;
-		case SceneState::PAUSE: {
-			map.Draw();
-			blinky.Draw();
-			inky.Draw();
-			clyde.Draw();
-			fruit->Draw();
-			player.Draw();
-			hud.Draw(player);
-			Renderer::Instance()->PushSprite("spritesheet", { 0, 996, 128, 128 }, { 0, 0, SCREEN_WIDTH, SCREEN_HEIGHT });
-			Vec2 size = Renderer::Instance()->GetTextureSize("stop");
-			Renderer::Instance()->PushImage("stop", { 220, 50, size.x, size.y });
-			size = Renderer::Instance()->GetTextureSize("press to continue");
-			Renderer::Instance()->PushImage("press to continue", { 20, 200, size.x, size.y });
-			sound.Draw();
-			if (true/*sound is playing*/) {
-				size = Renderer::Instance()->GetTextureSize("on");
-				Renderer::Instance()->PushImage("on", { 470, 390, size.x, size.y });
-			}
-			else {
-				size = Renderer::Instance()->GetTextureSize("off");
-				Renderer::Instance()->PushImage("off", { 470, 390, size.x, size.y });
-			}
-			break;
+		else {
+			size = Renderer::Instance()->GetTextureSize("off");
+			Renderer::Instance()->PushImage("off", { 470, 390, size.x, size.y });
 		}
+		break;
+	}
 	}
 	Renderer::Instance()->Render();
 }

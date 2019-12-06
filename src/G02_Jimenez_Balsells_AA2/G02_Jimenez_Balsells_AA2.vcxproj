@@ -132,6 +132,7 @@
     <ClCompile Include="main.cpp" />
     <ClCompile Include="Map.cpp" />
     <ClCompile Include="Menu.cpp" />
+    <ClCompile Include="Music.cpp" />
     <ClCompile Include="Player.cpp" />
     <ClCompile Include="Ranking.cpp" />
     <ClCompile Include="Renderer.cpp" />
@@ -152,6 +153,7 @@
     <ClInclude Include="InputManager.h" />
     <ClInclude Include="Map.h" />
     <ClInclude Include="Menu.h" />
+    <ClInclude Include="Music.h" />
     <ClInclude Include="Player.h" />
     <ClInclude Include="Ranking.h" />
     <ClInclude Include="Renderer.h" />
