@@ -10,6 +10,8 @@ void InputManager::ReadInput() {
 		input.keyUp[static_cast<Input::Key>(i)] = false;
 	}
 
+
+	// Check and maps the input from the SDL to our own Input structure
 	SDL_Event event;
 	while (SDL_PollEvent(&event)) {
 		switch (event.type) {

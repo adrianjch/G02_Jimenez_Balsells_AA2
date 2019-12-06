@@ -28,6 +28,7 @@ void Menu::Draw() const{
 	ranking.Draw();
 	sound.Draw();
 	exit.Draw();
+	// Check if the music is active or not uses one text or the other
 	if (Music::Instance()->GetState()) {
 		Vec2 size = Renderer::Instance()->GetTextureSize("on");
 		Renderer::Instance()->PushImage("on", { SCREEN_WIDTH / 2 + 150, 3 * SCREEN_HEIGHT / 4 - 100 - size.y/2, size.x, size.y });

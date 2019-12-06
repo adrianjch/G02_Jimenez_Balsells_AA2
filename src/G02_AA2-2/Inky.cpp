@@ -22,6 +22,8 @@ void Inky::Update(const Input &input, const Map &map) {
 }
 
 void Inky::Move(const Map &map) {
+	// Checks if the enemy can move to the position that he wants
+	// If he's able to move the actualMovement will be Updated
 	switch (actualMovement) {
 	case Movement::UP:
 		switch (futureMovement) {
@@ -93,10 +95,12 @@ void Inky::Move(const Map &map) {
 		break;
 	}
 
+	// When the player kwnow where he will move check again if he can move and update his pos
 	switch (actualMovement) {
 	case Movement::UP:
 		if (map.GetCell({ pixelPos.x / CELL_SIZE, ((700 + pixelPos.y - 1) % 700) / CELL_SIZE }) != Map::Cell::WALL)
 			pixelPos.y -= 1;
+		// Checks the frame rate and if the number of frames per sprite is bigger than the limit change the sprite
 		if (frameCounter >= MAX_FRAME) {
 			if (spriteNumber == 0)
 				spriteNumber = 1;
@@ -140,6 +144,7 @@ void Inky::Move(const Map &map) {
 		break;
 	}
 
+	// Checks if the player crosses the map limits and in case he does it he reapers in oposit part of he map
 	if (pixelPos.x <= -CELL_SIZE)
 		pixelPos.x = 699;
 	else if (pixelPos.x >= 700)

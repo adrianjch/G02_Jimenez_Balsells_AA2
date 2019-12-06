@@ -53,6 +53,7 @@ Game::Game() {
 		map.SetCell({ inky.GetInitialPos().x / CELL_SIZE,inky.GetInitialPos().y / CELL_SIZE }, Map::Cell::NONE);
 		map.SetCell({ clyde.GetInitialPos().x / CELL_SIZE, clyde.GetInitialPos().y / CELL_SIZE }, Map::Cell::NONE);
 
+		// Set the number of coins that the map should have
 		map.SetCoinCounter(map.GetSize().x * map.GetSize().y - 4 - counter);
 
 		doc.clear();
@@ -64,6 +65,7 @@ Game::Game() {
 void Game::Update(const Input &input) {
 	switch (Scene::GetState()) {
 	case SceneState::START_GAME:
+		// While the beginging sound is playing the game doesn't accept input
 		if (!Music::Instance()->IsPlaying()) {
 			if (input.key.at(Input::Key::SPACE)) {
 				state = SceneState::RUNNING;
@@ -80,6 +82,7 @@ void Game::Update(const Input &input) {
 
 		player.Update(input, map);
 
+		// If the player isn't dead update the enemies and check the collisions
 		if (player.GetState() != Player::State::DEAD && player.GetState() != Player::State::RESET) {
 			inky.Update(input, map);
 			clyde.Update(input, map);
@@ -91,10 +94,11 @@ void Game::Update(const Input &input) {
 				player.Dead();
 			}
 		}
+
+		// After the player has been killed and the animation done the players the game gets reseted
 		if (player.GetState() == Player::State::RESET) {
 			inky.Reset();
 			clyde.Reset();
-			// blinky.Reset();
 			player.Reset();
 
 			if (player.GetLives() <= 0)
@@ -103,11 +107,11 @@ void Game::Update(const Input &input) {
 				state = SceneState::START_GAME;
 		}
 
+		// If the player collects all the coins the game ends
 		if (map.GetCoinCounter() <= 0) {
 			state = SceneState::GAME_OVER;
 			Music::Instance()->PauseMusic();
 		}
-
 		break;
 	case SceneState::GAME_OVER:
 		state = SceneState::RANKING_STATE;
@@ -119,10 +123,14 @@ void Game::Update(const Input &input) {
 		else if (input.key.at(Input::Key::SPACE)) {
 			state = SceneState::RUNNING;
 		}
+
+		// Checks if the music is playing and then stops it
 		if (Music::Instance()->IsPlaying()) {
 			Music::Instance()->PauseMusic();
 		}
 		sound.Update(input);
+
+		// If the button has been clicked changes de music state
 		if (sound.IsClicked()) {
 			Music::Instance()->SetState(!Music::Instance()->GetState());
 		}

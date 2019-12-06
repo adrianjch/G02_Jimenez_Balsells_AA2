@@ -51,6 +51,7 @@ void Player::SetState(const State &_state) {
 }
 
 void Player::Update(const Input &input, Map &map) {
+	// Checks if the player is dead
 	if (state != State::DEAD && state != State::RESET) {
 		if (input.keyDown.at(Input::Key::W) || input.keyDown.at(Input::Key::UP))
 			futureMovement = Movement::UP;
@@ -63,7 +64,9 @@ void Player::Update(const Input &input, Map &map) {
 
 		Move(map);
 
+		// Checks if there's a coin in the current cell
 		if (map.GetCell({ pixelPos.x / CELL_SIZE, pixelPos.y / CELL_SIZE }) == Map::Cell::POINT) {
+			//  Checks is the player is in the center of the cell to collect the coin
 			if ((actualMovement == Movement::LEFT || actualMovement == Movement::RIGHT) && (pixelPos.x % CELL_SIZE == 0)) {
 				map.SetCell({ pixelPos.x / CELL_SIZE, pixelPos.y / CELL_SIZE }, Map::Cell::NONE);
 				SetScore(score + 1);
@@ -75,8 +78,9 @@ void Player::Update(const Input &input, Map &map) {
 				map.SetCoinCounter(map.GetCoinCounter() - 1);
 			}
 		}
-
+		// Checks if there's a power up in the current cell
 		if (map.GetCell({ pixelPos.x / CELL_SIZE, pixelPos.y / CELL_SIZE }) == Map::Cell::POWER_UP) {
+			//  Checks is the player is in the center of the cell to collect the power up
 			if ((actualMovement == Movement::LEFT || actualMovement == Movement::RIGHT) && (pixelPos.x % CELL_SIZE == 0)) {
 				map.SetCell({ pixelPos.x / CELL_SIZE, pixelPos.y / CELL_SIZE }, Map::Cell::NONE);
 				// isEmpowered = true;
@@ -90,7 +94,9 @@ void Player::Update(const Input &input, Map &map) {
 			}
 		}
 	}
+	// Checks if the player is dead
 	else if(state == State::DEAD) {
+		// Updates the dead animation until its finished
 		if (frameCounter > MAX_FRAME_DEAD) {
 			if (spriteNumber == 11) {
 				state = State::RESET;
@@ -105,6 +111,8 @@ void Player::Update(const Input &input, Map &map) {
 }
 
 void Player::Move(const Map &map) {
+	// Checks if the player can move to the position that he wants
+	// If he's able to move the actualMovement will be Updated
 	switch (actualMovement) {
 	case Movement::UP:
 		switch (futureMovement) {
@@ -176,19 +184,23 @@ void Player::Move(const Map &map) {
 		break;
 	}
 
+	// Updates the sound of the player
+	// We only update the sound once after the game has started
 	if (!Music::Instance()->IsPlaying()) {
 		Music::Instance()->PlayMusic("waka waka", -1);
 	}
 
+	// When the player kwnow where he will move check again if he can move and update his pos
 	switch (actualMovement) {
 	case Movement::UP:
 		if (map.GetCell({ pixelPos.x / CELL_SIZE, ((700 + pixelPos.y - 1) % 700) / CELL_SIZE }) != Map::Cell::WALL) {
 			pixelPos.y -= 1;
-
+			// If the player is moving we check is the sound is paused and we update it
 			if (Music::Instance()->IsPaused()) {
 				Music::Instance()->ResumeMusic();
 			}
 
+			// Checks the frame rate and if the number of frames per sprite is bigger than the limit change the sprite
 			if (frameCounter >= MAX_FRAME_NORMAL) {
 				if (spriteNumber == 0)
 					spriteNumber = 1;
@@ -198,6 +210,7 @@ void Player::Move(const Map &map) {
 			}
 		}
 		else {
+			// If the player is not moving we pause de sound
 			Music::Instance()->PauseMusic();
 		}
 		break;
@@ -263,6 +276,8 @@ void Player::Move(const Map &map) {
 		break;
 	}
 
+	// Checks if the player crosses the map limits and in case he does it he reapers in oposit part of he map
+	if (pixelPos.x <= -CELL_SIZE)
 	if (pixelPos.x <= -CELL_SIZE)
 		pixelPos.x = 699;
 	else if (pixelPos.x >= 700)

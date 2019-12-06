@@ -11,6 +11,8 @@
 GameController::GameController() {
 	scene = new SplashScreen();
 	gameState = GameState::SPLASH_SCREEN;
+
+	// Loading Fonts
 	Renderer::Instance()->LoadFont({"buttons", "../../res/ttf/PAC-FONT.TTF", 60});
 	Renderer::Instance()->LoadFont({ "title", "../../res/ttf/PAC-FONT.TTF", 100 });
 	Renderer::Instance()->LoadFont({ "hud", "../../res/ttf/Gameplay.ttf", 55 });
