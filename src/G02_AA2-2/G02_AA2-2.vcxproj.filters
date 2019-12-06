@@ -134,5 +134,8 @@
     <ClInclude Include="Music.h">
       <Filter>Header Files</Filter>
     </ClInclude>
+    <ClInclude Include="SDL_Utils.h">
+      <Filter>Header Files</Filter>
+    </ClInclude>
   </ItemGroup>
 </Project>

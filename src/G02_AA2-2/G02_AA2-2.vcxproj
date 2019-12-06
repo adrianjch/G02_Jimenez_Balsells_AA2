@@ -159,6 +159,7 @@
     <ClInclude Include="Ranking.h" />
     <ClInclude Include="Renderer.h" />
     <ClInclude Include="Scene.h" />
+    <ClInclude Include="SDL_Utils.h" />
     <ClInclude Include="SplashScreen.h" />
     <ClInclude Include="Types.h" />
   </ItemGroup>

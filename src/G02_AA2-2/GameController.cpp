@@ -4,6 +4,7 @@
 #include "Ranking.h"
 #include "Game.h"
 #include "Music.h"
+#include "SDL_Utils.h"
 #include <Windows.h>
 
 
@@ -65,7 +66,7 @@ void GameController::Run() {
 	unsigned int startFrame, endFrame;
 	bool finish = false;
 	while (!finish) {
-		startFrame = SDL_GetTicks();
+		startFrame = GetTicks();
 		// INPUT
 		inputManager.ReadInput();
 
@@ -139,8 +140,8 @@ void GameController::Run() {
 				break;
 		}
 		//FRAME CONTROLLER
-		endFrame = SDL_GetTicks();
+		endFrame = GetTicks();
 		if (endFrame - startFrame < 1000 / MAX_FRAMERATE)
-			SDL_Delay((1000 / MAX_FRAMERATE) - (endFrame - startFrame));
+			Delay((1000 / MAX_FRAMERATE) - (endFrame - startFrame));
 	}
 }
