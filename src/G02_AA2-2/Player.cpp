@@ -278,7 +278,6 @@ void Player::Move(const Map &map) {
 
 	// Checks if the player crosses the map limits and in case he does it he reapers in oposit part of he map
 	if (pixelPos.x <= -CELL_SIZE)
-	if (pixelPos.x <= -CELL_SIZE)
 		pixelPos.x = 699;
 	else if (pixelPos.x >= 700)
 		pixelPos.x = -CELL_SIZE + 1;
