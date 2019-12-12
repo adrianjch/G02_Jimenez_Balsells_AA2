@@ -32,6 +32,7 @@ Game::Game() {
 	Renderer::Instance()->LoadTextureText("hud", { "7", "7", {0,0 ,0 ,255}, 200, 600 });
 	Renderer::Instance()->LoadTextureText("hud", { "8", "8", {0,0 ,0 ,255}, 200, 600 });
 	Renderer::Instance()->LoadTextureText("hud", { "9", "9", {0,0 ,0 ,255}, 200, 600 });
+	Renderer::Instance()->LoadTextureText("hud", { "X", "X", {0,0 ,0 ,255}, 200, 600 });
 	// Load sounds
 	Music::Instance()->LoadMusic("waka waka", "../../res/au/pacman_waka_waka.mp3");
 	Music::Instance()->LoadMusic("begin", "../../res/au/pacman_beginning.mp3");
@@ -120,10 +121,20 @@ void Game::Update(const Input &input) {
 		}
 		else {
 			if ((sqrt((pow(player.GetPixelPos().x - fruit->GetInitialPos().x, 2) + pow(player.GetPixelPos().y - fruit->GetInitialPos().y, 2))) < 25)) {
-				player.SetScore(player.GetScore() + fruit->GetScore());
+				switch (fruit->GetType()) {
+					case Fruit::FruitType::CHERRY:
+						player.SetScore(Fruit::FruitType::CHERRY);
+						break;
+					case Fruit::FruitType::SRTRAWBERRY:
+						player.SetScore(Fruit::FruitType::SRTRAWBERRY);
+						break;
+					case Fruit::FruitType::ORANGE:
+						player.SetScore(Fruit::FruitType::ORANGE);
+						break;
+				}
+				fruitTimer = clock();
 				delete fruit;
 				fruit = nullptr;
-				fruitTimer = clock();
 			}
 		}
 
@@ -148,8 +159,13 @@ void Game::Update(const Input &input) {
 
 			if (player.GetLives() <= 0)
 				state = SceneState::GAME_OVER;
-			else
+			else {
 				state = SceneState::START_GAME;
+				if (fruit != nullptr) {
+					delete fruit;
+					fruit = nullptr;
+				}
+			}
 		}
 
 		// If the player collects all the coins the game ends
@@ -160,10 +176,18 @@ void Game::Update(const Input &input) {
 		break;
 	case SceneState::GAME_OVER:
 		state = SceneState::RANKING_STATE;
+		if (fruit != nullptr) {
+			delete fruit;
+			fruit = nullptr;
+		}
 		break;
 	case SceneState::PAUSE:
 		if (input.key.at(Input::Key::ESCAPE)) {
 			state = SceneState::MENU_STATE;
+			if (fruit != nullptr) {
+				delete fruit;
+				fruit = nullptr;
+			}
 		}
 		else if (input.key.at(Input::Key::SPACE)) {
 			state = SceneState::RUNNING;
@@ -187,11 +211,11 @@ void Game::Draw() const {
 	switch (Scene::GetState()) {
 	case SceneState::START_GAME: {
 		map.Draw();
+		if (fruit != nullptr)
+			fruit->Draw();
 		blinky.Draw();
 		inky.Draw();
 		clyde.Draw();
-		if (fruit != nullptr)
-			fruit->Draw();
 		player.Draw();
 		hud.Draw(player);
 		Renderer::Instance()->PushSprite("spritesheet", { 0, 996, 128, 128 }, { 0, 0, SCREEN_WIDTH, SCREEN_HEIGHT });
@@ -201,11 +225,11 @@ void Game::Draw() const {
 	}
 	case SceneState::RUNNING:
 		map.Draw();
+		if(fruit != nullptr)
+			fruit->Draw();
 		blinky.Draw();
 		inky.Draw();
 		clyde.Draw();
-		if(fruit != nullptr)
-			fruit->Draw();
 		player.Draw();
 		hud.Draw(player);
 		break;
@@ -213,11 +237,11 @@ void Game::Draw() const {
 		break;
 	case SceneState::PAUSE: {
 		map.Draw();
+		if (fruit != nullptr)
+			fruit->Draw();
 		blinky.Draw();
 		inky.Draw();
 		clyde.Draw();
-		if (fruit != nullptr)
-			fruit->Draw();
 		player.Draw();
 		hud.Draw(player);
 		Renderer::Instance()->PushSprite("spritesheet", { 0, 996, 128, 128 }, { 0, 0, SCREEN_WIDTH, SCREEN_HEIGHT });

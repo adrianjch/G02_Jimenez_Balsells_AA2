@@ -30,6 +30,23 @@ void Hud::Draw(const Player &p) const{
 
 	// Render fruits
 	for (int i = 0; i < 3; i++) {
-		Renderer::Instance()->PushSprite("spritesheet", { i * 128,768, 128,128 }, { 710, 200 + 100 * i, 100, 100 });
+		Renderer::Instance()->PushSprite("spritesheet", { i * 128,768, 128,128 }, { 710, 200 + 70 * i, 70, 70 });
+		Renderer::Instance()->PushImage("X", { 775, 210 + 70 * i, 50, 55});
+		switch (i) {
+			case 0:
+				scoreStr = std::to_string(p.GetFruitScore(Fruit::FruitType::CHERRY));
+				Renderer::Instance()->PushImage(scoreStr, { 830, 205 + 70* i, Renderer::Instance()->GetTextureSize(scoreStr).x, Renderer::Instance()->GetTextureSize(scoreStr).y });
+				break;
+			case 1:
+				scoreStr = std::to_string(p.GetFruitScore(Fruit::FruitType::SRTRAWBERRY));
+				Renderer::Instance()->PushImage(scoreStr, { 830, 205 + 70 * i, Renderer::Instance()->GetTextureSize(scoreStr).x, Renderer::Instance()->GetTextureSize(scoreStr).y });
+				break;
+			case 2:
+				scoreStr = std::to_string(p.GetFruitScore(Fruit::FruitType::ORANGE));
+				Renderer::Instance()->PushImage(scoreStr, { 830, 205 + 70 * i, Renderer::Instance()->GetTextureSize(scoreStr).x, Renderer::Instance()->GetTextureSize(scoreStr).y });
+				break;
+
+		}
+		
 	}
 }

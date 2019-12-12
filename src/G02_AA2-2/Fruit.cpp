@@ -4,18 +4,6 @@
 Fruit::Fruit( const Vec2 &_initialPos) {
 	initialPos = _initialPos;
 	type = static_cast<FruitType>(rand() % static_cast<int>(FruitType::COUNT));
-
-	switch (type) {
-	case FruitType::CHERRY:
-		score = 10;
-		break;
-	case FruitType::ORANGE:
-		score = 20;
-		break;
-	case FruitType::SRTRAWBERRY:
-		score = 15;
-		break;
-	}
 }
 
 Vec2 Fruit::GetInitialPos() const{
@@ -24,10 +12,6 @@ Vec2 Fruit::GetInitialPos() const{
 
 Fruit::FruitType Fruit::GetType() const{
 	return type;
-}
-
-int Fruit::GetScore() const{
-	return score;
 }
 
 void Fruit::SetInitialPos(const Vec2 &_initialPos) {

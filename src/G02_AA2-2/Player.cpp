@@ -8,6 +8,9 @@ Player::Player() {
 	frameCounter = 0;
 	score = 0;
 	lives = 3;
+	orangeCounter = 0;
+	strawberryCounter = 0;
+	cherryCounter = 0;
 }
 
 Vec2 Player::GetInitialPos() const{
@@ -16,6 +19,21 @@ Vec2 Player::GetInitialPos() const{
 
 Vec2 Player::GetPixelPos() const{
 	return pixelPos;
+}
+
+int Player::GetFruitScore(Fruit::FruitType type) const {
+	switch (type) {
+	case Fruit::FruitType::CHERRY:
+		return cherryCounter;
+		break;
+	case Fruit::FruitType::SRTRAWBERRY:
+		return strawberryCounter;
+		break;
+	case Fruit::FruitType::ORANGE:
+		return orangeCounter;
+		break;
+
+	}
 }
 
 int Player::GetScore() const{
@@ -41,6 +59,30 @@ void Player::SetScore(const int &_score) {
 	else
 		score = _score;
 }
+
+void Player::SetScore(const Fruit::FruitType &type) {
+	switch (type) {
+		case Fruit::FruitType::CHERRY:
+			score += CHERRY_COST;
+			if(cherryCounter < 9)
+				cherryCounter++;
+			break;
+		case Fruit::FruitType::ORANGE:
+			if (orangeCounter < 9)
+				orangeCounter++;
+			score += ORANGE_COST;
+			break;
+		case Fruit::FruitType::SRTRAWBERRY:
+			if (strawberryCounter < 9)
+				strawberryCounter++;
+			score += STRAWBERRY_COST;
+			break;
+	}
+
+	if (score > 9999)
+		score = 9999;
+}
+
 
 void Player::SetLives(const int &_lives) {
 	lives = _lives;

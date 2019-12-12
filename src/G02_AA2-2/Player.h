@@ -3,6 +3,7 @@
 #include "Map.h"
 #include "Renderer.h"
 #include "Music.h"
+#include "Fruit.h"
 #include <ctime>
 #include <string>
 
@@ -19,6 +20,9 @@ private:
 	Movement futureMovement;
 	clock_t empoweredTimer;
 	clock_t deadTimer;
+	int orangeCounter;
+	int strawberryCounter;
+	int cherryCounter;
 	int spriteNumber;
 	int frameCounter;
 	const int MAX_FRAME_NORMAL = 4;
@@ -27,11 +31,13 @@ public:
 	Player();
 	Vec2 GetInitialPos() const;
 	Vec2 GetPixelPos() const;
+	int GetFruitScore(Fruit::FruitType) const;
 	int GetScore() const;
 	int GetLives() const;
 	State GetState() const;
 	void SetInitialPos(const Vec2 &);
 	void SetScore(const int &);
+	void SetScore(const Fruit::FruitType &);
 	void SetLives(const int &);
 	void SetState(const State &);
 	void Update(const Input &, Map &);//

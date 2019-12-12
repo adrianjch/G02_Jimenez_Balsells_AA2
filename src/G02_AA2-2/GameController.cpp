@@ -16,6 +16,7 @@ GameController::GameController() {
 void GameController::Run() {
 	unsigned int startFrame, endFrame;
 	bool finish = false;
+	srand(time(NULL));
 	while (!finish) {
 		startFrame = GetTicks();
 		// INPUT
