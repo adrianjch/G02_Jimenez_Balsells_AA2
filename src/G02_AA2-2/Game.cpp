@@ -98,6 +98,7 @@ void Game::Update(const Input &input) {
 		if (!Music::Instance()->IsPlaying()) {
 			if (input.key.at(Input::Key::SPACE)) {
 				state = SceneState::RUNNING;
+				fruitTimer = clock();
 			}
 			else if (input.key.at(Input::Key::ESCAPE)) {
 				state = SceneState::MENU_STATE;
@@ -108,8 +109,23 @@ void Game::Update(const Input &input) {
 		if (input.key.at(Input::Key::P)) {
 			state = SceneState::PAUSE;
 		}
-
 		player.Update(input, map);
+
+
+		// Check Fruit collisions and fruit timer
+		if (fruit == nullptr) {
+			if (((clock() - fruitTimer) / (float)CLOCKS_PER_SEC >= 10)) {
+				fruit = new Fruit(player.GetInitialPos());	////
+			}
+		}
+		else {
+			if ((sqrt((pow(player.GetPixelPos().x - fruit->GetInitialPos().x, 2) + pow(player.GetPixelPos().y - fruit->GetInitialPos().y, 2))) < 25)) {
+				player.SetScore(player.GetScore() + fruit->GetScore());
+				delete fruit;
+				fruit = nullptr;
+				fruitTimer = clock();
+			}
+		}
 
 		// If the player isn't dead update the enemies and check the collisions
 		if (player.GetState() != Player::State::DEAD && player.GetState() != Player::State::RESET) {
@@ -174,7 +190,8 @@ void Game::Draw() const {
 		blinky.Draw();
 		inky.Draw();
 		clyde.Draw();
-		fruit->Draw();
+		if (fruit != nullptr)
+			fruit->Draw();
 		player.Draw();
 		hud.Draw(player);
 		Renderer::Instance()->PushSprite("spritesheet", { 0, 996, 128, 128 }, { 0, 0, SCREEN_WIDTH, SCREEN_HEIGHT });
@@ -187,7 +204,8 @@ void Game::Draw() const {
 		blinky.Draw();
 		inky.Draw();
 		clyde.Draw();
-		fruit->Draw();
+		if(fruit != nullptr)
+			fruit->Draw();
 		player.Draw();
 		hud.Draw(player);
 		break;
@@ -198,7 +216,8 @@ void Game::Draw() const {
 		blinky.Draw();
 		inky.Draw();
 		clyde.Draw();
-		fruit->Draw();
+		if (fruit != nullptr)
+			fruit->Draw();
 		player.Draw();
 		hud.Draw(player);
 		Renderer::Instance()->PushSprite("spritesheet", { 0, 996, 128, 128 }, { 0, 0, SCREEN_WIDTH, SCREEN_HEIGHT });

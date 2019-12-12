@@ -8,8 +8,8 @@ Hud::Hud() {
 void Hud::Draw(const Player &p) const{
 	Renderer::Instance()->PushSprite("spritesheet", { 996, 768, 128, 128 }, { 700, 0, 200, 700 });
 
+	// Render score
 	std::string scoreStr;
-
 	int tmp = p.GetScore();
 	int counter = 0;
 	do {
@@ -23,7 +23,13 @@ void Hud::Draw(const Player &p) const{
 	counter = 0;
 	tmp = p.GetLives();
 	
+	// Render lives
 	for (int i = 0; i < tmp; i++) {
 		Renderer::Instance()->PushSprite("spritesheet", { 896, 0, 128, 128 }, { 705 + (i*60), 630, 70, 70 });
+	}
+
+	// Render fruits
+	for (int i = 0; i < 3; i++) {
+		Renderer::Instance()->PushSprite("spritesheet", { i * 128,768, 128,128 }, { 710, 200 + 100 * i, 100, 100 });
 	}
 }
