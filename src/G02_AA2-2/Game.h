@@ -16,8 +16,6 @@
 
 class Game : public Scene {
 private:
-	std::string imageID;
-	std::string imagePath;
 	Map map;
 	Player player;
 	Blinky blinky;
@@ -25,7 +23,7 @@ private:
 	Clyde clyde;
 	Fruit* fruit;
 	Hud hud;
-	Button sound{ "sound: normal", "sound: hover", {SCREEN_WIDTH / 2 - 100, SCREEN_HEIGHT / 2 + 70} };
+	Button sound;
 public:
 	Game();
 	void Update(const Input &);

@@ -1,12 +1,8 @@
 #include "Button.h"
 
-Button::Button(std::string id1, std::string id2, Vec2 p) {
+Button::Button() {
 	clicked = false;
 	hover = false;
-	pos = p;
-	normalID = id1;
-	hoverID = id2;
-	size = Renderer::Instance()->GetTextureSize(normalID);
 }
 
 bool Button::CheckIfHover(const Vec2 &mousePos) const{
@@ -15,6 +11,16 @@ bool Button::CheckIfHover(const Vec2 &mousePos) const{
 
 bool Button::IsClicked() const{
 	return clicked;
+}
+
+void Button::SetTextures(const std::string &id1, const std::string &id2) {
+	normalID = id1;
+	hoverID = id2;
+	size = Renderer::Instance()->GetTextureSize(normalID);
+}
+
+void Button::SetPos(const Vec2 &p) {
+	pos = p;
 }
 
 void Button::Update(const Input &input) {

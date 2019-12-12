@@ -6,10 +6,10 @@
 
 class Menu : public Scene {
 private:
-	Button play{ "play normal", "play hover", {SCREEN_WIDTH / 2, SCREEN_HEIGHT / 4 - 100 } };
-	Button ranking{ "ranking normal", "ranking hover", {SCREEN_WIDTH / 2, 2 * SCREEN_HEIGHT / 4 - 100 } };
-	Button sound{ "sound normal", "sound hover", {SCREEN_WIDTH / 2, 3 * SCREEN_HEIGHT / 4 - 100} };
-	Button exit{ "exit normal", "exit hover", {SCREEN_WIDTH / 2, 4 * SCREEN_HEIGHT / 4 - 100} };
+	Button play;
+	Button ranking;
+	Button sound;
+	Button exit;
 public:
 	Menu();
 	void Update(const Input &);

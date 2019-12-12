@@ -3,6 +3,27 @@
 
 Menu::Menu() {
 	state = SceneState::RUNNING;
+	// Load textures and fonts
+	Renderer::Instance()->LoadFont({ "buttons", "../../res/ttf/PAC-FONT.TTF", 60 });
+	Renderer::Instance()->LoadTextureText("buttons", { "play normal", "PLAY", {255,0,0,255}, 200, 600 });
+	Renderer::Instance()->LoadTextureText("buttons", { "play hover", "play", {255,0,0,255}, 200, 600 });
+	Renderer::Instance()->LoadTextureText("buttons", { "ranking normal", "RANKING", {255,0,0,255}, 200, 600 });
+	Renderer::Instance()->LoadTextureText("buttons", { "ranking hover", "ranking", {255,0,0,255}, 200, 600 });
+	Renderer::Instance()->LoadTextureText("buttons", { "sound normal", "SOUND", {255,0,0,255}, 200, 600 });
+	Renderer::Instance()->LoadTextureText("buttons", { "sound hover", "sound", {255,0,0,255}, 200, 600 });
+	Renderer::Instance()->LoadTextureText("buttons", { "exit normal", "EXIT", {255,0,0,255}, 200, 600 });
+	Renderer::Instance()->LoadTextureText("buttons", { "exit hover", "exit", {255,0,0,255}, 200, 600 });
+	Renderer::Instance()->LoadTextureText("buttons", { "on", "on", {0,255,0,255}, 200, 600 });
+	Renderer::Instance()->LoadTextureText("buttons", { "off", "off", {255,0,0,255}, 200, 600 });
+
+	play.SetTextures("play normal", "play hover");
+	play.SetPos({ SCREEN_WIDTH/2, SCREEN_HEIGHT/4 - 100 });
+	ranking.SetTextures("ranking normal", "ranking hover");
+	ranking.SetPos({ SCREEN_WIDTH/2, 2 * SCREEN_HEIGHT/4 - 100 });
+	sound.SetTextures("sound normal", "sound hover");
+	sound.SetPos({ SCREEN_WIDTH/2, 3 * SCREEN_HEIGHT/4 - 100 });
+	exit.SetTextures("exit normal", "exit hover");
+	exit.SetPos({ SCREEN_WIDTH/2, 4 * SCREEN_HEIGHT/4 - 100 });
 }
 
 void Menu::Update(const Input &input) {

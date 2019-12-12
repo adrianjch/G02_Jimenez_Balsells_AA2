@@ -4,6 +4,10 @@
 SplashScreen::SplashScreen() {
 	state = SceneState::RUNNING;
 	timer = clock();
+	// Load textures and fonts
+	Renderer::Instance()->LoadFont({ "title", "../../res/ttf/PAC-FONT.TTF", 100 });
+	Renderer::Instance()->LoadTextureText("title", { "title", "pacman", {255,255,0,255}, 200, 600 });
+	Renderer::Instance()->LoadTexture("spritesheet", "../../res/img/PacManSpritesheet.png");
 }
 
 void SplashScreen::Update(const Input &input) {

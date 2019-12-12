@@ -9,6 +9,33 @@
 
 Game::Game() {
 	state = SceneState::START_GAME;
+	// Load textures and fonts
+	Renderer::Instance()->LoadFont({ "pac40", "../../res/ttf/PAC-FONT.TTF", 40 });
+	Renderer::Instance()->LoadFont({ "title", "../../res/ttf/PAC-FONT.TTF", 100 });
+	Renderer::Instance()->LoadFont({ "buttons", "../../res/ttf/PAC-FONT.TTF", 60 });
+	Renderer::Instance()->LoadFont({ "hud", "../../res/ttf/Gameplay.ttf", 55 });
+	Renderer::Instance()->LoadTexture("spritesheet", "../../res/img/PacManSpritesheet.png");
+	Renderer::Instance()->LoadTextureText("pac40", { "press to play", "PrEsS sPaCe To StArT", {255,0 ,0 ,255}, 200, 600 });
+	Renderer::Instance()->LoadTextureText("pac40", { "press to continue", "PrEsS sPaCe To CoNtInUe", {255,0 ,0 ,255}, 200, 600 });
+	Renderer::Instance()->LoadTextureText("title", { "stop", "StOp", {255,0 ,0 ,255}, 200, 600 });
+	Renderer::Instance()->LoadTextureText("pac40", { "sound: normal", "SOUND:", {255,255,255,255}, 200, 600 });
+	Renderer::Instance()->LoadTextureText("pac40", { "sound: hover", "sound:", {255,255,255,255}, 200, 600 });
+	Renderer::Instance()->LoadTextureText("buttons", { "on", "on", {0,255,0,255}, 200, 600 });
+	Renderer::Instance()->LoadTextureText("buttons", { "off", "off", {255,0,0,255}, 200, 600 });
+	Renderer::Instance()->LoadTextureText("hud", { "0", "0", {0,0 ,0 ,255}, 200, 600 });
+	Renderer::Instance()->LoadTextureText("hud", { "1", "1", {0,0 ,0 ,255}, 200, 600 });
+	Renderer::Instance()->LoadTextureText("hud", { "2", "2", {0,0 ,0 ,255}, 200, 600 });
+	Renderer::Instance()->LoadTextureText("hud", { "3", "3", {0,0 ,0 ,255}, 200, 600 });
+	Renderer::Instance()->LoadTextureText("hud", { "4", "4", {0,0 ,0 ,255}, 200, 600 });
+	Renderer::Instance()->LoadTextureText("hud", { "5", "5", {0,0 ,0 ,255}, 200, 600 });
+	Renderer::Instance()->LoadTextureText("hud", { "6", "6", {0,0 ,0 ,255}, 200, 600 });
+	Renderer::Instance()->LoadTextureText("hud", { "7", "7", {0,0 ,0 ,255}, 200, 600 });
+	Renderer::Instance()->LoadTextureText("hud", { "8", "8", {0,0 ,0 ,255}, 200, 600 });
+	Renderer::Instance()->LoadTextureText("hud", { "9", "9", {0,0 ,0 ,255}, 200, 600 });
+	// Load sounds
+	Music::Instance()->LoadMusic("waka waka", "../../res/au/pacman_waka_waka.mp3");
+	Music::Instance()->LoadMusic("begin", "../../res/au/pacman_beginning.mp3");
+	Music::Instance()->LoadMusic("death", "../../res/au/pacman_death.mp3");
 	// XML
 	std::ifstream file("../../res/files/config.xml");
 	if (file.is_open()) {
@@ -59,6 +86,8 @@ Game::Game() {
 		doc.clear();
 	}
 
+	sound.SetTextures("sound: normal", "sound: hover");
+	sound.SetPos({ SCREEN_WIDTH/2 - 100, SCREEN_HEIGHT/2 + 70 });
 	Music::Instance()->PlayMusic("begin", 1);
 }
 

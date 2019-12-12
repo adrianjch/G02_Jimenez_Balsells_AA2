@@ -5,7 +5,7 @@
 
 class Ranking : public Scene {
 private:
-	Button menu{ "menu normal", "menu hover", { 130, SCREEN_HEIGHT - 50 } };
+	Button menu;
 public:
 	Ranking();
 	void Update(const Input &);
