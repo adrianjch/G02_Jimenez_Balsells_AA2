@@ -89,7 +89,10 @@ void Renderer::SetRendreDrawColor(int r, int g, int b)
 	SDL_SetRenderDrawColor(m_renderer, r, g, b, 255);
 }
 
-
+void Renderer::ResetMap() {
+	m_textureData.clear();
+	m_fontData.clear();
+}
 
 
 Renderer* Renderer::renderer = nullptr;

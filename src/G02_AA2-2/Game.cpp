@@ -121,17 +121,8 @@ void Game::Update(const Input &input) {
 		}
 		else {
 			if ((sqrt((pow(player.GetPixelPos().x - fruit->GetInitialPos().x, 2) + pow(player.GetPixelPos().y - fruit->GetInitialPos().y, 2))) < 25)) {
-				switch (fruit->GetType()) {
-					case Fruit::FruitType::CHERRY:
-						player.SetScore(Fruit::FruitType::CHERRY);
-						break;
-					case Fruit::FruitType::SRTRAWBERRY:
-						player.SetScore(Fruit::FruitType::SRTRAWBERRY);
-						break;
-					case Fruit::FruitType::ORANGE:
-						player.SetScore(Fruit::FruitType::ORANGE);
-						break;
-				}
+				player.SetScore(fruit->GetType());
+
 				fruitTimer = clock();
 				delete fruit;
 				fruit = nullptr;

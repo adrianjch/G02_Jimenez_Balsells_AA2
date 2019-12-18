@@ -9,6 +9,8 @@ public:
 private:
 	Vec2 initialPos;
 	FruitType type;
+	float timeCounter;
+	bool active;
 public:
 	Fruit(const Vec2 &);
 	Vec2 GetInitialPos() const;
