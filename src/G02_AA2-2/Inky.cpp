@@ -4,21 +4,26 @@
 Inky::Inky() {
 	actualMovement = futureMovement = Movement::LEFT;
 	spriteNumber = 6;
-	frameCounter = 0;
 }
 
 void Inky::Update(const Input &input, const Map &map) {
-	if (input.keyDown.at(Input::Key::W) || input.keyDown.at(Input::Key::UP))
-		futureMovement = Movement::UP;
-	else if (input.keyDown.at(Input::Key::A) || input.keyDown.at(Input::Key::LEFT))
-		futureMovement = Movement::LEFT;
-	else if (input.keyDown.at(Input::Key::S) || input.keyDown.at(Input::Key::DOWN))
-		futureMovement = Movement::DOWN;
-	else if (input.keyDown.at(Input::Key::D) || input.keyDown.at(Input::Key::RIGHT))
-		futureMovement = Movement::RIGHT;
-
-	Move(map);
-	frameCounter++;
+	if (state == State::DEAD) {
+		deadTimer += static_cast<float>(1.0f / MAX_FRAMERATE);
+		if (deadTimer >= 2.0f)
+			state = State::NORMAL;
+	}
+	else {
+		if (input.keyDown.at(Input::Key::W) || input.keyDown.at(Input::Key::UP))
+			futureMovement = Movement::UP;
+		else if (input.keyDown.at(Input::Key::A) || input.keyDown.at(Input::Key::LEFT))
+			futureMovement = Movement::LEFT;
+		else if (input.keyDown.at(Input::Key::S) || input.keyDown.at(Input::Key::DOWN))
+			futureMovement = Movement::DOWN;
+		else if (input.keyDown.at(Input::Key::D) || input.keyDown.at(Input::Key::RIGHT))
+			futureMovement = Movement::RIGHT;
+		Move(map);
+		frameCounter++;
+	}
 }
 
 void Inky::Move(const Map &map) {
@@ -209,7 +214,6 @@ void Inky::Draw() const{
 
 void Inky::Reset() {
 	pixelPos = initialPos;
-	state = State::NORMAL;
 	actualMovement = futureMovement = Movement::LEFT;
 	spriteNumber = 6;
 	frameCounter = 0;

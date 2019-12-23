@@ -4,25 +4,27 @@
 Clyde::Clyde() {
 	actualMovement = futureMovement = Movement::RIGHT;
 	spriteNumber = 4;
-	frameCounter = 0;
 }
 
 void Clyde::Update(const Input &input, const Map &map) {
 
-	// si esta dead sumar timer 
-	//sino la resta del codi
-	if (input.keyDown.at(Input::Key::W) || input.keyDown.at(Input::Key::UP))
-		futureMovement = Movement::DOWN;
-	else if (input.keyDown.at(Input::Key::A) || input.keyDown.at(Input::Key::LEFT))
-		futureMovement = Movement::RIGHT;
-	else if (input.keyDown.at(Input::Key::S) || input.keyDown.at(Input::Key::DOWN))
-		futureMovement = Movement::UP;
-	else if (input.keyDown.at(Input::Key::D) || input.keyDown.at(Input::Key::RIGHT))
-		futureMovement = Movement::LEFT;
-
-	Move(map);
-
-	frameCounter++;
+	if (state == State::DEAD) {
+		deadTimer += static_cast<float>(1.0f / MAX_FRAMERATE);
+		if (deadTimer >= 2.0f)
+			state = State::NORMAL;
+	}
+	else {
+		if (input.keyDown.at(Input::Key::W) || input.keyDown.at(Input::Key::UP))
+			futureMovement = Movement::DOWN;
+		else if (input.keyDown.at(Input::Key::A) || input.keyDown.at(Input::Key::LEFT))
+			futureMovement = Movement::RIGHT;
+		else if (input.keyDown.at(Input::Key::S) || input.keyDown.at(Input::Key::DOWN))
+			futureMovement = Movement::UP;
+		else if (input.keyDown.at(Input::Key::D) || input.keyDown.at(Input::Key::RIGHT))
+			futureMovement = Movement::LEFT;
+		Move(map);
+		frameCounter++;
+	}
 }
 
 void Clyde::Move(const Map &map) {
@@ -214,7 +216,6 @@ void Clyde::Draw() const{
 void Clyde::Reset() {
 	pixelPos = initialPos;
 	actualMovement = futureMovement = Movement::RIGHT;
-	state = State::NORMAL;
 	spriteNumber = 4;
 	frameCounter = 0;
 }

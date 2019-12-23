@@ -3,6 +3,8 @@
 
 Enemy::Enemy() {
 	state = State::NORMAL;
+	deadTimer = 0.0f;
+	frameCounter = 0;
 }
 
 Vec2 Enemy::GetInitialPos() const{
@@ -31,7 +33,8 @@ void Enemy::SetState(const State &_state) {
 		spriteNumber = 0;
 	}
 	else if (state == State::DEAD) {
-		// contador a 0
+		deadTimer = 0.0f;
 		Reset();
+		state = State::DEAD;
 	}
 }
