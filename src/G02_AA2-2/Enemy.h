@@ -6,17 +6,22 @@
 
 class Enemy {
 public:
-	enum class EnemyState { NORMAL, SCARED, DEAD };
+	enum class State { NORMAL, SCARED, DEAD };
 protected:
 	Vec2 pixelPos;
 	Vec2 initialPos;
-	EnemyState state;
-	clock_t deadTimer;
+	State state;
+	float deadTimer;
+	int spriteNumber;
+	int frameCounter;
+	const int MAX_FRAME = 5;
 public:
 	Enemy();
 	Vec2 GetInitialPos() const;
 	Vec2 GetPixelPos() const;
+	State GetState() const;
 	void SetInitialPos(const Vec2 &);
 	void SetPixelPos(const Vec2 &);
-	void Dead();//
+	void SetState(const State &);
+	virtual void Reset() = 0;
 };

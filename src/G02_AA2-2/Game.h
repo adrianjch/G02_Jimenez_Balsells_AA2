@@ -21,9 +21,8 @@ private:
 	Blinky blinky;
 	Inky inky;
 	Clyde clyde;
-	Fruit* fruit;
+	Fruit fruit;
 	Hud hud;
-	clock_t fruitTimer;
 	Button sound;
 public:
 	Game();

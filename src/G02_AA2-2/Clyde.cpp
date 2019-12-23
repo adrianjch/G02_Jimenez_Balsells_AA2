@@ -8,6 +8,9 @@ Clyde::Clyde() {
 }
 
 void Clyde::Update(const Input &input, const Map &map) {
+
+	// si esta dead sumar timer 
+	//sino la resta del codi
 	if (input.keyDown.at(Input::Key::W) || input.keyDown.at(Input::Key::UP))
 		futureMovement = Movement::DOWN;
 	else if (input.keyDown.at(Input::Key::A) || input.keyDown.at(Input::Key::LEFT))
@@ -103,44 +106,84 @@ void Clyde::Move(const Map &map) {
 			pixelPos.y -= 1;
 		// Checks the frame rate and if the number of frames per sprite is bigger than the limit change the sprite
 		if (frameCounter >= MAX_FRAME) {
-			if (spriteNumber == 0)
-				spriteNumber = 1;
-			else
-				spriteNumber = 0;
-			frameCounter = 0;
+			switch (state) {
+				case State::NORMAL:
+					if (spriteNumber == 0)
+						spriteNumber = 1;
+					else
+						spriteNumber = 0;
+					frameCounter = 0;
+					break;
+
+				case State::SCARED:
+					spriteNumber++;
+					spriteNumber = spriteNumber % 4;
+					frameCounter = 0;
+					break;
+			}
 		}
 		break;
 	case Movement::DOWN:
 		if (map.GetCell({ pixelPos.x / CELL_SIZE, ((pixelPos.y + CELL_SIZE) % 700) / CELL_SIZE }) != Map::Cell::WALL)
 			pixelPos.y += 1;
 		if (frameCounter >= MAX_FRAME) {
-			if (spriteNumber == 2)
-				spriteNumber = 3;
-			else
-				spriteNumber = 2;
-			frameCounter = 0;
+			switch (state) {
+				case State::NORMAL:
+					if (spriteNumber == 2)
+						spriteNumber = 3;
+					else
+						spriteNumber = 2;
+					frameCounter = 0;
+					break;
+
+				case State::SCARED:
+					spriteNumber++;
+					spriteNumber = spriteNumber % 4;
+					frameCounter = 0;
+					break;
+			}
 		}
 		break;
 	case Movement::LEFT:
 		if (map.GetCell({ ((700 + pixelPos.x - 1) % 700) / CELL_SIZE, pixelPos.y / CELL_SIZE }) != Map::Cell::WALL)
 			pixelPos.x -= 1;
 		if (frameCounter >= MAX_FRAME) {
-			if (spriteNumber == 6)
-				spriteNumber = 7;
-			else
-				spriteNumber = 6;
-			frameCounter = 0;
+			switch (state) {
+				case State::NORMAL:
+					if (spriteNumber == 6)
+						spriteNumber = 7;
+					else
+						spriteNumber = 6;
+					frameCounter = 0;
+					break;
+
+				case State::SCARED:
+					spriteNumber++;
+					spriteNumber = spriteNumber % 4;
+					frameCounter = 0;
+					break;
+			}
 		}
 		break;
 	case Movement::RIGHT:
 		if (map.GetCell({ ((pixelPos.x + CELL_SIZE) % 700) / CELL_SIZE, pixelPos.y / CELL_SIZE }) != Map::Cell::WALL) 
 			pixelPos.x += 1;
 		if (frameCounter >= MAX_FRAME) {
-			if (spriteNumber == 4)
-				spriteNumber = 5;
-			else
-				spriteNumber = 4;
-			frameCounter = 0;
+			switch (state) {
+			case State::NORMAL:
+				if (spriteNumber == 4)
+					spriteNumber = 5;
+				else
+					spriteNumber = 4;
+				frameCounter = 0;
+				break;
+
+			case State::SCARED:
+				spriteNumber++;
+				spriteNumber = spriteNumber % 4;
+				frameCounter = 0;
+				break;
+			}
 		}
 		break;
 	}
@@ -158,12 +201,20 @@ void Clyde::Move(const Map &map) {
 }
 
 void Clyde::Draw() const{
-	Renderer::Instance()->PushSprite("spritesheet", { spriteNumber*128, 384, 128, 128 }, { pixelPos.x, pixelPos.y, 35, 35 });
+	switch (state) {
+		case State::SCARED:
+			Renderer::Instance()->PushSprite("spritesheet", { spriteNumber * 128, 512, 128, 128 }, { pixelPos.x, pixelPos.y, 35, 35 });
+			break;
+		case State::NORMAL:
+			Renderer::Instance()->PushSprite("spritesheet", { spriteNumber * 128, 384, 128, 128 }, { pixelPos.x, pixelPos.y, 35, 35 });
+			break;
+	}
 }
 
 void Clyde::Reset() {
 	pixelPos = initialPos;
 	actualMovement = futureMovement = Movement::RIGHT;
+	state = State::NORMAL;
 	spriteNumber = 4;
 	frameCounter = 0;
 }

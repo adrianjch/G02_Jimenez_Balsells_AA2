@@ -8,4 +8,5 @@ public:
 	void Update(Map::Cell**);//
 	void Move(Map::Cell**, Vec2);//
 	void Draw() const;
+	void Reset();
 };

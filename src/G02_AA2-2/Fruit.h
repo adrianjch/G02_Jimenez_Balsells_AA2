@@ -10,11 +10,14 @@ private:
 	Vec2 initialPos;
 	FruitType type;
 	float timeCounter;
+	float timeToSpawn;
 	bool active;
 public:
-	Fruit(const Vec2 &);
+	Fruit();
 	Vec2 GetInitialPos() const;
 	FruitType GetType() const;
+	bool IsActive() const;
+	void Destroy();
 	void SetInitialPos(const Vec2 &);
 	void Update();//
 	void Draw() const;

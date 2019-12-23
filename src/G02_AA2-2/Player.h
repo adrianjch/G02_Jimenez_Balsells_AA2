@@ -9,7 +9,7 @@
 
 class Player {
 public:
-	enum class State { RESET, DEAD, NORMAL, POWER };
+	enum class State { RESET, DEAD, NORMAL, EMPOWERED ,POWER_COLLECTED};
 private:
 	State state;
 	Vec2 pixelPos;
@@ -18,8 +18,7 @@ private:
 	int lives;
 	Movement actualMovement;
 	Movement futureMovement;
-	clock_t empoweredTimer;
-	clock_t deadTimer;
+	float empoweredTimer;
 	int orangeCounter;
 	int strawberryCounter;
 	int cherryCounter;
@@ -27,6 +26,7 @@ private:
 	int frameCounter;
 	const int MAX_FRAME_NORMAL = 4;
 	const int MAX_FRAME_DEAD = 5;
+
 public:
 	Player();
 	Vec2 GetInitialPos() const;

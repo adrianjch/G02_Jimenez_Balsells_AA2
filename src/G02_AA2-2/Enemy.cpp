@@ -2,7 +2,7 @@
 #include "Enemy.h"
 
 Enemy::Enemy() {
-
+	state = State::NORMAL;
 }
 
 Vec2 Enemy::GetInitialPos() const{
@@ -21,6 +21,17 @@ void Enemy::SetPixelPos(const Vec2 &pos) {
 	pixelPos = pos;
 }
 
-void Enemy::Dead() {
+Enemy::State Enemy::GetState() const {
+	return state;
+}
 
+void Enemy::SetState(const State &_state) {
+	state = _state;
+	if (state == State::SCARED) {
+		spriteNumber = 0;
+	}
+	else if (state == State::DEAD) {
+		// contador a 0
+		Reset();
+	}
 }

@@ -47,48 +47,49 @@ Game::Game() {
 		std::string content(buffer.str());
 		doc.parse<0>(&content[0]);
 
-		rapidxml::xml_node<> *pRoot = doc.first_node();
-		// Set map size
-		map.SetSize({ std::stoi(pRoot->first_node("Positions")->first_attribute("x")->value()),
-					  std::stoi(pRoot->first_node("Positions")->first_attribute("y")->value()) });
-		// Set player position
-		player.SetInitialPos({ std::stoi(pRoot->first_node("Positions")->first_node("Player")->first_attribute("x")->value()) - 1,
-							   std::stoi(pRoot->first_node("Positions")->first_node("Player")->first_attribute("y")->value()) - 1 });
-		// Set blinky position
-		blinky.SetInitialPos({ std::stoi(pRoot->first_node("Positions")->first_node("Blinky")->first_attribute("x")->value()) - 1,
-							   std::stoi(pRoot->first_node("Positions")->first_node("Blinky")->first_attribute("y")->value()) - 1 });
-		// Set inky position
-		inky.SetInitialPos({ std::stoi(pRoot->first_node("Positions")->first_node("Inky")->first_attribute("x")->value()) - 1,
-							 std::stoi(pRoot->first_node("Positions")->first_node("Inky")->first_attribute("y")->value()) - 1 });
-		// Set clyde position
-		clyde.SetInitialPos({ std::stoi(pRoot->first_node("Positions")->first_node("Clyde")->first_attribute("x")->value()) - 1,
-							  std::stoi(pRoot->first_node("Positions")->first_node("Clyde")->first_attribute("y")->value()) - 1 });
-		// Set power ups positions
-		int counter = 0;
-		for (rapidxml::xml_node<> *pNode = pRoot->first_node("Positions")->first_node("PowerUps")->first_node("Power"); pNode; pNode = pNode->next_sibling()) {
-			map.SetCell({ std::stoi(pNode->first_attribute("x")->value()) - 1, std::stoi(pNode->first_attribute("y")->value()) - 1 }, Map::Cell::POWER_UP);
-			counter++;
-		}
-		// Set wall positions
-		for (rapidxml::xml_node<> *pNode = pRoot->first_node("Map")->first_node("Wall"); pNode; pNode = pNode->next_sibling()) {
-			map.SetCell({ std::stoi(pNode->first_attribute("x")->value()) - 1, std::stoi(pNode->first_attribute("y")->value()) - 1 }, Map::Cell::WALL);
-			counter++;
-		}
+rapidxml::xml_node<> *pRoot = doc.first_node();
+// Set map size
+map.SetSize({ std::stoi(pRoot->first_node("Positions")->first_attribute("x")->value()),
+			  std::stoi(pRoot->first_node("Positions")->first_attribute("y")->value()) });
+// Set player position
+player.SetInitialPos({ std::stoi(pRoot->first_node("Positions")->first_node("Player")->first_attribute("x")->value()) - 1,
+					   std::stoi(pRoot->first_node("Positions")->first_node("Player")->first_attribute("y")->value()) - 1 });
+fruit.SetInitialPos(player.GetInitialPos());
+// Set blinky position
+blinky.SetInitialPos({ std::stoi(pRoot->first_node("Positions")->first_node("Blinky")->first_attribute("x")->value()) - 1,
+					   std::stoi(pRoot->first_node("Positions")->first_node("Blinky")->first_attribute("y")->value()) - 1 });
+// Set inky position
+inky.SetInitialPos({ std::stoi(pRoot->first_node("Positions")->first_node("Inky")->first_attribute("x")->value()) - 1,
+					 std::stoi(pRoot->first_node("Positions")->first_node("Inky")->first_attribute("y")->value()) - 1 });
+// Set clyde position
+clyde.SetInitialPos({ std::stoi(pRoot->first_node("Positions")->first_node("Clyde")->first_attribute("x")->value()) - 1,
+					  std::stoi(pRoot->first_node("Positions")->first_node("Clyde")->first_attribute("y")->value()) - 1 });
+// Set power ups positions
+int counter = 0;
+for (rapidxml::xml_node<> *pNode = pRoot->first_node("Positions")->first_node("PowerUps")->first_node("Power"); pNode; pNode = pNode->next_sibling()) {
+	map.SetCell({ std::stoi(pNode->first_attribute("x")->value()) - 1, std::stoi(pNode->first_attribute("y")->value()) - 1 }, Map::Cell::POWER_UP);
+	counter++;
+}
+// Set wall positions
+for (rapidxml::xml_node<> *pNode = pRoot->first_node("Map")->first_node("Wall"); pNode; pNode = pNode->next_sibling()) {
+	map.SetCell({ std::stoi(pNode->first_attribute("x")->value()) - 1, std::stoi(pNode->first_attribute("y")->value()) - 1 }, Map::Cell::WALL);
+	counter++;
+}
 
-		// Set "empty" cells
-		map.SetCell({ player.GetInitialPos().x / CELL_SIZE,player.GetInitialPos().y / CELL_SIZE }, Map::Cell::NONE);
-		map.SetCell({ blinky.GetInitialPos().x / CELL_SIZE, blinky.GetInitialPos().y / CELL_SIZE }, Map::Cell::NONE);
-		map.SetCell({ inky.GetInitialPos().x / CELL_SIZE,inky.GetInitialPos().y / CELL_SIZE }, Map::Cell::NONE);
-		map.SetCell({ clyde.GetInitialPos().x / CELL_SIZE, clyde.GetInitialPos().y / CELL_SIZE }, Map::Cell::NONE);
+// Set "empty" cells
+map.SetCell({ player.GetInitialPos().x / CELL_SIZE,player.GetInitialPos().y / CELL_SIZE }, Map::Cell::NONE);
+map.SetCell({ blinky.GetInitialPos().x / CELL_SIZE, blinky.GetInitialPos().y / CELL_SIZE }, Map::Cell::NONE);
+map.SetCell({ inky.GetInitialPos().x / CELL_SIZE,inky.GetInitialPos().y / CELL_SIZE }, Map::Cell::NONE);
+map.SetCell({ clyde.GetInitialPos().x / CELL_SIZE, clyde.GetInitialPos().y / CELL_SIZE }, Map::Cell::NONE);
 
-		// Set the number of coins that the map should have
-		map.SetCoinCounter(map.GetSize().x * map.GetSize().y - 4 - counter);
+// Set the number of coins that the map should have
+map.SetCoinCounter(map.GetSize().x * map.GetSize().y - 4 - counter);
 
-		doc.clear();
+doc.clear();
 	}
 
 	sound.SetTextures("sound: normal", "sound: hover");
-	sound.SetPos({ SCREEN_WIDTH/2 - 100, SCREEN_HEIGHT/2 + 70 });
+	sound.SetPos({ SCREEN_WIDTH / 2 - 100, SCREEN_HEIGHT / 2 + 70 });
 	Music::Instance()->PlayMusic("begin", 1);
 }
 
@@ -99,7 +100,6 @@ void Game::Update(const Input &input) {
 		if (!Music::Instance()->IsPlaying()) {
 			if (input.key.at(Input::Key::SPACE)) {
 				state = SceneState::RUNNING;
-				fruitTimer = clock();
 			}
 			else if (input.key.at(Input::Key::ESCAPE)) {
 				state = SceneState::MENU_STATE;
@@ -111,21 +111,32 @@ void Game::Update(const Input &input) {
 			state = SceneState::PAUSE;
 		}
 		player.Update(input, map);
+		fruit.Update();
 
+		
+		if (player.GetState() == Player::State::POWER_COLLECTED) {
+			if(inky.GetState() == Enemy::State::NORMAL)
+				inky.SetState(Enemy::State::SCARED);
+			if (blinky.GetState() == Enemy::State::NORMAL)
+				blinky.SetState(Enemy::State::SCARED);
+			if (clyde.GetState() == Enemy::State::NORMAL)
+				clyde.SetState(Enemy::State::SCARED);
+		}
+		else if (player.GetState() == Player::State::NORMAL && inky.GetState() == Enemy::State::SCARED) {
+			inky.SetState(Enemy::State::NORMAL);			
+		}
+		else if (player.GetState() == Player::State::NORMAL && blinky.GetState() == Enemy::State::SCARED) {
+			blinky.SetState(Enemy::State::NORMAL);
+		}
+		else if (player.GetState() == Player::State::NORMAL && clyde.GetState() == Enemy::State::SCARED) {
+			clyde.SetState(Enemy::State::NORMAL);
+		}
 
 		// Check Fruit collisions and fruit timer
-		if (fruit == nullptr) {
-			if (((clock() - fruitTimer) / (float)CLOCKS_PER_SEC >= 10)) {
-				fruit = new Fruit(player.GetInitialPos());	////
-			}
-		}
-		else {
-			if ((sqrt((pow(player.GetPixelPos().x - fruit->GetInitialPos().x, 2) + pow(player.GetPixelPos().y - fruit->GetInitialPos().y, 2))) < 25)) {
-				player.SetScore(fruit->GetType());
-
-				fruitTimer = clock();
-				delete fruit;
-				fruit = nullptr;
+		if (fruit.IsActive()) {
+			if ((sqrt((pow(player.GetPixelPos().x - fruit.GetInitialPos().x, 2) + pow(player.GetPixelPos().y - fruit.GetInitialPos().y, 2))) < 25)) {
+				player.SetScore(fruit.GetType());
+				fruit.Destroy();
 			}
 		}
 
@@ -134,11 +145,26 @@ void Game::Update(const Input &input) {
 			inky.Update(input, map);
 			clyde.Update(input, map);
 
-			if ((sqrt((pow(player.GetPixelPos().x - inky.GetPixelPos().x, 2) + pow(player.GetPixelPos().y - inky.GetPixelPos().y, 2))) < 25) ||
-				(sqrt((pow(player.GetPixelPos().x - clyde.GetPixelPos().x, 2) + pow(player.GetPixelPos().y - clyde.GetPixelPos().y, 2))) < 25) ||
-				(sqrt((pow(player.GetPixelPos().x - blinky.GetPixelPos().x, 2) + pow(player.GetPixelPos().y - blinky.GetPixelPos().y, 2))) < 25)) {
-
-				player.Dead();
+			if ((sqrt((pow(player.GetPixelPos().x - inky.GetPixelPos().x, 2) + pow(player.GetPixelPos().y - inky.GetPixelPos().y, 2))) < 25)) {
+				if (inky.GetState() == Enemy::State::SCARED) {
+					inky.SetState(Enemy::State::DEAD);
+				}
+				else
+					player.Dead();
+			}
+			else if ((sqrt((pow(player.GetPixelPos().x - clyde.GetPixelPos().x, 2) + pow(player.GetPixelPos().y - clyde.GetPixelPos().y, 2))) < 25)) {
+				if (clyde.GetState() == Enemy::State::SCARED) {
+					clyde.SetState(Enemy::State::DEAD);
+				}
+				else
+					player.Dead();
+			}
+			else if((sqrt((pow(player.GetPixelPos().x - blinky.GetPixelPos().x, 2) + pow(player.GetPixelPos().y - blinky.GetPixelPos().y, 2))) < 25)) {
+				if (blinky.GetState() == Enemy::State::SCARED) {
+					blinky.SetState(Enemy::State::DEAD);
+				}
+				else
+					player.Dead();
 			}
 		}
 
@@ -152,10 +178,6 @@ void Game::Update(const Input &input) {
 				state = SceneState::GAME_OVER;
 			else {
 				state = SceneState::START_GAME;
-				if (fruit != nullptr) {
-					delete fruit;
-					fruit = nullptr;
-				}
 			}
 		}
 
@@ -167,18 +189,12 @@ void Game::Update(const Input &input) {
 		break;
 	case SceneState::GAME_OVER:
 		state = SceneState::RANKING_STATE;
-		if (fruit != nullptr) {
-			delete fruit;
-			fruit = nullptr;
-		}
+
 		break;
 	case SceneState::PAUSE:
 		if (input.key.at(Input::Key::ESCAPE)) {
 			state = SceneState::MENU_STATE;
-			if (fruit != nullptr) {
-				delete fruit;
-				fruit = nullptr;
-			}
+
 		}
 		else if (input.key.at(Input::Key::SPACE)) {
 			state = SceneState::RUNNING;
@@ -202,8 +218,8 @@ void Game::Draw() const {
 	switch (Scene::GetState()) {
 	case SceneState::START_GAME: {
 		map.Draw();
-		if (fruit != nullptr)
-			fruit->Draw();
+		if (fruit.IsActive())
+				fruit.Draw();
 		blinky.Draw();
 		inky.Draw();
 		clyde.Draw();
@@ -216,8 +232,8 @@ void Game::Draw() const {
 	}
 	case SceneState::RUNNING:
 		map.Draw();
-		if(fruit != nullptr)
-			fruit->Draw();
+		if (fruit.IsActive())
+			fruit.Draw();
 		blinky.Draw();
 		inky.Draw();
 		clyde.Draw();
@@ -228,8 +244,8 @@ void Game::Draw() const {
 		break;
 	case SceneState::PAUSE: {
 		map.Draw();
-		if (fruit != nullptr)
-			fruit->Draw();
+		if (fruit.IsActive())
+			fruit.Draw();
 		blinky.Draw();
 		inky.Draw();
 		clyde.Draw();

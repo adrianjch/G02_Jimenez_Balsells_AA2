@@ -7,3 +7,4 @@ const int MAX_FRAMERATE = 60;
 const int CHERRY_COST = 10;
 const int STRAWBERRY_COST = 15;
 const int ORANGE_COST = 20;
+

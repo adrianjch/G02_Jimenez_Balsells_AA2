@@ -68,14 +68,14 @@ void Player::SetScore(const Fruit::FruitType &type) {
 				cherryCounter++;
 			break;
 		case Fruit::FruitType::ORANGE:
-			if (orangeCounter < 9)
-				orangeCounter++;
 			score += ORANGE_COST;
+			if (orangeCounter < 9)
+				orangeCounter++;			
 			break;
 		case Fruit::FruitType::SRTRAWBERRY:
+			score += STRAWBERRY_COST;
 			if (strawberryCounter < 9)
 				strawberryCounter++;
-			score += STRAWBERRY_COST;
 			break;
 	}
 
@@ -104,6 +104,17 @@ void Player::Update(const Input &input, Map &map) {
 		else if (input.keyDown.at(Input::Key::D) || input.keyDown.at(Input::Key::RIGHT))
 			futureMovement = Movement::RIGHT;
 
+		if (state == State::POWER_COLLECTED) {
+			state = State::EMPOWERED;
+		}
+		if (state == State::EMPOWERED) {
+			empoweredTimer += static_cast<float>(1.0f / MAX_FRAMERATE);
+			if (empoweredTimer >= 10.0f) {
+				state = State::NORMAL;
+				empoweredTimer = 0.0f;
+			}
+		}
+
 		Move(map);
 
 		// Checks if there's a coin in the current cell
@@ -125,13 +136,15 @@ void Player::Update(const Input &input, Map &map) {
 			//  Checks is the player is in the center of the cell to collect the power up
 			if ((actualMovement == Movement::LEFT || actualMovement == Movement::RIGHT) && (pixelPos.x % CELL_SIZE == 0)) {
 				map.SetCell({ pixelPos.x / CELL_SIZE, pixelPos.y / CELL_SIZE }, Map::Cell::NONE);
-				// isEmpowered = true;
+				state = State::POWER_COLLECTED;
+				empoweredTimer = 0.0f;
 				SetScore(score + 20);
 
 			}
 			else if ((actualMovement == Movement::UP || actualMovement == Movement::DOWN) && (pixelPos.y % CELL_SIZE == 0)) {
 				map.SetCell({ pixelPos.x / CELL_SIZE, pixelPos.y / CELL_SIZE }, Map::Cell::NONE);
-				// isEmpowered = true;
+				state = State::POWER_COLLECTED;
+				empoweredTimer = 0.0f;
 				SetScore(score + 20);
 			}
 		}
@@ -331,18 +344,14 @@ void Player::Move(const Map &map) {
 }
 
 void Player::Draw() const{
-	switch (state) {
-		case State::NORMAL:
-			Renderer::Instance()->PushSprite("spritesheet", { spriteNumber * 128, 0, 128, 128 }, { pixelPos.x, pixelPos.y, CELL_SIZE, CELL_SIZE });
-			break;
-		case State::DEAD:
-			if (spriteNumber < 4) 
-				Renderer::Instance()->PushSprite("spritesheet", { spriteNumber * 128 + 512, 512, 128, 128 }, { pixelPos.x, pixelPos.y, CELL_SIZE, CELL_SIZE });
-			else 
-				Renderer::Instance()->PushSprite("spritesheet", { (spriteNumber - 4) * 128, 640, 128, 128 }, { pixelPos.x, pixelPos.y, CELL_SIZE, CELL_SIZE });
-			break;
-		case State::POWER:
-			break;
+	if (state == State::DEAD) {
+		if (spriteNumber < 4) 
+			Renderer::Instance()->PushSprite("spritesheet", { spriteNumber * 128 + 512, 512, 128, 128 }, { pixelPos.x, pixelPos.y, CELL_SIZE, CELL_SIZE });
+		else 
+			Renderer::Instance()->PushSprite("spritesheet", { (spriteNumber - 4) * 128, 640, 128, 128 }, { pixelPos.x, pixelPos.y, CELL_SIZE, CELL_SIZE });
+	}
+	else {
+		Renderer::Instance()->PushSprite("spritesheet", { spriteNumber * 128, 0, 128, 128 }, { pixelPos.x, pixelPos.y, CELL_SIZE, CELL_SIZE });
 	}
 }
 
