@@ -12,9 +12,16 @@ void Blinky::Update(const Map &map) {
 		if (deadTimer >= 2.0f)
 			state = State::NORMAL;
 	}
-	else {
+	else if(state == State::NORMAL){
 		Move(map);
 		frameCounter++;
+	}
+	else if (state == State::SCARED) {
+		if (moved) {
+			Move(map);
+			frameCounter++;
+		}
+		moved = !moved;
 	}
 }
 

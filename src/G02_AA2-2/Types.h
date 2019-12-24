@@ -69,3 +69,12 @@ struct Input {
 };
 
 enum class Movement { UP, DOWN, RIGHT, LEFT };
+
+struct User {
+	std::string name;
+	int score;
+
+	bool operator()(const User &a, const User &b) {
+		return a.score < b.score;
+	}
+};

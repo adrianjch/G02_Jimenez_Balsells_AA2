@@ -6,7 +6,7 @@
 class Ranking : public Scene {
 private:
 	Button menu;
-	std::vector<std::pair<std::string, int>> ranking;
+	int numPlayers;
 public:
 	Ranking();
 	void ReadRanking();

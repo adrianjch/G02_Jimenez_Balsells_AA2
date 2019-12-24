@@ -6,6 +6,7 @@
 #include "../../dep/inc/XML/rapidxml_print.hpp"
 #include <sstream>
 #include <cmath>
+#include <queue>
 
 Game::Game() {
 	state = SceneState::START_GAME;
@@ -210,7 +211,7 @@ void Game::Update(const Input &input) {
 		std::cin >> name;
 		std::ifstream myFile;
 		myFile.open("ranking.bin", std::ios::binary);
-		std::vector<std::pair<std::string, int>> ranking;
+		std::priority_queue<User, std::vector<User>, User> ranking;
 		if (myFile.is_open()) {
 			int players;
 			myFile.read(reinterpret_cast<char*>(&players), sizeof(int)); //num of players in ranking
@@ -221,22 +222,25 @@ void Game::Update(const Input &input) {
 				myFile.read(name, aux); // string name
 				name[aux] = '\0';
 				myFile.read(reinterpret_cast<char*>(&aux), sizeof(int)); // score
-				ranking.push_back({ name, aux });
+				ranking.push({ name, aux });
 			}
 		}
 		myFile.close();
-		ranking.push_back({name, player.GetScore()});
+		ranking.push({name, player.GetScore()});
 		std::ofstream myFile2;
 		myFile2.open("ranking.bin", std::ios::binary);
 		if (myFile2.is_open()) {
 			int players = ranking.size();
+			if (players > 5)
+				players = 5;
 			myFile2.write(reinterpret_cast<char*>(&players), sizeof(int));
 			for (int i = 0; i < players; i++) {
-				int aux = ranking[i].first.length();
+				int aux = ranking.top().name.length();
 				myFile2.write(reinterpret_cast<char*>(&aux), sizeof(int));
-				myFile2.write(ranking[i].first.c_str(), aux);
-				aux = ranking[i].second;
+				myFile2.write(ranking.top().name.c_str(), aux);
+				aux = ranking.top().score;
 				myFile2.write(reinterpret_cast<char*>(&aux), sizeof(int));
+				ranking.pop();
 			}
 		}
 		myFile2.close();

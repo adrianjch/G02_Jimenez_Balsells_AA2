@@ -13,7 +13,7 @@ class Renderer {
 private:
 	SDL_Renderer *m_renderer = nullptr;
 	SDL_Window *m_window = nullptr;
-	public: std::unordered_map<std::string, SDL_Texture*> m_textureData;
+	std::unordered_map<std::string, SDL_Texture*> m_textureData;
 	std::unordered_map<std::string, TTF_Font*> m_fontData;
 	static Renderer *renderer;
 	Renderer();
