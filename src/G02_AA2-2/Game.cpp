@@ -47,45 +47,45 @@ Game::Game() {
 		std::string content(buffer.str());
 		doc.parse<0>(&content[0]);
 
-rapidxml::xml_node<> *pRoot = doc.first_node();
-// Set map size
-map.SetSize({ std::stoi(pRoot->first_node("Positions")->first_attribute("x")->value()),
-			  std::stoi(pRoot->first_node("Positions")->first_attribute("y")->value()) });
-// Set player position
-player.SetInitialPos({ std::stoi(pRoot->first_node("Positions")->first_node("Player")->first_attribute("x")->value()) - 1,
-					   std::stoi(pRoot->first_node("Positions")->first_node("Player")->first_attribute("y")->value()) - 1 });
-fruit.SetInitialPos(player.GetInitialPos());
-// Set blinky position
-blinky.SetInitialPos({ std::stoi(pRoot->first_node("Positions")->first_node("Blinky")->first_attribute("x")->value()) - 1,
-					   std::stoi(pRoot->first_node("Positions")->first_node("Blinky")->first_attribute("y")->value()) - 1 });
-// Set inky position
-inky.SetInitialPos({ std::stoi(pRoot->first_node("Positions")->first_node("Inky")->first_attribute("x")->value()) - 1,
-					 std::stoi(pRoot->first_node("Positions")->first_node("Inky")->first_attribute("y")->value()) - 1 });
-// Set clyde position
-clyde.SetInitialPos({ std::stoi(pRoot->first_node("Positions")->first_node("Clyde")->first_attribute("x")->value()) - 1,
-					  std::stoi(pRoot->first_node("Positions")->first_node("Clyde")->first_attribute("y")->value()) - 1 });
-// Set power ups positions
-int counter = 0;
-for (rapidxml::xml_node<> *pNode = pRoot->first_node("Positions")->first_node("PowerUps")->first_node("Power"); pNode; pNode = pNode->next_sibling()) {
-	map.SetCell({ std::stoi(pNode->first_attribute("x")->value()) - 1, std::stoi(pNode->first_attribute("y")->value()) - 1 }, Map::Cell::POWER_UP);
-	counter++;
-}
-// Set wall positions
-for (rapidxml::xml_node<> *pNode = pRoot->first_node("Map")->first_node("Wall"); pNode; pNode = pNode->next_sibling()) {
-	map.SetCell({ std::stoi(pNode->first_attribute("x")->value()) - 1, std::stoi(pNode->first_attribute("y")->value()) - 1 }, Map::Cell::WALL);
-	counter++;
-}
+		rapidxml::xml_node<> *pRoot = doc.first_node();
+		// Set map size
+		map.SetSize({ std::stoi(pRoot->first_node("Positions")->first_attribute("x")->value()),
+					  std::stoi(pRoot->first_node("Positions")->first_attribute("y")->value()) });
+		// Set player position
+		player.SetInitialPos({ std::stoi(pRoot->first_node("Positions")->first_node("Player")->first_attribute("x")->value()) - 1,
+							   std::stoi(pRoot->first_node("Positions")->first_node("Player")->first_attribute("y")->value()) - 1 });
+		fruit.SetInitialPos(player.GetInitialPos());
+		// Set blinky position
+		blinky.SetInitialPos({ std::stoi(pRoot->first_node("Positions")->first_node("Blinky")->first_attribute("x")->value()) - 1,
+							   std::stoi(pRoot->first_node("Positions")->first_node("Blinky")->first_attribute("y")->value()) - 1 });
+		// Set inky position
+		inky.SetInitialPos({ std::stoi(pRoot->first_node("Positions")->first_node("Inky")->first_attribute("x")->value()) - 1,
+							 std::stoi(pRoot->first_node("Positions")->first_node("Inky")->first_attribute("y")->value()) - 1 });
+		// Set clyde position
+		clyde.SetInitialPos({ std::stoi(pRoot->first_node("Positions")->first_node("Clyde")->first_attribute("x")->value()) - 1,
+							  std::stoi(pRoot->first_node("Positions")->first_node("Clyde")->first_attribute("y")->value()) - 1 });
+		// Set power ups positions
+		int counter = 0;
+		for (rapidxml::xml_node<> *pNode = pRoot->first_node("Positions")->first_node("PowerUps")->first_node("Power"); pNode; pNode = pNode->next_sibling()) {
+			map.SetCell({ std::stoi(pNode->first_attribute("x")->value()) - 1, std::stoi(pNode->first_attribute("y")->value()) - 1 }, Map::Cell::POWER_UP);
+			counter++;
+		}
+		// Set wall positions
+		for (rapidxml::xml_node<> *pNode = pRoot->first_node("Map")->first_node("Wall"); pNode; pNode = pNode->next_sibling()) {
+			map.SetCell({ std::stoi(pNode->first_attribute("x")->value()) - 1, std::stoi(pNode->first_attribute("y")->value()) - 1 }, Map::Cell::WALL);
+			counter++;
+		}
 
-// Set "empty" cells
-map.SetCell({ player.GetInitialPos().x / CELL_SIZE,player.GetInitialPos().y / CELL_SIZE }, Map::Cell::NONE);
-map.SetCell({ blinky.GetInitialPos().x / CELL_SIZE, blinky.GetInitialPos().y / CELL_SIZE }, Map::Cell::NONE);
-map.SetCell({ inky.GetInitialPos().x / CELL_SIZE,inky.GetInitialPos().y / CELL_SIZE }, Map::Cell::NONE);
-map.SetCell({ clyde.GetInitialPos().x / CELL_SIZE, clyde.GetInitialPos().y / CELL_SIZE }, Map::Cell::NONE);
+		// Set "empty" cells
+		map.SetCell({ player.GetInitialPos().x / CELL_SIZE,player.GetInitialPos().y / CELL_SIZE }, Map::Cell::NONE);
+		map.SetCell({ blinky.GetInitialPos().x / CELL_SIZE, blinky.GetInitialPos().y / CELL_SIZE }, Map::Cell::NONE);
+		map.SetCell({ inky.GetInitialPos().x / CELL_SIZE,inky.GetInitialPos().y / CELL_SIZE }, Map::Cell::NONE);
+		map.SetCell({ clyde.GetInitialPos().x / CELL_SIZE, clyde.GetInitialPos().y / CELL_SIZE }, Map::Cell::NONE);
 
-// Set the number of coins that the map should have
-map.SetCoinCounter(map.GetSize().x * map.GetSize().y - 4 - counter);
+		// Set the number of coins that the map should have
+		map.SetCoinCounter(map.GetSize().x * map.GetSize().y - 4 - counter);
 
-doc.clear();
+		doc.clear();
 	}
 
 	sound.SetTextures("sound: normal", "sound: hover");
@@ -203,9 +203,45 @@ void Game::Update(const Input &input) {
 			Music::Instance()->PauseMusic();
 		}
 		break;
-	case SceneState::GAME_OVER:
+	case SceneState::GAME_OVER: {
+		std::string name;
+		std::cout << "What's your name? ";
+		std::cin >> name;
+		std::ifstream myFile;
+		myFile.open("ranking.bin", std::ios::binary);
+		std::vector<std::pair<std::string, int>> ranking;
+		if (myFile.is_open()) {
+			int players;
+			myFile.read(reinterpret_cast<char*>(&players), sizeof(int)); //num of players in ranking
+			for (int i = 0; i < players; i++) {
+				int aux;
+				myFile.read(reinterpret_cast<char*>(&aux), sizeof(int)); //length of string name
+				char* name = new char[aux + 1];
+				myFile.read(name, aux); // string name
+				name[aux] = '\0';
+				myFile.read(reinterpret_cast<char*>(&aux), sizeof(int)); // score
+				ranking.push_back({ name, aux });
+			}
+		}
+		myFile.close();
+		ranking.push_back({name, player.GetScore()});
+		std::ofstream myFile2;
+		myFile2.open("ranking.bin", std::ios::binary);
+		if (myFile2.is_open()) {
+			int players = ranking.size();
+			myFile2.write(reinterpret_cast<char*>(&players), sizeof(int));
+			for (int i = 0; i < players; i++) {
+				int aux = ranking[i].first.length();
+				myFile2.write(reinterpret_cast<char*>(&aux), sizeof(int));
+				myFile2.write(ranking[i].first.c_str(), aux);
+				aux = ranking[i].second;
+				myFile2.write(reinterpret_cast<char*>(&aux), sizeof(int));
+			}
+		}
+		myFile2.close();
 		state = SceneState::RANKING_STATE;
 		break;
+	}
 	case SceneState::PAUSE:
 		if (input.key.at(Input::Key::ESCAPE)) {
 			state = SceneState::MENU_STATE;

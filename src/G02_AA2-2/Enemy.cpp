@@ -5,6 +5,7 @@ Enemy::Enemy() {
 	state = State::NORMAL;
 	deadTimer = 0.0f;
 	frameCounter = 0;
+	moved = true;
 }
 
 Vec2 Enemy::GetInitialPos() const{

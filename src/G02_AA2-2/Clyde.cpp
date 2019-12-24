@@ -13,7 +13,7 @@ void Clyde::Update(const Input &input, const Map &map) {
 		if (deadTimer >= 2.0f)
 			state = State::NORMAL;
 	}
-	else {
+	else if (state == State::NORMAL){
 		if (input.keyDown.at(Input::Key::W) || input.keyDown.at(Input::Key::UP))
 			futureMovement = Movement::DOWN;
 		else if (input.keyDown.at(Input::Key::A) || input.keyDown.at(Input::Key::LEFT))
@@ -24,6 +24,21 @@ void Clyde::Update(const Input &input, const Map &map) {
 			futureMovement = Movement::LEFT;
 		Move(map);
 		frameCounter++;
+	}
+	else if (state == State::SCARED) {
+		if (input.keyDown.at(Input::Key::W) || input.keyDown.at(Input::Key::UP))
+			futureMovement = Movement::DOWN;
+		else if (input.keyDown.at(Input::Key::A) || input.keyDown.at(Input::Key::LEFT))
+			futureMovement = Movement::RIGHT;
+		else if (input.keyDown.at(Input::Key::S) || input.keyDown.at(Input::Key::DOWN))
+			futureMovement = Movement::UP;
+		else if (input.keyDown.at(Input::Key::D) || input.keyDown.at(Input::Key::RIGHT))
+			futureMovement = Movement::LEFT;
+		if (moved) {
+			Move(map);
+			frameCounter++;
+		}
+		moved = !moved;
 	}
 }
 

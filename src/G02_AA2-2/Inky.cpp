@@ -12,7 +12,7 @@ void Inky::Update(const Input &input, const Map &map) {
 		if (deadTimer >= 2.0f)
 			state = State::NORMAL;
 	}
-	else {
+	else if (state == State::NORMAL){
 		if (input.keyDown.at(Input::Key::W) || input.keyDown.at(Input::Key::UP))
 			futureMovement = Movement::UP;
 		else if (input.keyDown.at(Input::Key::A) || input.keyDown.at(Input::Key::LEFT))
@@ -23,6 +23,21 @@ void Inky::Update(const Input &input, const Map &map) {
 			futureMovement = Movement::RIGHT;
 		Move(map);
 		frameCounter++;
+	}
+	else if (state == State::SCARED) {
+		if (input.keyDown.at(Input::Key::W) || input.keyDown.at(Input::Key::UP))
+			futureMovement = Movement::UP;
+		else if (input.keyDown.at(Input::Key::A) || input.keyDown.at(Input::Key::LEFT))
+			futureMovement = Movement::LEFT;
+		else if (input.keyDown.at(Input::Key::S) || input.keyDown.at(Input::Key::DOWN))
+			futureMovement = Movement::DOWN;
+		else if (input.keyDown.at(Input::Key::D) || input.keyDown.at(Input::Key::RIGHT))
+			futureMovement = Movement::RIGHT;
+		if (moved) {
+			Move(map);
+			frameCounter++;
+		}
+		moved = !moved;
 	}
 }
 

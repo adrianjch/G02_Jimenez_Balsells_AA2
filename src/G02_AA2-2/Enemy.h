@@ -14,6 +14,7 @@ protected:
 	float deadTimer;
 	int spriteNumber;
 	int frameCounter;
+	bool moved;		// Boolean to reduce speed to half when scared
 	const int MAX_FRAME = 5;
 public:
 	Enemy();
