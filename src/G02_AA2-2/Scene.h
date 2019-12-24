@@ -1,5 +1,6 @@
 #pragma once
 #include "Types.h"
+#include "Renderer.h"
 
 class Scene {
 public:
@@ -7,6 +8,7 @@ public:
 protected:
 	SceneState state;
 public:
+	~Scene();
 	virtual void Update(const Input &) = 0;
 	virtual void Draw() const = 0;
 	SceneState GetState() const;

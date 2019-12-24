@@ -90,9 +90,11 @@ void Renderer::SetRendreDrawColor(int r, int g, int b)
 }
 
 void Renderer::ResetMap() {
+	for (auto &t : m_textureData) SDL_DestroyTexture(t.second), t.second = nullptr;
+	for (auto &f : m_fontData) TTF_CloseFont(f.second), f.second = nullptr;
 	m_textureData.clear();
 	m_fontData.clear();
-}
 
+}
 
 Renderer* Renderer::renderer = nullptr;

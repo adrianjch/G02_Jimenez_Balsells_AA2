@@ -111,7 +111,7 @@ void Game::Update(const Input &input) {
 			state = SceneState::PAUSE;
 		}
 		player.Update(input, map);
-		fruit.Update();
+		fruit.Update(player.GetPixelPos());
 
 		
 		if (player.GetState() == Player::State::POWER_COLLECTED) {
@@ -149,6 +149,7 @@ void Game::Update(const Input &input) {
 				if ((sqrt((pow(player.GetPixelPos().x - inky.GetPixelPos().x, 2) + pow(player.GetPixelPos().y - inky.GetPixelPos().y, 2))) < 25)) {
 					if (inky.GetState() == Enemy::State::SCARED) {
 						inky.SetState(Enemy::State::DEAD);
+						player.SetScore(player.GetScore() + 10);
 					}
 					else
 						player.Dead();
@@ -159,6 +160,7 @@ void Game::Update(const Input &input) {
 				if ((sqrt((pow(player.GetPixelPos().x - clyde.GetPixelPos().x, 2) + pow(player.GetPixelPos().y - clyde.GetPixelPos().y, 2))) < 25)) {
 					if (clyde.GetState() == Enemy::State::SCARED) {
 						clyde.SetState(Enemy::State::DEAD);
+						player.SetScore(player.GetScore() + 15);
 					}
 					else
 						player.Dead();
@@ -169,6 +171,7 @@ void Game::Update(const Input &input) {
 				if ((sqrt((pow(player.GetPixelPos().x - blinky.GetPixelPos().x, 2) + pow(player.GetPixelPos().y - blinky.GetPixelPos().y, 2))) < 25)) {
 					if (blinky.GetState() == Enemy::State::SCARED) {
 						blinky.SetState(Enemy::State::DEAD);
+						player.SetScore(player.GetScore() + 25);
 					}
 					else
 						player.Dead();
@@ -202,7 +205,6 @@ void Game::Update(const Input &input) {
 		break;
 	case SceneState::GAME_OVER:
 		state = SceneState::RANKING_STATE;
-
 		break;
 	case SceneState::PAUSE:
 		if (input.key.at(Input::Key::ESCAPE)) {
