@@ -3,10 +3,12 @@
 #include "Map.h"
 
 class Blinky : public Enemy {
+private:
+	Movement actualMovement;
 public:
 	Blinky();
-	void Update(Map::Cell**);//
-	void Move(Map::Cell**, Vec2);//
+	void Update(const Map &);//
+	void Move(const Map &);//
 	void Draw() const;
 	void Reset();
 };

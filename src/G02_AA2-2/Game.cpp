@@ -144,6 +144,7 @@ void Game::Update(const Input &input) {
 		if (player.GetState() != Player::State::DEAD && player.GetState() != Player::State::RESET) {
 			inky.Update(input, map);
 			clyde.Update(input, map);
+			blinky.Update(map);
 
 			if (inky.GetState() != Enemy::State::DEAD) {
 				if ((sqrt((pow(player.GetPixelPos().x - inky.GetPixelPos().x, 2) + pow(player.GetPixelPos().y - inky.GetPixelPos().y, 2))) < 25)) {
@@ -183,12 +184,12 @@ void Game::Update(const Input &input) {
 		if (player.GetState() == Player::State::RESET) {
 			inky.Reset();
 			clyde.Reset();
-			//blinky reset
+			blinky.Reset();
 			player.Reset();
+
 			inky.SetState(Enemy::State::NORMAL);
 			blinky.SetState(Enemy::State::NORMAL);
 			clyde.SetState(Enemy::State::NORMAL);
-
 
 			if (player.GetLives() <= 0)
 				state = SceneState::GAME_OVER;

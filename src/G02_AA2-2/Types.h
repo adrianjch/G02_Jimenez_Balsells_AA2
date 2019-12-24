@@ -68,4 +68,4 @@ struct Input {
 	Vec2 mouse;
 };
 
-enum class Movement { UP, DOWN, LEFT, RIGHT };
+enum class Movement { UP, DOWN, RIGHT, LEFT };
