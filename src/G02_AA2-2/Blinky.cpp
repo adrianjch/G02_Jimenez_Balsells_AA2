@@ -3,7 +3,7 @@
 
 Blinky::Blinky() {
 	actualMovement = static_cast<Movement>(rand() % 4);
-	spriteNumber = static_cast<int>(actualMovement)*2;
+	spriteNumber = static_cast<int>(actualMovement) * 2;
 }
 
 void Blinky::Update(const Map &map) {

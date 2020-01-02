@@ -17,13 +17,13 @@ public:
 	Music();
 	~Music();
 	void LoadMusic(const std::string &,const std::string &);
-	void CloseMusic() const;
 	bool IsPlaying() const;
-	void SetVolume(const int &);
+	void SetVolume(const int &) const;
 	void PlayMusic(const std::string &, const int &);
 	void PauseMusic() const;
 	void ResumeMusic() const;
 	bool IsPaused() const;
 	void SetState(const bool &);
 	bool GetState() const;
+	void ResetMap();
 };

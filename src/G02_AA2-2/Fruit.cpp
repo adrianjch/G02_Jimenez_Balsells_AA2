@@ -41,7 +41,14 @@ void Fruit::Destroy() {
 	active = false;
 	timeToSpawn = 15.0f;
 	timeCounter = 0.0f;
-	type = static_cast<FruitType>(rand() % static_cast<int>(FruitType::COUNT));
+	FruitType aux;
+	while (true) { //it will leave the loop on the break, when the fruits are different
+		aux = static_cast<FruitType>(rand() % static_cast<int>(FruitType::COUNT));
+		if (aux != type) {
+			type = aux;
+			break;
+		}
+	}
 }
 
 void Fruit::Draw() const{

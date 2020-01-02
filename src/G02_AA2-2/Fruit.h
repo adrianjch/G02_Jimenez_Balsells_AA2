@@ -19,6 +19,6 @@ public:
 	bool IsActive() const;
 	void Destroy();
 	void SetInitialPos(const Vec2 &);
-	void Update(const Vec2 &);//
+	void Update(const Vec2 &);
 	void Draw() const;
 };

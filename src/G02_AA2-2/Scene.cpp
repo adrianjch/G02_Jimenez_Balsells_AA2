@@ -1,4 +1,6 @@
 #include "Scene.h"
+#include "Renderer.h"
+#include "Music.h"
 
 Scene::SceneState Scene::GetState() const{
 	return state;
@@ -6,4 +8,5 @@ Scene::SceneState Scene::GetState() const{
 
 Scene::~Scene() {
 	Renderer::Instance()->ResetMap();
+	Music::Instance()->ResetMap();
 }

@@ -7,8 +7,8 @@ private:
 	Movement actualMovement;
 public:
 	Blinky();
-	void Update(const Map &);//
-	void Move(const Map &);//
+	void Update(const Map &);
+	void Move(const Map &);
 	void Draw() const;
 	void Reset();
 };

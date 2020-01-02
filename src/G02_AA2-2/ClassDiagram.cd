@@ -1,0 +1,248 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<ClassDiagram MajorVersion="1" MinorVersion="1" GroupingSetting="Access" MembersFormat="FullSignature">
+  <Class Name="Blinky">
+    <Position X="12.25" Y="7.25" Width="2.25" />
+    <TypeIdentifier>
+      <HashCode>ACQAAAAQAIAABgAAAAAAAAAAAAAAAAAAAAAAAAAAAAA=</HashCode>
+      <FileName>Blinky.h</FileName>
+    </TypeIdentifier>
+  </Class>
+  <Class Name="Button">
+    <Position X="10.25" Y="10.75" Width="3.5" />
+    <TypeIdentifier>
+      <HashCode>ANQAAAAACABAAgAQAIAAAIAAAAABAAAAAAAgAAQAAAA=</HashCode>
+      <FileName>Button.h</FileName>
+    </TypeIdentifier>
+  </Class>
+  <Class Name="Clyde">
+    <Position X="14.75" Y="7.25" Width="3" />
+    <TypeIdentifier>
+      <HashCode>BAQAAAAQAIAABgAAAAAAAAAQAAAAAAAAAAAAAAAAAAA=</HashCode>
+      <FileName>Clyde.h</FileName>
+    </TypeIdentifier>
+  </Class>
+  <Class Name="Enemy">
+    <Position X="14.75" Y="0.5" Width="2.5" />
+    <Compartments>
+      <Compartment Name="Nested Types" Collapsed="false" />
+    </Compartments>
+    <NestedTypes>
+      <Enum Name="Enemy::State">
+        <TypeIdentifier>
+          <NewMemberFileName>Enemy.h</NewMemberFileName>
+        </TypeIdentifier>
+      </Enum>
+    </NestedTypes>
+    <TypeIdentifier>
+      <HashCode>AAAABkAAAAAABAgBwAAAgAAAAIACAAAEBAAAJAAgAAA=</HashCode>
+      <FileName>Enemy.h</FileName>
+    </TypeIdentifier>
+  </Class>
+  <Class Name="Fruit">
+    <Position X="4.25" Y="10.75" Width="2.5" />
+    <NestedTypes>
+      <Enum Name="Fruit::FruitType" Collapsed="true">
+        <TypeIdentifier>
+          <NewMemberFileName>Fruit.h</NewMemberFileName>
+        </TypeIdentifier>
+      </Enum>
+    </NestedTypes>
+    <TypeIdentifier>
+      <HashCode>AAQAAggAAAAAAggAkAAAgAAAAABBQAEAAAAAIAAAAAA=</HashCode>
+      <FileName>Fruit.h</FileName>
+    </TypeIdentifier>
+  </Class>
+  <Class Name="Game">
+    <Position X="3" Y="6" Width="2.25" />
+    <TypeIdentifier>
+      <HashCode>AAQAEAgAAAIAAgAAAAAAAAAAAAgEABABAAAAAAQgAAA=</HashCode>
+      <FileName>Game.h</FileName>
+    </TypeIdentifier>
+  </Class>
+  <Class Name="GameController">
+    <Position X="12" Y="14.75" Width="2.25" />
+    <NestedTypes>
+      <Enum Name="GameController::GameState" Collapsed="true">
+        <TypeIdentifier>
+          <NewMemberFileName>GameController.h</NewMemberFileName>
+        </TypeIdentifier>
+      </Enum>
+    </NestedTypes>
+    <TypeIdentifier>
+      <HashCode>AAAAAAAAABAAAAAAAAAAAIAAAAAAAAAgAAAgAAAAAAI=</HashCode>
+      <FileName>GameController.h</FileName>
+    </TypeIdentifier>
+  </Class>
+  <Class Name="Hud">
+    <Position X="7.5" Y="10.75" Width="2.25" />
+    <TypeIdentifier>
+      <HashCode>CAAAAAAAAAAAAgAAAgAAAAAAAAAAAAAAAAAAAAAAAIA=</HashCode>
+      <FileName>Hud.h</FileName>
+    </TypeIdentifier>
+  </Class>
+  <Class Name="Inky">
+    <Position X="18" Y="7.25" Width="3" />
+    <TypeIdentifier>
+      <HashCode>AAQAAAAQAIAABgAAAAAAAAAQAAAAAAAAAAAQAAAAAAA=</HashCode>
+      <FileName>Inky.h</FileName>
+    </TypeIdentifier>
+  </Class>
+  <Class Name="InputManager">
+    <Position X="7.75" Y="13.25" Width="1.75" />
+    <TypeIdentifier>
+      <HashCode>AQAAAACAAAAAAAAAAAAAAAAAAAAAABAAAAAAAAAAAAA=</HashCode>
+      <FileName>InputManager.h</FileName>
+    </TypeIdentifier>
+  </Class>
+  <Class Name="Map">
+    <Position X="8.5" Y="15.25" Width="3" />
+    <NestedTypes>
+      <Enum Name="Map::Cell" Collapsed="true">
+        <TypeIdentifier>
+          <NewMemberFileName>Map.h</NewMemberFileName>
+        </TypeIdentifier>
+      </Enum>
+    </NestedTypes>
+    <TypeIdentifier>
+      <HashCode>QAQEEAIAABAAAwCAAAAIAAAAAAAAAAAIAAAACACAgAA=</HashCode>
+      <FileName>Map.h</FileName>
+    </TypeIdentifier>
+  </Class>
+  <Class Name="Menu">
+    <Position X="5.5" Y="6" Width="2.25" />
+    <TypeIdentifier>
+      <HashCode>EAQAAAAAAAAAAgAAAAAAAAAAAACMAAAAAAAAACAAAAA=</HashCode>
+      <FileName>Menu.h</FileName>
+    </TypeIdentifier>
+  </Class>
+  <Class Name="Music">
+    <Position X="4.25" Y="15.25" Width="3.5" />
+    <TypeIdentifier>
+      <HashCode>AAAAhEEACAABAAAAwAAAAAEAAAQAAACQQAAoAAAAQAA=</HashCode>
+      <FileName>Music.h</FileName>
+    </TypeIdentifier>
+  </Class>
+  <Class Name="Player">
+    <Position X="1" Y="10.75" Width="2.75" />
+    <NestedTypes>
+      <Enum Name="Player::State" Collapsed="true">
+        <TypeIdentifier>
+          <NewMemberFileName>Player.h</NewMemberFileName>
+        </TypeIdentifier>
+      </Enum>
+    </NestedTypes>
+    <TypeIdentifier>
+      <HashCode>AAQABEAQBIAAxggBgAAIgAAQAAMCIAgEBggAjQAACAA=</HashCode>
+      <FileName>Player.h</FileName>
+    </TypeIdentifier>
+  </Class>
+  <Class Name="Ranking">
+    <Position X="0.5" Y="6" Width="2.25" />
+    <TypeIdentifier>
+      <HashCode>AAQAAAAAAAAAAgAAAAAAAAgAgAAAQAAAAAAAABAAAAA=</HashCode>
+      <FileName>Ranking.h</FileName>
+    </TypeIdentifier>
+  </Class>
+  <Class Name="Renderer">
+    <Position X="22.25" Y="2.25" Width="6.75" />
+    <TypeIdentifier>
+      <HashCode>CAA0AAAAAAAAACAAgEAAAAAAAAAAAAAAYBCEARBAoAg=</HashCode>
+      <FileName>Renderer.h</FileName>
+    </TypeIdentifier>
+  </Class>
+  <Class Name="Scene">
+    <Position X="4.25" Y="0.5" Width="2.25" />
+    <Compartments>
+      <Compartment Name="Nested Types" Collapsed="false" />
+    </Compartments>
+    <NestedTypes>
+      <Enum Name="Scene::SceneState">
+        <TypeIdentifier>
+          <NewMemberFileName>Scene.h</NewMemberFileName>
+        </TypeIdentifier>
+      </Enum>
+    </NestedTypes>
+    <TypeIdentifier>
+      <HashCode>AAQAAEAAAAAAAgAAAAAAAAAAQAAAAAAEAAAAAAAAAAA=</HashCode>
+      <FileName>Scene.h</FileName>
+    </TypeIdentifier>
+  </Class>
+  <Class Name="SplashScreen">
+    <Position X="8" Y="6" Width="2.25" />
+    <TypeIdentifier>
+      <HashCode>AAQAAAIAAAAAAgCAAAAAAAAAAAAAAAAAAAAAAAAAAAA=</HashCode>
+      <FileName>SplashScreen.h</FileName>
+    </TypeIdentifier>
+  </Class>
+  <Struct Name="Line">
+    <Position X="21.25" Y="15.25" Width="2" />
+    <TypeIdentifier>
+      <HashCode>AAAAAAAAAAAAAAAAAAAAAAAAAAAAAACgAQAAAAABAAA=</HashCode>
+      <FileName>Types.h</FileName>
+    </TypeIdentifier>
+  </Struct>
+  <Struct Name="Rect">
+    <Position X="18.25" Y="13.25" Width="2.5" />
+    <TypeIdentifier>
+      <HashCode>AAAAAAAAAAAAAAAAAAAAAAAAACAAAAAAQAhgAAAAAAA=</HashCode>
+      <FileName>Types.h</FileName>
+    </TypeIdentifier>
+  </Struct>
+  <Struct Name="Color">
+    <Position X="18.25" Y="10.75" Width="2.5" />
+    <TypeIdentifier>
+      <HashCode>AAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAoAQABgAAAAAA=</HashCode>
+      <FileName>Types.h</FileName>
+    </TypeIdentifier>
+  </Struct>
+  <Struct Name="Font">
+    <Position X="16.25" Y="12.75" Width="1.5" />
+    <TypeIdentifier>
+      <HashCode>AAAAAAAAAAAAAAAAAIACAAAAAAAAAAAAAAAAAAAAAgA=</HashCode>
+      <FileName>Types.h</FileName>
+    </TypeIdentifier>
+  </Struct>
+  <Struct Name="Text">
+    <Position X="16.25" Y="14.75" Width="1.5" />
+    <TypeIdentifier>
+      <HashCode>AAAAAAAAAAAAAAAAAAAAAAAAAAAAAACIQAgAAAAAAgA=</HashCode>
+      <FileName>Types.h</FileName>
+    </TypeIdentifier>
+  </Struct>
+  <Struct Name="Vec2">
+    <Position X="23.75" Y="15.25" Width="1.75" />
+    <TypeIdentifier>
+      <HashCode>AAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAABggAAAAAA=</HashCode>
+      <FileName>Types.h</FileName>
+    </TypeIdentifier>
+  </Struct>
+  <Struct Name="Input">
+    <Position X="21.25" Y="12.75" Width="2.75" />
+    <NestedTypes>
+      <Enum Name="Input::Key" Collapsed="true">
+        <TypeIdentifier>
+          <NewMemberFileName>Types.h</NewMemberFileName>
+        </TypeIdentifier>
+      </Enum>
+    </NestedTypes>
+    <TypeIdentifier>
+      <HashCode>AAAAAAAAAAAACAAAAIAEAEAAEAAAAAAAAAAAAAAAAAA=</HashCode>
+      <FileName>Types.h</FileName>
+    </TypeIdentifier>
+  </Struct>
+  <Struct Name="User">
+    <Position X="21.25" Y="10.75" Width="3.25" />
+    <TypeIdentifier>
+      <HashCode>AAAAAAAAAAAAAAAAEAAIAAAAAAAEAAAAAAAAAAAAAAA=</HashCode>
+      <FileName>Types.h</FileName>
+    </TypeIdentifier>
+  </Struct>
+  <Enum Name="Movement">
+    <Position X="16.25" Y="10.75" Width="1.5" />
+    <TypeIdentifier>
+      <HashCode>AAAAAAAAAAAAAgAAAAAAAAAAAAICAAAgAAAAAAAAAAA=</HashCode>
+      <FileName>Types.h</FileName>
+    </TypeIdentifier>
+  </Enum>
+  <Font Name="Segoe UI" Size="9" />
+</ClassDiagram>
