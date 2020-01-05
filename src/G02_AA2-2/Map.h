@@ -21,6 +21,5 @@ public:
 	void SetCell(const Vec2 &, const Cell &) const;
 	void SetSize(const Vec2 &);
 	void SetCoinCounter(const int &);
-	void Update();//
 	void Draw() const;
 };

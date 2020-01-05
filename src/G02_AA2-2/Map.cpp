@@ -36,10 +36,6 @@ void Map::SetCoinCounter(const int &coins) {
 	coinCounter = coins;
 }
 
-void Map::Update() {
-
-}
-
 void Map::Draw() const{
 	for (int y = 0; y < numRows; y++) {
 		for (int x = 0; x < numColumns; x++) {

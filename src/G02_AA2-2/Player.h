@@ -40,9 +40,9 @@ public:
 	void SetScore(const Fruit::FruitType &);
 	void SetLives(const int &);
 	void SetState(const State &);
-	void Update(const Input &, Map &);//
+	void Update(const Input &, Map &);
 	void Move(const Map &);
 	void Draw() const;
 	void Reset();
-	void Dead();//
+	void Dead();
 };

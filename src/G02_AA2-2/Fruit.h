@@ -9,8 +9,8 @@ public:
 private:
 	Vec2 initialPos;
 	FruitType type;
-	float timeCounter;
-	float timeToSpawn;
+	float timeCounter; // timer var
+	float timeToSpawn; // ammount of seconds the timer has to reach to appear
 	bool active;
 public:
 	Fruit();
